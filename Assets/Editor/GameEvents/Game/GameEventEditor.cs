@@ -8,13 +8,7 @@ namespace GameEvents.Game
     [CustomEditor(typeof(GameEvent))]
     public class GameEventEditor : Editor
     {
-        #region Pirvate Fields
-
         private const int GroupSpacingPixels = 8;
-
-        #endregion
-
-        #region Public Methods
 
         public override void OnInspectorGUI()
         {
@@ -40,7 +34,5 @@ namespace GameEvents.Game
                 gameEvent.RaiseGameEvent();
             }
         }
-
-        #endregion
     }
 }

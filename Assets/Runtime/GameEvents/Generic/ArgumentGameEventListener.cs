@@ -8,8 +8,6 @@ namespace GameEvents.Generic
         where TGameEvent : IArgumentGameEvent<TArgument>
         where TUnityEvent : UnityEvent<TArgument>
     {
-        #region Public Methods
-
         /// <summary>
         ///     Trigger this listener with an argument.
         /// </summary>
@@ -17,10 +15,6 @@ namespace GameEvents.Generic
         {
             onGameEvent.Invoke(argument);
         }
-
-        #endregion
-
-        #region Private Fields
 
         [SerializeField]
         [Tooltip("Game event to listen to which will trigger the onGameEvent event")]
@@ -31,10 +25,6 @@ namespace GameEvents.Generic
         [SerializeField]
         [Tooltip("Called when the listener is triggered with an argument")]
         private TUnityEvent onGameEvent = default;
-
-        #endregion
-
-        #region Unity Event Methods
 
         private void OnEnable()
         {
@@ -63,7 +53,5 @@ namespace GameEvents.Generic
 
             gameEvent.UnregisterListener(this);
         }
-
-        #endregion
     }
 }

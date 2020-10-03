@@ -6,18 +6,12 @@ namespace GameEvents.Generic
     public abstract class ArgumentGameEvent<TArgument>
         : ScriptableObject, IArgumentGameEvent<TArgument>
     {
-        #region Private Fields
-
         [SerializeField]
         [Tooltip("Should debug messages be logged for this event")]
         private bool debug = false;
 
         private readonly List<IArgumentGameEventListener<TArgument>> listeners =
             new List<IArgumentGameEventListener<TArgument>>();
-
-        #endregion
-
-        #region Public Methods
 
         public void RaiseGameEvent(TArgument argument)
         {
@@ -57,7 +51,5 @@ namespace GameEvents.Generic
 
             listeners.Remove(listener);
         }
-
-        #endregion
     }
 }
