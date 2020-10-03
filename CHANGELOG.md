@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1] - 2020-10-03
 
 ### Added
+- Mutable objects.
+- Samples for mutable objects.
+
+### Added
 - Assembly definition for samples.
 
 ## [0.1.0] - 2020-10-03
