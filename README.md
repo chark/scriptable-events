@@ -11,3 +11,6 @@ Provides Game Events and their respective listeners. Includes Mutable Scriptable
     }
 }
 ```
+
+## Usage
+Usage documentation can be found [here](Assets/Documentation/README.md).
