@@ -1,14 +1,10 @@
-﻿using GameEvents.Transform;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameEvents
+namespace MutableObjects
 {
     [RequireComponent(typeof(Camera))]
     public class Shooter : MonoBehaviour
     {
-        [SerializeField]
-        private TransformGameEvent shotGameEvent = default;
-
         [SerializeField]
         private string shootButton = "Fire1";
 
@@ -38,7 +34,11 @@ namespace GameEvents
 
             if (Physics.Raycast(ray, out var hit))
             {
-                shotGameEvent.RaiseGameEvent(hit.transform);
+                var handler = hit.transform.GetComponent<HealthHandler>();
+                if (handler != null)
+                {
+                    handler.HandleShot();
+                }
             }
         }
     }
