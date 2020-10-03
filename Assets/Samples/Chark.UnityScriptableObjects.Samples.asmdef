@@ -1,0 +1,7 @@
+﻿{
+  "name": "Chark.UnityScriptableObjects.Samples",
+  "references": [
+    "Chark.UnityScriptableObjects",
+    "Chark.UnityScriptableObjects.Editor"
+  ]
+}
