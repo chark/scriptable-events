@@ -5,9 +5,9 @@ This package provides utilities for implementing game architecture which is orie
 This package can be installed by using the [Unity Package Manager](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html). To install this package, add the following to `manifest.json`:
 ```json
 {
-    "dependencies": {
-        "com.chark.unity-scriptable-objects": "https://github.com/chark/unity-scriptable-objects.git#upm"
-    }
+  "dependencies": {
+    "com.chark.unity-scriptable-objects": "https://github.com/chark/unity-scriptable-objects.git#upm"
+  }
 }
 ```
 
