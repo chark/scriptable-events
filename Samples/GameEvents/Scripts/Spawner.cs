@@ -1,69 +1,72 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
-public class Spawner : MonoBehaviour
+namespace GameEvents
 {
-    [Min(0)]
-    [SerializeField]
-    private int spawnedLimit = 10;
-
-    [SerializeField]
-    private GameObject spawnPrefab = default;
-
-    private new BoxCollider collider;
-    private int spawned;
-
-    private void Awake()
+    [RequireComponent(typeof(BoxCollider))]
+    public class Spawner : MonoBehaviour
     {
-        collider = GetComponent<BoxCollider>();
-    }
+        [Min(0)]
+        [SerializeField]
+        private int spawnedLimit = 10;
 
-    private void Update()
-    {
-        if (IsSpawn()) Spawn();
-    }
+        [SerializeField]
+        private UnityEngine.GameObject spawnPrefab = default;
 
-    private bool IsSpawn()
-    {
-        return spawned < spawnedLimit;
-    }
+        private new BoxCollider collider;
+        private int spawned;
 
-    private void Spawn()
-    {
-        Instantiate(spawnPrefab, GetSpawnPosition(), GetSpawnRotation(), transform);
-        spawned++;
-    }
+        private void Awake()
+        {
+            collider = GetComponent<BoxCollider>();
+        }
 
-    private Vector3 GetSpawnPosition()
-    {
-        var colliderBounds = collider.bounds;
-        var position = new Vector3(
-            Random.Range(colliderBounds.min.x, colliderBounds.max.x),
-            Random.Range(colliderBounds.min.y, colliderBounds.max.y),
-            Random.Range(colliderBounds.min.z, colliderBounds.max.z)
-        );
+        private void Update()
+        {
+            if (IsSpawn()) Spawn();
+        }
 
-        return colliderBounds.ClosestPoint(position);
-    }
+        private bool IsSpawn()
+        {
+            return spawned < spawnedLimit;
+        }
 
-    private static Quaternion GetSpawnRotation()
-    {
-        var angles = new Vector3(
-            GetRandomAngle(),
-            GetRandomAngle(),
-            GetRandomAngle()
-        );
+        private void Spawn()
+        {
+            Instantiate(spawnPrefab, GetSpawnPosition(), GetSpawnRotation(), transform);
+            spawned++;
+        }
 
-        return Quaternion.Euler(angles);
-    }
+        private UnityEngine.Vector3 GetSpawnPosition()
+        {
+            var colliderBounds = collider.bounds;
+            var position = new UnityEngine.Vector3(
+                Random.Range(colliderBounds.min.x, colliderBounds.max.x),
+                Random.Range(colliderBounds.min.y, colliderBounds.max.y),
+                Random.Range(colliderBounds.min.z, colliderBounds.max.z)
+            );
 
-    private static float GetRandomAngle()
-    {
-        return Random.Range(0f, 360f);
-    }
+            return colliderBounds.ClosestPoint(position);
+        }
 
-    public void DecreaseSpawned()
-    {
-        spawned--;
+        private static Quaternion GetSpawnRotation()
+        {
+            var angles = new UnityEngine.Vector3(
+                GetRandomAngle(),
+                GetRandomAngle(),
+                GetRandomAngle()
+            );
+
+            return Quaternion.Euler(angles);
+        }
+
+        private static float GetRandomAngle()
+        {
+            return Random.Range(0f, 360f);
+        }
+
+        public void DecreaseSpawned()
+        {
+            spawned--;
+        }
     }
 }

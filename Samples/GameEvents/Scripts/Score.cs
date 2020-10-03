@@ -1,53 +1,56 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class Score : MonoBehaviour
+namespace GameEvents
 {
-    [Min(0)]
-    [SerializeField]
-    private int scoreIncrease = 100;
-
-    [SerializeField]
-    private float scoreEffectYOffset = 10f;
-
-    [SerializeField]
-    private FloatFadeOutText scoreEffectPrefab = default;
-
-    private int currentScore;
-    private Text text;
-
-    private void Awake()
+    [RequireComponent(typeof(Text))]
+    public class Score : MonoBehaviour
     {
-        text = GetComponent<Text>();
-    }
+        [Min(0)]
+        [SerializeField]
+        private int scoreIncrease = 100;
 
-    public void IncreaseScore()
-    {
-        currentScore += scoreIncrease;
-        text.text = currentScore.ToString();
+        [SerializeField]
+        private float scoreEffectYOffset = 10f;
 
-        InstantiateEffect($"+{scoreIncrease.ToString()}");
-    }
+        [SerializeField]
+        private FloatFadeOutText scoreEffectPrefab = default;
 
-    private void InstantiateEffect(string effectText)
-    {
-        var scoreTransform = transform;
-        var scorePosition = scoreTransform.position;
+        private int currentScore;
+        private Text text;
 
-        scorePosition.y += scoreEffectYOffset;
-
-        var floatEffect = Instantiate(
-            scoreEffectPrefab,
-            scorePosition,
-            Quaternion.identity,
-            scoreTransform
-        );
-
-        var floatText = floatEffect.GetComponent<Text>();
-        if (floatText != null)
+        private void Awake()
         {
-            floatText.text = effectText;
+            text = GetComponent<Text>();
+        }
+
+        public void IncreaseScore()
+        {
+            currentScore += scoreIncrease;
+            text.text = currentScore.ToString();
+
+            InstantiateEffect($"+{scoreIncrease.ToString()}");
+        }
+
+        private void InstantiateEffect(string effectText)
+        {
+            var scoreTransform = transform;
+            var scorePosition = scoreTransform.position;
+
+            scorePosition.y += scoreEffectYOffset;
+
+            var floatEffect = Instantiate(
+                scoreEffectPrefab,
+                scorePosition,
+                Quaternion.identity,
+                scoreTransform
+            );
+
+            var floatText = floatEffect.GetComponent<Text>();
+            if (floatText != null)
+            {
+                floatText.text = effectText;
+            }
         }
     }
 }
