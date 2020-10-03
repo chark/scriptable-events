@@ -13,6 +13,11 @@
       "displayName": "Game Events",
       "description": "Shows how to use game events and listeners with individual prefabs.",
       "path": "Samples/GameEvents"
+    },
+    {
+      "displayName": "Mutable Objects",
+      "description": "Shows how to use mutable objects.",
+      "path": "Samples/MutableObjects"
     }
   ]
 }
