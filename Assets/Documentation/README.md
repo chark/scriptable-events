@@ -2,7 +2,7 @@
 
 ## Game Events
 <p align="center">
-  <img width="100%" src="events.png" alt="Diagram showing how data is shared using events."/>
+  <img width="75%" src="events.png" alt="Diagram showing how data is shared using events."/>
 </p>
 
 Game events allow to decouple prefabs from direct dependencies such as scene or nested prefab game objects. The biggest benefit of events is that they can be referenced in isolated prefabs, this allows to later avoid having to set them up in the scene.
@@ -90,7 +90,7 @@ Import the `GameEvents` sample which shows how to use game events in various sit
 
 ## Mutable Objects
 <p align="center">
-  <img width="100%" src="mutable-objects.png" alt="Diagram showing how data is shared when using mutable objects."/>
+  <img  width="75%" src="mutable-objects.png" alt="Diagram showing how data is shared when using mutable objects."/>
 </p>
 
 Mutable objects allow using `ScriptableObject` assets to store and share data. They are handy when a lot of behaviours need access to specific data. In such cases, mutable objects can be injected in dependant behaviours instead of forming hard dependencies between them or using singletons.
