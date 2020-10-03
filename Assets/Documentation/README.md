@@ -1,6 +1,10 @@
 ﻿# Documentation
 
 ## Game Events
+<p align="center">
+  <img width="100%" src="events.png" alt="Diagram showing how data is shared using events."/>
+</p>
+
 Game events allow to decouple prefabs from direct dependencies such as scene or nested prefab game objects. The biggest benefit of events is that they can be referenced in isolated prefabs, this allows to later avoid having to set them up in the scene.
 
 The package provides two types of game events:
@@ -82,9 +86,13 @@ public class CustomGameEventListener : ArgumentGameEventListener<CustomGameEvent
 ```
 
 ### Examples
-Import the `GameEvents` samples which show how to use game events in various situations.
+Import the `GameEvents` sample which shows how to use game events in various situations.
 
 ## Mutable Objects
+<p align="center">
+  <img width="100%" src="mutable-objects.png" alt="Diagram showing how data is shared when using mutable objects."/>
+</p>
+
 Mutable objects allow using `ScriptableObject` assets to store and share data. They are handy when a lot of behaviours need access to specific data. In such cases, mutable objects can be injected in dependant behaviours instead of forming hard dependencies between them or using singletons.
 
 ### Mutable object assets
@@ -127,3 +135,6 @@ public class MutableCustom : MutableObject
 ```
 
 After that is set up, make sure to call `MutableObjectExtensions.ResetMutatedObjects()` somewhere in one of the `Awake` methods, each time before a scene loads. Make sure the script which calls this extension executes before other scripts by setting up [Script Execution Order](https://docs.unity3d.com/Manual/class-MonoManager.html).
+
+### Examples
+Import the `MutableObject` sample which shows how to use game events in various situations.
