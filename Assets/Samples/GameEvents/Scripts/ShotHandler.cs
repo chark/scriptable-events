@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class ShotHandler : MonoBehaviour
+namespace GameEvents
 {
-    [SerializeField]
-    private UnityEvent onShot = default;
-
-    public void HandleShot(Transform shot)
+    public class ShotHandler : MonoBehaviour
     {
-        Destroy(shot.gameObject);
-        onShot.Invoke();
+        [SerializeField]
+        private UnityEvent onShot = default;
+
+        public void HandleShot(UnityEngine.Transform shot)
+        {
+            Destroy(shot.gameObject);
+            onShot.Invoke();
+        }
     }
 }
