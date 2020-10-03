@@ -1,9 +1,8 @@
 # Unity Scriptable Objects
-Provides Game Events and their respective listeners. Includes Mutable Scriptable Objects for injecting and using shared data.
+This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and Game Events. For more info see [Unite2017](https://github.com/roboryantron/Unite2017).
 
 ## Installation
-<https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html>
-
+This package can be installed by using the [Unity Package Manager](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html). To install this package, add the following to `manifest.json`:
 ```json
 {
     "dependencies": {
