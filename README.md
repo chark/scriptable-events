@@ -1,5 +1,5 @@
 # Unity Scriptable Objects
-This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and Game Events. Most of these ideas are based on[Unite2017](https://github.com/roboryantron/Unite2017).
+This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and Game Events. Most of these ideas are based on [Unite2017](https://github.com/roboryantron/Unite2017).
 
 ## Features
 - Game Events - allows transferring of event messages using `ScriptableObject` assets. See
