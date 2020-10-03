@@ -4,8 +4,8 @@ using UnityEngine;
 namespace GameEvents.Generic
 {
     [CanEditMultipleObjects]
-    public abstract class ArgumentGameEventEditor<TGameEvent, TArgument>
-        : Editor where TGameEvent : class, IArgumentGameEvent<TArgument>
+    public abstract class ArgumentGameEventEditor<TGameEvent, TArgument> : Editor
+        where TGameEvent : class, IArgumentGameEvent<TArgument>
     {
         #region Protected Methods
 
@@ -33,7 +33,10 @@ namespace GameEvents.Generic
         {
             base.OnInspectorGUI();
 
-            if (!(target is TGameEvent gameEvent)) return;
+            if (!(target is TGameEvent gameEvent))
+            {
+                return;
+            }
 
             GUI.enabled = Application.isPlaying;
             GUILayout.Space(GroupSpacingPixels);
@@ -47,7 +50,10 @@ namespace GameEvents.Generic
             GUILayout.BeginHorizontal();
 
             argumentValue = DrawArgumentField(argumentValue);
-            if (GUILayout.Button("Raise")) gameEvent.RaiseGameEvent(argumentValue);
+            if (GUILayout.Button("Raise"))
+            {
+                gameEvent.RaiseGameEvent(argumentValue);
+            }
 
             GUILayout.EndHorizontal();
         }

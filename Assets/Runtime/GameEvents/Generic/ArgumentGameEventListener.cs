@@ -41,7 +41,9 @@ namespace GameEvents.Generic
             if (gameEvent == null)
             {
                 Debug.LogWarning(
-                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set");
+                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set"
+                );
+
                 return;
             }
 
@@ -53,7 +55,9 @@ namespace GameEvents.Generic
             if (gameEvent == null)
             {
                 Debug.LogWarning(
-                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set");
+                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set"
+                );
+
                 return;
             }
 

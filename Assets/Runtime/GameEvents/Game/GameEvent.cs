@@ -22,12 +22,18 @@ namespace GameEvents.Game
 
         public void RaiseGameEvent()
         {
-            if (debug) Debug.Log($"Raise event: {name}");
+            if (debug)
+            {
+                Debug.Log($"Raise event: {name}");
+            }
 
             for (var i = listeners.Count - 1; i >= 0; i--)
             {
                 var listener = listeners[i];
-                if (debug) Debug.Log($"Raise event: {name}, listener: {listener}");
+                if (debug)
+                {
+                    Debug.Log($"Raise event: {name}, listener: {listener}");
+                }
 
                 listener.OnGameEvent();
             }
@@ -35,14 +41,20 @@ namespace GameEvents.Game
 
         public void RegisterListener(IGameEventListener listener)
         {
-            if (debug) Debug.Log($"Registering listener: {listener}");
+            if (debug)
+            {
+                Debug.Log($"Registering listener: {listener}");
+            }
 
             listeners.Add(listener);
         }
 
         public void UnregisterListener(IGameEventListener listener)
         {
-            if (debug) Debug.Log($"Unregistering listener: {listener}");
+            if (debug)
+            {
+                Debug.Log($"Unregistering listener: {listener}");
+            }
 
             listeners.Remove(listener);
         }

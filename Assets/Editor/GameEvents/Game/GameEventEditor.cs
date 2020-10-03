@@ -21,7 +21,10 @@ namespace GameEvents.Game
             base.OnInspectorGUI();
 
             var gameEvent = target as GameEvent;
-            if (gameEvent == null) return;
+            if (gameEvent == null)
+            {
+                return;
+            }
 
             GUI.enabled = Application.isPlaying;
             GUILayout.Space(GroupSpacingPixels);
@@ -32,7 +35,10 @@ namespace GameEvents.Game
         private static void DrawRaise(IGameEvent gameEvent)
         {
             GUILayout.Label("Raise event (play mode only)");
-            if (GUILayout.Button("Raise")) gameEvent.RaiseGameEvent();
+            if (GUILayout.Button("Raise"))
+            {
+                gameEvent.RaiseGameEvent();
+            }
         }
 
         #endregion
