@@ -7,27 +7,9 @@ namespace GameEvents.Generic
     public abstract class ArgumentGameEventEditor<TGameEvent, TArgument> : Editor
         where TGameEvent : class, IArgumentGameEvent<TArgument>
     {
-        #region Protected Methods
-
-        /// <returns>
-        ///     Value that is entered in the argument field.
-        /// </returns>
-        protected virtual TArgument DrawArgumentField(TArgument value)
-        {
-            return value;
-        }
-
-        #endregion
-
-        #region Pirvate Fields
-
         private const int GroupSpacingPixels = 8;
 
         private TArgument argumentValue = default;
-
-        #endregion
-
-        #region Public Methods
 
         public override void OnInspectorGUI()
         {
@@ -58,6 +40,9 @@ namespace GameEvents.Generic
             GUILayout.EndHorizontal();
         }
 
-        #endregion
+        /// <returns>
+        ///     Value that is entered in the argument field.
+        /// </returns>
+        protected abstract TArgument DrawArgumentField(TArgument value);
     }
 }

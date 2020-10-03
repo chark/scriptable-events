@@ -7,18 +7,12 @@ namespace GameEvents.Game
     [CreateAssetMenu(fileName = "GameEvent", menuName = "Game Events/Game Event")]
     public class GameEvent : ScriptableObject, IGameEvent
     {
-        #region Private Fields
-
         [SerializeField]
         [Tooltip("Should debug messages be logged for this event")]
         private bool debug = false;
 
         private readonly List<IGameEventListener> listeners =
             new List<IGameEventListener>();
-
-        #endregion
-
-        #region Public Methods
 
         public void RaiseGameEvent()
         {
@@ -58,7 +52,5 @@ namespace GameEvents.Game
 
             listeners.Remove(listener);
         }
-
-        #endregion
     }
 }
