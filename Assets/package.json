@@ -5,7 +5,7 @@
     "name": "Chark",
     "url": "https://chark.io"
   },
-  "version": "0.1.1",
+  "version": "0.2.0",
   "unity": "2019.4",
   "description": "Provides Game Events and their respective listeners. Includes Mutable Scriptable Objects for injecting and using shared data.",
   "samples": [
