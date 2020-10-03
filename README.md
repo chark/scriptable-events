@@ -2,7 +2,7 @@
 This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and Game Events. Most of these ideas are based on [Unite2017](https://github.com/roboryantron/Unite2017).
 
 ## Features
-- Game Events - allows transferring of event messages using `ScriptableObject` assets. See
+- Game Events - allows transferring of event messages using `ScriptableObject` assets.
 - Game Event listeners - listener components which allow subscribing to specific events.
 - Mutable Objects - allows sharing and resetting of data via `ScriptableObject` assets.
 
