@@ -1,0 +1,9 @@
+﻿{
+  "name": "Chark.UnityScriptableObjects.Editor",
+  "references": [
+    "Chark.UnityScriptableObjects"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
