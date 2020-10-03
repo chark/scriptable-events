@@ -21,7 +21,10 @@ namespace GameEvents
 
         private void Update()
         {
-            if (IsShoot()) Shoot();
+            if (IsShoot())
+            {
+                Shoot();
+            }
         }
 
         private bool IsShoot()
@@ -33,7 +36,10 @@ namespace GameEvents
         {
             var ray = camera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out var hit)) shotGameEvent.RaiseGameEvent(hit.transform);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                shotGameEvent.RaiseGameEvent(hit.transform);
+            }
         }
     }
 }
