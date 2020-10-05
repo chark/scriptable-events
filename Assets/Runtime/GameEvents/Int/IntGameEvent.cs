@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameEvents.Int
 {
-    [CreateAssetMenu(fileName = "IntEvent", menuName = "Game Events/Int Event")]
+    [CreateAssetMenu(fileName = "IntEvent", menuName = "Game Events/Int Game Event")]
     public class IntGameEvent : ArgumentGameEvent<int>
     {
     }

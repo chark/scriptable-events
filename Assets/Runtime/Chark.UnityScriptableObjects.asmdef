@@ -1,3 +1,13 @@
-﻿{
-  "name": "Chark.UnityScriptableObjects"
+{
+    "name": "Chark.UnityScriptableObjects",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
