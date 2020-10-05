@@ -1,0 +1,106 @@
+﻿## Documentation
+
+### Game events
+<p align="middle">
+  <img
+    src="/Assets/Documentation~/game-events.png"
+    width="49.5%" alt="Example usage of Game Event assets"
+  />
+  <img
+    src="/Assets/Documentation~/listeners.png" width="49.5%"
+    alt="Example of a setup Game Event Listener component"
+  />
+</p>
+
+Game events are scriptable objects (_Right Click -> Create -> Game Events -> ..._) which can be subscribed to via listener components (_Add Component -> Game Events -> ..._). Events allow to decouple scripts and instead rely on intermediate `ScriptableObject` assets for communication.
+
+Available game events:
+- `GameEvent` - simple event which doesn't accept any arguments.
+- `BoolGameEvent` - event with a `bool` argument.
+- `IntGameEvent` - event with a `int` argument.
+- `FloatGameEvent` - event with a `float` argument.
+- `StringGameEvent` - event with a `string` argument.
+- `Vector2GameEvent` - event with a `Vector2` argument.
+- `Vector3GameEvent` - event with a `Vector3` argument.
+- `TransformGameEvent` - event with a `Transform` argument.
+- `GameObjectGameEvent` - event with a `GameObject` argument.
+
+### Mutable objects
+<img
+  src="/Assets/Documentation~/mutable-objects.png"
+  width="100%" alt="Example usage of Mutable Objects"
+/>
+
+Mutable objects are used for storing and editing data on `ScriptableObject` assets at runtime. This data can be referenced, observed and used as a bridge by various scripts. Mutable objects are useful in situations where `ScriptableObject` data needs to be reset when a new level loads (e.g. in `Awake` on a `GameManager` script with a properly setup [Script Execution Order](https://docs.unity3d.com/Manual/class-MonoManager.html)). Mutable objects can be reset using `MutableObjectExtensions.ResetMutatedObjects()` method.
+
+Available mutable objects:
+- `MutableBool` - encapsulates a `bool` value.
+- `MutableInt` - encapsulates a `int` value.
+- `MutableFloat` - encapsulates a `float` value.
+- `MutableString` - encapsulates a `string` value.
+- `MutableVector2` - encapsulates a `Vector2` value.
+- `MutableVector3` - encapsulates a `Vector3` value.
+
+### Custom game events
+In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, custom game event can be created which would carry all the necessary data.
+
+To create a custom game event, first create a regular `UnityEvent`:
+```cs
+[Serializable]
+public class CustomEvent : UnityEvent<Custom>
+{
+}
+```
+
+After that is ready, create a game event by extending `GameEvents.Generic.ArgumentGameEvent`:
+```cs
+[CreateAssetMenu(fileName = "CustomEvent", menuName = "Game Events/Custom Event")]
+public class CustomGameEvent : ArgumentGameEvent<Custom>
+{
+}
+```
+
+Finally, create a game event listener by extending `GameEvents.Generic.ArgumentGameEventListener`:
+```cs
+[AddComponentMenu("Game Events/Custom Game Event Listener")]
+public class CustomGameEventListener : ArgumentGameEventListener<CustomGameEvent, CustomEvent, Custom>
+{
+}
+```
+
+### Custom mutable objects
+In some cases, littering the script code with loads of `MutableObject` references can be inconvenient. To avoid this, a single object can be used which encompasses multiple fields.
+
+To create a custom mutable object, extend `MutableObjects.Generic.MutableObject` and override `ResetValues()` method, e.g:
+```cs
+[CreateAssetMenu(fileName = "MutableCustom", menuName = "Mutable Objects/Mutable Custom")]
+public class MutableCustom : MutableObject
+{
+    [SerializeField]
+    private int health = default;
+
+    [SerializeField]
+    private int armor = default;
+
+    [SerializeField]
+    private int xp = default;
+
+    public int Health { get; set; }
+
+    public int Armor { get; set; }
+
+    public int Xp { get; set; }
+
+    // This will set property values when mutable object is enabled or if the values change in the
+    // inspector.
+    // This is also called when MutableObjectExtensions.ResetMutatedObjects() is invoked.
+    public override void ResetValues()
+    {
+        Health = health;
+        Armor = armor;
+        Xp = xp;
+    }
+}
+```
+
+[Unity Package Manager]: https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html

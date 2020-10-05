@@ -1,7 +1,16 @@
-﻿{
-  "name": "Chark.UnityScriptableObjects.Samples",
-  "references": [
-    "Chark.UnityScriptableObjects",
-    "Chark.UnityScriptableObjects.Editor"
-  ]
+{
+    "name": "Chark.UnityScriptableObjects.Samples",
+    "references": [
+        "Chark.UnityScriptableObjects",
+        "Chark.UnityScriptableObjects.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
