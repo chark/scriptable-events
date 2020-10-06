@@ -31,7 +31,7 @@ Available game events:
   width="100%" alt="Example usage of Mutable Objects"
 />
 
-Mutable objects are used for storing and editing data on `ScriptableObject` assets at runtime. This data can be referenced, observed and used as a bridge by various scripts. Mutable objects are useful in situations where `ScriptableObject` data needs to be reset when a new level loads (e.g. in `Awake` on a `GameManager` script with a properly setup [Script Execution Order](https://docs.unity3d.com/Manual/class-MonoManager.html)). Mutable objects can be reset using `MutableObjectExtensions.ResetMutatedObjects()` method.
+Mutable objects are used for storing and editing data on `ScriptableObject` assets at runtime. This data can be referenced, observed and used as a bridge by various scripts. Mutable objects are useful in situations where `ScriptableObject` data needs to be reset when a new level loads.
 
 Available mutable objects:
 - `MutableBool` - encapsulates a `bool` value.
@@ -40,6 +40,8 @@ Available mutable objects:
 - `MutableString` - encapsulates a `string` value.
 - `MutableVector2` - encapsulates a `Vector2` value.
 - `MutableVector3` - encapsulates a `Vector3` value.
+
+If a mutable object value should be saved between scene loads, check the `Persisting` flag on the `MutableObject` asset.
 
 ### Custom game events
 In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, custom game event can be created which would carry all the necessary data.
@@ -102,5 +104,3 @@ public class MutableCustom : MutableObject
     }
 }
 ```
-
-[Unity Package Manager]: https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html
