@@ -64,7 +64,7 @@ Available mutable objects:
 - `MutableVector2` - encapsulates a `Vector2` value.
 - `MutableVector3` - encapsulates a `Vector3` value.
 
-If a mutable object value should be saved between scene loads, check the `Persisting` flag on the `MutableObject` asset.
+If a mutable object value should be saved between scene loads, set the `Persisting` flag on the `MutableObject` asset to `true`.
 
 ### Custom game events
 In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, custom game event can be created which would carry all the necessary data.
@@ -117,8 +117,8 @@ public class MutableCustom : MutableObject
     public int Xp { get; set; }
 
     // This will set property values when mutable object is enabled or if the values change in the
-    // inspector.
-    // This is also called when MutableObjectExtensions.ResetMutatedObjects() is invoked.
+    // inspector. Active scene changes will also trigger this method, unless the mutable object is
+    // persistent.
     public override void ResetValues()
     {
         Health = health;
