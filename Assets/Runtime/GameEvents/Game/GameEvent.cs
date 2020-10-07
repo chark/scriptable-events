@@ -29,7 +29,7 @@ namespace GameEvents.Game
                     Debug.Log($"Raise event: {name}, listener: {listener}");
                 }
 
-                listener.OnGameEvent();
+                listener.RaiseGameEvent();
             }
         }
 

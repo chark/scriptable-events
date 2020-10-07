@@ -52,7 +52,7 @@ Available game events:
   width="100%" alt="Example usage of Mutable Objects"
 />
 
-Mutable objects are used for storing and editing data on `ScriptableObject` assets at runtime. This data can be referenced, observed and used as a bridge by various scripts. Mutable objects are useful in situations where `ScriptableObject` data needs to be reset when a new level loads.
+Mutable objects are used for storing and editing data on `ScriptableObject` assets at runtime. This data can be referenced, observed and used as a bridge by various scripts. Mutable objects are useful in situations where `ScriptableObject` data needs to be reset when the [active scene changes](https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager-activeSceneChanged.html).
 
 Available mutable objects:
 - `MutableBool` - encapsulates a `bool` value.
@@ -125,3 +125,5 @@ public class MutableCustom : MutableObject
     }
 }
 ```
+
+[Unity Package Manager]: https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html

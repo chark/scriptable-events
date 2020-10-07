@@ -5,6 +5,6 @@
         /// <summary>
         ///     Trigger this listener.
         /// </summary>
-        void OnGameEvent();
+        void RaiseGameEvent();
     }
 }

@@ -19,9 +19,27 @@ namespace GameEvents.Generic
         private TUnityEvent onGameEvent = default;
 
         /// <summary>
+        ///     Get or set the underlying GameEvent.
+        /// </summary>
+        public TGameEvent GameEvent
+        {
+            get => gameEvent;
+            set => gameEvent = value;
+        }
+
+        /// <summary>
+        ///     Get or set the underlying UnityEvent.
+        /// </summary>
+        public TUnityEvent OnGameEvent
+        {
+            get => onGameEvent;
+            set => onGameEvent = value;
+        }
+
+        /// <summary>
         ///     Trigger this listener with an argument.
         /// </summary>
-        public void OnGameEvent(TArgument argument)
+        public void RaiseGameEvent(TArgument argument)
         {
             onGameEvent.Invoke(argument);
         }

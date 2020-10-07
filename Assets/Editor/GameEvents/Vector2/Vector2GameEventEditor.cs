@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameEvents.Vector2
 {
-    [CustomEditor(typeof(Vector3GameEvent))]
+    [CustomEditor(typeof(Vector2GameEvent))]
     public class Vector2GameEventEditor
-        : ArgumentGameEventEditor<Vector3GameEvent, UnityEngine.Vector2>
+        : ArgumentGameEventEditor<Vector2GameEvent, UnityEngine.Vector2>
     {
         protected override UnityEngine.Vector2 DrawArgumentField(UnityEngine.Vector2 value)
         {
