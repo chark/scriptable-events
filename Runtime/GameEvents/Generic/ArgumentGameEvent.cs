@@ -28,7 +28,7 @@ namespace GameEvents.Generic
                     Debug.Log($"Raise event: {name}, listener: {listener}, argument: {argument}");
                 }
 
-                listener.OnGameEvent(argument);
+                listener.RaiseGameEvent(argument);
             }
         }
 

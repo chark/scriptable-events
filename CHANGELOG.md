@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.4.0] - 2020-10-07
+## [0.5.0] - 2020-10-07
+
+### Added
+- Tests for game events and their listeners.
+- Tests for mutable objects.
+
+### Changed
+- **Renamed** event and listener trigger functions (`OnGameEvent` -> `RaiseGameEvent`).
+- **Renamed** `GameEvents.Vector2.Vector3GameEvent` to `GameEvents.Vector2.Vector2GameEvent`, fixed typo.
+- Made `MutableObjectHandler` more extensible.
+- Exposed `GameEvent` and `OnGameEvent` on listeners via properties.
+- `MutableObject` instances are now reset using `SceneManager.activeSceneChanged`.
+
+## [0.4.0] - 2020-10-06
 
 ### Added
 - `MutableObjectHandler` which would automate the process of resetting `MutableObjects`.

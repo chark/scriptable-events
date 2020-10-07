@@ -5,7 +5,7 @@ namespace GameEvents.Vector2
 {
     [AddComponentMenu("Game Events/Vector2 Game Event Listener")]
     public class Vector2GameEventListener
-        : ArgumentGameEventListener<Vector3GameEvent, Vector2Event, UnityEngine.Vector2>
+        : ArgumentGameEventListener<Vector2GameEvent, Vector2Event, UnityEngine.Vector2>
     {
     }
 }
