@@ -1,7 +1,7 @@
 # Unity Scriptable Objects
-This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and game events. Most of these ideas are based on [Unite2017](https://github.com/roboryantron/Unite2017).
+[![Unity 2019.4+](https://img.shields.io/badge/unity-2019.4%2B-blue.svg)](https://unity3d.com/get-unity/download)
 
-This package is tested using Unity 2019.4. Older Unity versions might not work.
+This package provides utilities for implementing game architecture which is oriented around `ScriptableObject` assets and game events. Most of these ideas are based on [Unite2017](https://github.com/roboryantron/Unite2017).
 
 ## Features
 - Game events - allows transferring of data between scripts using `ScriptableObject` event assets.
