@@ -12,6 +12,11 @@ namespace GameEvents
         [SerializeField]
         private UnityEngine.GameObject spawnPrefab = default;
 
+        [Min(1f)]
+        [SerializeField]
+        private UnityEngine.Vector3 maxRandomScale =
+            new UnityEngine.Vector3(1f, 2f, 1f);
+
         private new BoxCollider collider;
         private int spawned;
 
@@ -32,7 +37,15 @@ namespace GameEvents
 
         private void Spawn()
         {
-            Instantiate(spawnPrefab, GetSpawnPosition(), GetSpawnRotation(), transform);
+            var instance = Instantiate(
+                spawnPrefab,
+                GetSpawnPosition(),
+                GetSpawnRotation(),
+                transform
+            );
+
+            instance.transform.localScale = GetSpawnScale();
+
             spawned++;
         }
 
@@ -51,9 +64,9 @@ namespace GameEvents
         private static Quaternion GetSpawnRotation()
         {
             var angles = new UnityEngine.Vector3(
+                0f,
                 GetRandomAngle(),
-                GetRandomAngle(),
-                GetRandomAngle()
+                0f
             );
 
             return Quaternion.Euler(angles);
@@ -62,6 +75,15 @@ namespace GameEvents
         private static float GetRandomAngle()
         {
             return Random.Range(0f, 360f);
+        }
+
+        private UnityEngine.Vector3 GetSpawnScale()
+        {
+            return new UnityEngine.Vector3(
+                Random.Range(1f, maxRandomScale.x),
+                Random.Range(1f, maxRandomScale.y),
+                Random.Range(1f, maxRandomScale.z)
+            );
         }
 
         public void DecreaseSpawned()

@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15, y: 1, z: 15}
+  m_Size: {x: 15, y: 0.5, z: 15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1775778486484008960
 MonoBehaviour:
@@ -88,3 +88,4 @@ MonoBehaviour:
   spawnedLimit: 10
   spawnPrefab: {fileID: 7326214114355414923, guid: 499fa445dcd1c5e4691103ff3cf960d3,
     type: 3}
+  maxRandomScale: {x: 1, y: 2, z: 1}
