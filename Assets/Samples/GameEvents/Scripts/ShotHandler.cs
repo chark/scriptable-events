@@ -10,7 +10,7 @@ namespace GameEvents
 
         public void HandleShot(UnityEngine.Transform shot)
         {
-            Destroy(shot.gameObject);
+            Destroy(shot.parent.gameObject);
             onShot.Invoke();
         }
     }
