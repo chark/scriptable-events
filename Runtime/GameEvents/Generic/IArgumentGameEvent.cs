@@ -1,7 +1,14 @@
-﻿namespace GameEvents.Generic
+﻿using System.Collections.Generic;
+
+namespace GameEvents.Generic
 {
     public interface IArgumentGameEvent<TArgument>
     {
+        /// <summary>
+        ///     Currently registered listeners.
+        /// </summary>
+        IEnumerable<IArgumentGameEventListener<TArgument>> Listeners { get; }
+
         /// <summary>
         ///     Raise this event with an argument.
         /// </summary>

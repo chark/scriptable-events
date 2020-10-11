@@ -4,7 +4,7 @@ namespace MutableObjects
 {
     public class MutableObjectProbe : IMutableObject
     {
-        public bool Persisting { get; set; }
+        public ResetType ResetType { get; set; } = ResetType.None;
 
         public int ResetCount { get; private set; }
 

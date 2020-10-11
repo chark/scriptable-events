@@ -3,9 +3,9 @@
     public interface IMutableObject
     {
         /// <summary>
-        ///     Is this mutable object persisting throughout the scenes and should not be reset.
+        ///     When this mutable object should be reset.
         /// </summary>
-        bool Persisting { get; }
+        ResetType ResetType { get; }
 
         /// <summary>
         ///     Reset values on this mutable object to their original ones.

@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2020-10-10
+
+### Added
+- List of references to event listeners on game events will be drawn during play mode.
+- Exposed listener enumerable.
+- Editors for all built-in game event types.
+- More tests!
+
+### Changed
+- `Persisting` flag was changed to `ResetType` enum which allows more customization.
+
+### Removed
+- Game event null checks on enable and disable.
+
 ## [0.6.0] - 2020-10-07
 
 ### Changed

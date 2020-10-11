@@ -1,4 +1,5 @@
-﻿using GameEvents.Bool;
+﻿using System.Linq;
+using GameEvents.Bool;
 using GameEvents.Float;
 using GameEvents.Game;
 using GameEvents.GameObject;
@@ -29,14 +30,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent(true);
 
-            Assert.AreEqual(tester.GetLastEventValue(), true);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(true, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(true);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterBoolGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<BoolGameEvent>();
+            var listener = new NoOpArgumentListener<bool>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -52,14 +66,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent(10f);
 
-            Assert.AreEqual(tester.GetLastEventValue(), 10f);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(10f, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(10f);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterFloatGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<FloatGameEvent>();
+            var listener = new NoOpArgumentListener<float>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -81,13 +108,26 @@ namespace GameEvents
             gameObject.SetActive(true);
             listener.GameEvent.RaiseGameEvent();
 
-            Assert.AreEqual(count[0], 1);
+            Assert.AreEqual(1, count[0]);
             count[0] = 0;
 
             gameObject.SetActive(false);
             listener.GameEvent.RaiseGameEvent();
 
-            Assert.AreEqual(count[0], 0);
+            Assert.AreEqual(0, count[0]);
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterGameObjectGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<GameObjectGameEvent>();
+            var listener = new NoOpArgumentListener<UnityEngine.GameObject>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -105,14 +145,27 @@ namespace GameEvents
             var gameObject = new UnityEngine.GameObject();
             tester.RaiseGameEvent(gameObject);
 
-            Assert.AreEqual(tester.GetLastEventValue(), gameObject);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(gameObject, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(gameObject);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<GameEvent>();
+            var listener = new NoOpListener();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -128,14 +181,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent(10);
 
-            Assert.AreEqual(tester.GetLastEventValue(), 10);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(10, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(10);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterIntGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<IntGameEvent>();
+            var listener = new NoOpArgumentListener<int>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -151,14 +217,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent("foo");
 
-            Assert.AreEqual(tester.GetLastEventValue(), "foo");
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual("foo", tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent("foo");
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterStringGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<StringGameEvent>();
+            var listener = new NoOpArgumentListener<string>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -176,14 +255,27 @@ namespace GameEvents
             var gameObject = new UnityEngine.GameObject();
             tester.RaiseGameEvent(gameObject.transform);
 
-            Assert.AreEqual(tester.GetLastEventValue(), gameObject.transform);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(gameObject.transform, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(gameObject.transform);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterTransformGameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<TransformGameEvent>();
+            var listener = new NoOpArgumentListener<UnityEngine.Transform>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -199,14 +291,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent(UnityEngine.Vector2.one);
 
-            Assert.AreEqual(tester.GetLastEventValue(), UnityEngine.Vector2.one);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(UnityEngine.Vector2.one, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(UnityEngine.Vector2.one);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterVector2GameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<Vector2GameEvent>();
+            var listener = new NoOpArgumentListener<UnityEngine.Vector2>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
 
         [Test]
@@ -222,14 +327,27 @@ namespace GameEvents
             tester.SetActive(true);
             tester.RaiseGameEvent(UnityEngine.Vector3.one);
 
-            Assert.AreEqual(tester.GetLastEventValue(), UnityEngine.Vector3.one);
-            Assert.AreEqual(tester.GetEventCount(), 1);
+            Assert.AreEqual(UnityEngine.Vector3.one, tester.GetLastEventValue());
+            Assert.AreEqual(1, tester.GetEventCount());
             tester.Clear();
 
             tester.SetActive(false);
             tester.RaiseGameEvent(UnityEngine.Vector3.one);
 
-            Assert.AreEqual(tester.GetEventCount(), 0);
+            Assert.AreEqual(0, tester.GetEventCount());
+        }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterVector3GameEvent()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<Vector3GameEvent>();
+            var listener = new NoOpArgumentListener<UnityEngine.Vector3>();
+
+            gameEvent.RegisterListener(listener);
+            Assert.AreEqual(1, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(listener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
     }
 }

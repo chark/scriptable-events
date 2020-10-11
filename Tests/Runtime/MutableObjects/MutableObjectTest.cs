@@ -17,11 +17,11 @@ namespace MutableObjects
             var mutable = ScriptableObject.CreateInstance<MutableBool>();
             mutable.Value = true;
 
-            Assert.AreEqual(mutable.Value, true);
+            Assert.AreEqual(true, mutable.Value);
 
             mutable.ResetValues();
 
-            Assert.AreEqual(mutable.Value, false);
+            Assert.AreEqual(false, mutable.Value);
         }
 
         [Test]
@@ -30,11 +30,11 @@ namespace MutableObjects
             var mutable = ScriptableObject.CreateInstance<MutableFloat>();
             mutable.Value = 10f;
 
-            Assert.AreEqual(mutable.Value, 10f);
+            Assert.AreEqual(10f, mutable.Value);
 
             mutable.ResetValues();
 
-            Assert.AreEqual(mutable.Value, 0f);
+            Assert.AreEqual(0f, mutable.Value);
         }
 
         [Test]
@@ -43,11 +43,11 @@ namespace MutableObjects
             var mutable = ScriptableObject.CreateInstance<MutableString>();
             mutable.Value = "foo";
 
-            Assert.AreEqual(mutable.Value, "foo");
+            Assert.AreEqual("foo", mutable.Value);
 
             mutable.ResetValues();
 
-            Assert.AreEqual(mutable.Value, null);
+            Assert.AreEqual(null, mutable.Value);
         }
 
         [Test]
@@ -56,11 +56,11 @@ namespace MutableObjects
             var mutable = ScriptableObject.CreateInstance<MutableVector2>();
             mutable.Value = UnityEngine.Vector2.one;
 
-            Assert.AreEqual(mutable.Value, UnityEngine.Vector2.one);
+            Assert.AreEqual(UnityEngine.Vector2.one, mutable.Value);
 
             mutable.ResetValues();
 
-            Assert.AreEqual(mutable.Value, UnityEngine.Vector2.zero);
+            Assert.AreEqual(UnityEngine.Vector2.zero, mutable.Value);
         }
 
         [Test]
@@ -69,11 +69,11 @@ namespace MutableObjects
             var mutable = ScriptableObject.CreateInstance<MutableVector3>();
             mutable.Value = UnityEngine.Vector3.one;
 
-            Assert.AreEqual(mutable.Value, UnityEngine.Vector3.one);
+            Assert.AreEqual(UnityEngine.Vector3.one, mutable.Value);
 
             mutable.ResetValues();
 
-            Assert.AreEqual(mutable.Value, UnityEngine.Vector3.zero);
+            Assert.AreEqual(UnityEngine.Vector3.zero, mutable.Value);
         }
     }
 }

@@ -41,7 +41,11 @@ Available mutable objects:
 - `MutableVector2` - encapsulates a `Vector2` value.
 - `MutableVector3` - encapsulates a `Vector3` value.
 
-If a mutable object value should be saved between scene loads, check the `Persisting` flag on the `MutableObject` asset.
+Each mutable object has a `ResetType` property. This allows specifying when data in the mutable object should be reset. The following modes are available:
+- `None` - do not reset.
+- `ActiveSceneChange` - when the active (focused) scene changes.
+- `SceneUnloaded` - when the current scene gets unloaded.
+- `SceneLoaded` - when the scene is loaded.
 
 ### Custom game events
 In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, custom game event can be created which would carry all the necessary data.
@@ -70,6 +74,21 @@ public class CustomGameEventListener : ArgumentGameEventListener<CustomGameEvent
 }
 ```
 
+Optionally add a custom editor so that the event could be raised, and the listeners which reference the event get displayed in the inspector.
+```cs
+[CustomEditor(typeof(CustomGameEvent))]
+public class GameObjectGameEventEditor : ArgumentGameEventEditor<CustomGameEvent, Custom>
+{
+    protected override Custom DrawArgumentField(Custom value)
+    {
+        var fieldValue = EditorGUILayout
+            .ObjectField(value, typeof(Custom), true);
+
+        return fieldValue as Custom;
+    }
+}
+```
+
 ### Custom mutable objects
 In some cases, littering the script code with loads of `MutableObject` references can be inconvenient. To avoid this, a single object can be used which encompasses multiple fields.
 
@@ -95,7 +114,6 @@ public class MutableCustom : MutableObject
 
     // This will set property values when mutable object is enabled or if the values change in the
     // inspector.
-    // This is also called when MutableObjectExtensions.ResetMutatedObjects() is invoked.
     public override void ResetValues()
     {
         Health = health;
