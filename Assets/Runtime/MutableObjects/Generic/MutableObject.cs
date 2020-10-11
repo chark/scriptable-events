@@ -5,10 +5,10 @@ namespace MutableObjects.Generic
     public abstract class MutableObject : ScriptableObject, IMutableObject
     {
         [SerializeField]
-        [Tooltip("Should this mutable object be persisted throughout scene loads")]
-        private bool persisting = false;
+        [Tooltip("When reset should be called for this object")]
+        private ResetType resetType = ResetType.ActiveSceneChange;
 
-        public bool Persisting => persisting;
+        public ResetType ResetType => resetType;
 
         public abstract void ResetValues();
 

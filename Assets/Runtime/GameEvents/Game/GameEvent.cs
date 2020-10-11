@@ -14,6 +14,8 @@ namespace GameEvents.Game
         private readonly List<IGameEventListener> listeners =
             new List<IGameEventListener>();
 
+        public IEnumerable<IGameEventListener> Listeners => listeners;
+
         public void RaiseGameEvent()
         {
             if (debug)

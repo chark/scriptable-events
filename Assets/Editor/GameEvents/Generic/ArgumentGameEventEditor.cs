@@ -24,6 +24,14 @@ namespace GameEvents.Generic
             GUILayout.Space(GroupSpacingPixels);
 
             DrawRaise(gameEvent);
+
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            GUILayout.Space(GroupSpacingPixels);
+            DrawListeners(gameEvent);
         }
 
         private void DrawRaise(TGameEvent gameEvent)
@@ -38,6 +46,18 @@ namespace GameEvents.Generic
             }
 
             GUILayout.EndHorizontal();
+        }
+
+        private static void DrawListeners(TGameEvent gameEvent)
+        {
+            GUILayout.Label("Listeners");
+            foreach (var listener in gameEvent.Listeners)
+            {
+                if (listener is MonoBehaviour behaviour)
+                {
+                    EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
+                }
+            }
         }
 
         /// <returns>

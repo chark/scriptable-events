@@ -1,67 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MutableObjects.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MutableObjects
 {
-    public static class MutableObjectHandler
+    public class MutableObjectHandler
     {
-        /// <summary>
-        ///     Default mutable object reset action.
-        /// </summary>
-        public static readonly Action<IEnumerable<IMutableObject>> DefaultOnReset =
-            mutableObjects =>
-            {
-                foreach (var mutableObject in mutableObjects)
-                {
-                    mutableObject.ResetValues();
-                }
-            };
+        private readonly List<IMutableObject> mutableObjects;
 
-        /// <summary>
-        ///     Currently used mutable object reset action.
-        /// </summary>
-        public static Action<IEnumerable<IMutableObject>> OnReset { get; set; } = DefaultOnReset;
-
-        /// <summary>
-        ///     Reset mutable object asset values.
-        /// </summary>
-        public static void ResetMutableObjectValues(
-            IEnumerable<IMutableObject> mutableObjects,
-            bool excludePersisting = false
-        )
+        public MutableObjectHandler(List<IMutableObject> mutableObjects)
         {
-            if (excludePersisting)
+            this.mutableObjects = mutableObjects;
+        }
+
+        /// <summary>
+        ///     Set initial mutable object values (ignoring reset type).
+        /// </summary>
+        public void SetInitialMutableObjectValues()
+        {
+            // Initial all mutable objects are reset (set initial values).
+            ResetMutableObjects(mutableObjects);
+        }
+
+        /// <summary>
+        ///     Reset objects with <see cref="ResetType.ActiveSceneChange"/> reset type.
+        /// </summary>
+        public void ResetActiveSceneChange()
+        {
+            ResetMutableObjects(ResetType.ActiveSceneChange);
+        }
+
+        /// <summary>
+        ///     Reset objects with <see cref="ResetType.SceneUnloaded"/> reset type.
+        /// </summary>
+        public void ResetSceneUnloaded()
+        {
+            ResetMutableObjects(ResetType.SceneUnloaded);
+        }
+
+        /// <summary>
+        ///     Reset objects with <see cref="ResetType.SceneLoaded"/> reset type.
+        /// </summary>
+        public void ResetSceneLoaded()
+        {
+            ResetMutableObjects(ResetType.SceneLoaded);
+        }
+
+        private void ResetMutableObjects(ResetType resetType)
+        {
+            var filteredByType = mutableObjects.Where(obj => obj.ResetType == resetType);
+            ResetMutableObjects(filteredByType);
+        }
+
+        private static void ResetMutableObjects(IEnumerable<IMutableObject> objects)
+        {
+            foreach (var obj in objects)
             {
-                mutableObjects = mutableObjects.Where(mutableObject => !mutableObject.Persisting);
+                obj.ResetValues();
             }
-
-            OnReset(mutableObjects);
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void RuntimeInit()
-        {
-            SetInitialMutableObjectValues();
-            SceneManager.activeSceneChanged += ResetMutableObjectValues;
-        }
-
-        private static void SetInitialMutableObjectValues()
-        {
-            ResetMutableObjectValues(FindMutableObjects());
-        }
-
-        private static void ResetMutableObjectValues(Scene curr, Scene next)
-        {
-            ResetMutableObjectValues(FindMutableObjects(), true);
-        }
-
-        private static IEnumerable<IMutableObject> FindMutableObjects()
-        {
-            return Resources.FindObjectsOfTypeAll<MutableObject>();
         }
     }
 }

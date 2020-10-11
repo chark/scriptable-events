@@ -46,29 +46,11 @@ namespace GameEvents.Generic
 
         private void OnEnable()
         {
-            if (gameEvent == null)
-            {
-                Debug.LogWarning(
-                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set"
-                );
-
-                return;
-            }
-
             gameEvent.RegisterListener(this);
         }
 
         private void OnDisable()
         {
-            if (gameEvent == null)
-            {
-                Debug.LogWarning(
-                    $"Game Event ({typeof(TGameEvent).Name}) on listener {name} is not set"
-                );
-
-                return;
-            }
-
             gameEvent.UnregisterListener(this);
         }
     }

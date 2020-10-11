@@ -13,6 +13,8 @@ namespace GameEvents.Generic
         private readonly List<IArgumentGameEventListener<TArgument>> listeners =
             new List<IArgumentGameEventListener<TArgument>>();
 
+        public IEnumerable<IArgumentGameEventListener<TArgument>> Listeners => listeners;
+
         public void RaiseGameEvent(TArgument argument)
         {
             if (debug)
