@@ -349,5 +349,21 @@ namespace GameEvents
             gameEvent.UnregisterListener(listener);
             Assert.AreEqual(0, gameEvent.Listeners.Count());
         }
+
+        [Test]
+        public void ShouldRegisterAndUnregisterMultipleGameEvents()
+        {
+            var gameEvent = ScriptableObject.CreateInstance<Vector3GameEvent>();
+            var firstListener = new NoOpArgumentListener<UnityEngine.Vector3>();
+            var secondListener = new NoOpArgumentListener<UnityEngine.Vector3>();
+
+            gameEvent.RegisterListener(firstListener);
+            gameEvent.RegisterListener(secondListener);
+            Assert.AreEqual(2, gameEvent.Listeners.Count());
+
+            gameEvent.UnregisterListener(firstListener);
+            gameEvent.UnregisterListener(secondListener);
+            Assert.AreEqual(0, gameEvent.Listeners.Count());
+        }
     }
 }
