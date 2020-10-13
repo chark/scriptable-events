@@ -41,7 +41,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterBoolGameEvent()
+        public void ShouldRegisterAndUnregisterBoolGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<BoolGameEvent>();
             var listener = new NoOpArgumentListener<bool>();
@@ -77,7 +77,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterFloatGameEvent()
+        public void ShouldRegisterAndUnregisterFloatGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<FloatGameEvent>();
             var listener = new NoOpArgumentListener<float>();
@@ -118,7 +118,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterGameObjectGameEvent()
+        public void ShouldRegisterAndUnregisterGameObjectGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<GameObjectGameEvent>();
             var listener = new NoOpArgumentListener<UnityEngine.GameObject>();
@@ -156,7 +156,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterGameEvent()
+        public void ShouldRegisterAndUnregisterGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<GameEvent>();
             var listener = new NoOpListener();
@@ -192,7 +192,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterIntGameEvent()
+        public void ShouldRegisterAndUnregisterIntGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<IntGameEvent>();
             var listener = new NoOpArgumentListener<int>();
@@ -228,7 +228,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterStringGameEvent()
+        public void ShouldRegisterAndUnregisterStringGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<StringGameEvent>();
             var listener = new NoOpArgumentListener<string>();
@@ -266,7 +266,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterTransformGameEvent()
+        public void ShouldRegisterAndUnregisterTransformGameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<TransformGameEvent>();
             var listener = new NoOpArgumentListener<UnityEngine.Transform>();
@@ -302,7 +302,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterVector2GameEvent()
+        public void ShouldRegisterAndUnregisterVector2GameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<Vector2GameEvent>();
             var listener = new NoOpArgumentListener<UnityEngine.Vector2>();
@@ -338,7 +338,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterVector3GameEvent()
+        public void ShouldRegisterAndUnregisterVector3GameEventListener()
         {
             var gameEvent = ScriptableObject.CreateInstance<Vector3GameEvent>();
             var listener = new NoOpArgumentListener<UnityEngine.Vector3>();
@@ -351,7 +351,7 @@ namespace GameEvents
         }
 
         [Test]
-        public void ShouldRegisterAndUnregisterMultipleGameEvents()
+        public void ShouldRegisterAndUnregisterGameEventMultipleListeners()
         {
             var gameEvent = ScriptableObject.CreateInstance<Vector3GameEvent>();
             var firstListener = new NoOpArgumentListener<UnityEngine.Vector3>();
