@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace GameEvents.Generic
@@ -10,10 +11,17 @@ namespace GameEvents.Generic
         [Tooltip("Should debug messages be logged for this event")]
         private bool debug = false;
 
+        private readonly ReadOnlyCollection<IArgumentGameEventListener<TArgument>> readListeners;
+
         private readonly List<IArgumentGameEventListener<TArgument>> listeners =
             new List<IArgumentGameEventListener<TArgument>>();
 
-        public IEnumerable<IArgumentGameEventListener<TArgument>> Listeners => listeners;
+        public ICollection<IArgumentGameEventListener<TArgument>> Listeners => readListeners;
+
+        public ArgumentGameEvent()
+        {
+            readListeners = listeners.AsReadOnly();
+        }
 
         public void RaiseGameEvent(TArgument argument)
         {

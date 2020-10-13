@@ -7,7 +7,7 @@ namespace GameEvents.Generic
         /// <summary>
         ///     Currently registered listeners.
         /// </summary>
-        IEnumerable<IArgumentGameEventListener<TArgument>> Listeners { get; }
+        ICollection<IArgumentGameEventListener<TArgument>> Listeners { get; }
 
         /// <summary>
         ///     Raise this event with an argument.

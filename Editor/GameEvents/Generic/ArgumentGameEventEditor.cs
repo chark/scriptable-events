@@ -7,8 +7,6 @@ namespace GameEvents.Generic
     public abstract class ArgumentGameEventEditor<TGameEvent, TArgument> : Editor
         where TGameEvent : class, IArgumentGameEvent<TArgument>
     {
-        private const int GroupSpacingPixels = 8;
-
         private TArgument argumentValue = default;
 
         public override void OnInspectorGUI()
@@ -21,22 +19,17 @@ namespace GameEvents.Generic
             }
 
             GUI.enabled = Application.isPlaying;
-            GUILayout.Space(GroupSpacingPixels);
+            EditorGUILayout.Space();
 
             DrawRaise(gameEvent);
 
-            if (!Application.isPlaying)
-            {
-                return;
-            }
-
-            GUILayout.Space(GroupSpacingPixels);
-            DrawListeners(gameEvent);
+            EditorGUILayout.Space();
+            GameEventEditors.DrawReferences(gameEvent);
         }
 
         private void DrawRaise(TGameEvent gameEvent)
         {
-            GUILayout.Label("Raise event (play mode only)");
+            GameEventEditors.DrawPlaymodeLabel("Raise event");
             GUILayout.BeginHorizontal();
 
             argumentValue = DrawArgumentField(argumentValue);
@@ -46,18 +39,6 @@ namespace GameEvents.Generic
             }
 
             GUILayout.EndHorizontal();
-        }
-
-        private static void DrawListeners(TGameEvent gameEvent)
-        {
-            GUILayout.Label("Listeners");
-            foreach (var listener in gameEvent.Listeners)
-            {
-                if (listener is MonoBehaviour behaviour)
-                {
-                    EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
-                }
-            }
         }
 
         /// <returns>

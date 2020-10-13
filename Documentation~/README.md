@@ -17,7 +17,7 @@ Game events are scriptable objects (_Right Click -> Create -> Game Events -> ...
 Available game events:
 - `GameEvent` - simple event which doesn't accept any arguments.
 - `BoolGameEvent` - event with a `bool` argument.
-- `IntGameEvent` - event with a `int` argument.
+- `IntGameEvent` - event with an `int` argument.
 - `FloatGameEvent` - event with a `float` argument.
 - `StringGameEvent` - event with a `string` argument.
 - `Vector2GameEvent` - event with a `Vector2` argument.
@@ -35,20 +35,20 @@ Mutable objects are used for storing and editing data on `ScriptableObject` asse
 
 Available mutable objects:
 - `MutableBool` - encapsulates a `bool` value.
-- `MutableInt` - encapsulates a `int` value.
+- `MutableInt` - encapsulates an `int` value.
 - `MutableFloat` - encapsulates a `float` value.
 - `MutableString` - encapsulates a `string` value.
 - `MutableVector2` - encapsulates a `Vector2` value.
 - `MutableVector3` - encapsulates a `Vector3` value.
 
 Each mutable object has a `ResetType` property. This allows specifying when data in the mutable object should be reset. The following modes are available:
-- `None` - do not reset.
+- `None` - do not reset (default).
 - `ActiveSceneChange` - when the active (focused) scene changes.
 - `SceneUnloaded` - when the current scene gets unloaded.
 - `SceneLoaded` - when the scene is loaded.
 
 ### Custom game events
-In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, custom game event can be created which would carry all the necessary data.
+In some situations, built-in game events might not suffice. For example if a custom type needs to be passed as an argument to the event. In this case, a custom game event can be created which would carry all the necessary data.
 
 To create a custom game event, first create a regular `UnityEvent`:
 ```cs
@@ -74,7 +74,7 @@ public class CustomGameEventListener : ArgumentGameEventListener<CustomGameEvent
 }
 ```
 
-Optionally add a custom editor so that the event could be raised, and the listeners which reference the event get displayed in the inspector.
+, add a custom editor so that the event could be raised, and the listeners which reference the event get displayed in the inspector.
 ```cs
 [CustomEditor(typeof(CustomGameEvent))]
 public class GameObjectGameEventEditor : ArgumentGameEventEditor<CustomGameEvent, Custom>
