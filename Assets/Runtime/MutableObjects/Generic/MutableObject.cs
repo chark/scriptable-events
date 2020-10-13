@@ -6,7 +6,7 @@ namespace MutableObjects.Generic
     {
         [SerializeField]
         [Tooltip("When reset should be called for this object")]
-        private ResetType resetType = ResetType.ActiveSceneChange;
+        private ResetType resetType = ResetType.None;
 
         public ResetType ResetType => resetType;
 

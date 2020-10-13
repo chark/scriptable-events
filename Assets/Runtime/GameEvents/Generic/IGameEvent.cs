@@ -7,7 +7,7 @@ namespace GameEvents.Generic
         /// <summary>
         ///     Currently registered listeners.
         /// </summary>
-        IEnumerable<IGameEventListener> Listeners { get; }
+        ICollection<IGameEventListener> Listeners { get; }
 
         /// <summary>
         ///     Raise this event.

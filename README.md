@@ -65,7 +65,7 @@ Available mutable objects:
 - `MutableVector3` - encapsulates a `Vector3` value.
 
 Each mutable object has a `ResetType` property. This allows specifying when data in the mutable object should be reset. The following modes are available:
-- `None` - do not reset.
+- `None` - do not reset (default).
 - `ActiveSceneChange` - when the active (focused) scene changes.
 - `SceneUnloaded` - when the current scene gets unloaded.
 - `SceneLoaded` - when the scene is loaded.

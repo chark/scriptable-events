@@ -8,8 +8,6 @@ namespace GameEvents.Game
     [CustomEditor(typeof(GameEvent))]
     public class GameEventEditor : Editor
     {
-        private const int GroupSpacingPixels = 8;
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -21,7 +19,7 @@ namespace GameEvents.Game
             }
 
             GUI.enabled = Application.isPlaying;
-            GUILayout.Space(GroupSpacingPixels);
+            EditorGUILayout.Space();
 
             DrawRaise(gameEvent);
 
@@ -30,28 +28,16 @@ namespace GameEvents.Game
                 return;
             }
 
-            GUILayout.Space(GroupSpacingPixels);
-            DrawListeners(gameEvent);
+            EditorGUILayout.Space();
+            GameEventEditors.DrawReferences(gameEvent);
         }
 
         private static void DrawRaise(IGameEvent gameEvent)
         {
-            GUILayout.Label("Raise event (play mode only)");
+            GameEventEditors.DrawPlaymodeLabel("Raise event");
             if (GUILayout.Button("Raise"))
             {
                 gameEvent.RaiseGameEvent();
-            }
-        }
-
-        private static void DrawListeners(IGameEvent gameEvent)
-        {
-            GUILayout.Label("Listeners");
-            foreach (var listener in gameEvent.Listeners)
-            {
-                if (listener is MonoBehaviour behaviour)
-                {
-                    EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
-                }
             }
         }
     }
