@@ -17,3 +17,10 @@ jobs:
           touch README_testing.md
           cat .github/README.md Assets/Documentation~/README.md >> README_testing.md
           ls
+      - name: Testing Writing
+        uses: DamianReeves/write-file-action
+        with:
+          path: test.md
+          contents: |
+            echo "Hello World!"
+          write-mode: append
