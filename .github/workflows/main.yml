@@ -18,7 +18,7 @@ jobs:
           cat .github/README.md Assets/Documentation~/README.md >> README_testing.md
           ls
       - name: Testing Writing
-        uses: DamianReeves/write-file-action@v1
+        uses: DamianReeves/write-file-action@v1.0
         with:
           path: test.md
           contents: |
