@@ -12,12 +12,12 @@ namespace MutableObjects.Generic
 
         public abstract void ResetValues();
 
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             ResetValues();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             ResetValues();
         }
