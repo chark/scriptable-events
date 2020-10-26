@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  test:
+    name: Unity Tests Workflow
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Test
+      - name: Run Tests
+        id: testRunner
+        uses: webbertakken/unity-test-runner@v1.3
+        with:
+          projectPath: .
+          unityVersion: 2019.4.11f1
+
+      # Test Results
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v1
+        with:
+          name: Test results
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
