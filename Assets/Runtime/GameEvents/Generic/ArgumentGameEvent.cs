@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
@@ -38,7 +39,17 @@ namespace GameEvents.Generic
                     Debug.Log($"Raise event: {name}, listener: {listener}, argument: {argument}");
                 }
 
-                listener.RaiseGameEvent(argument);
+                try
+                {
+                    listener.RaiseGameEvent(argument);
+                }
+                catch (Exception e)
+                {
+                    if (debug)
+                    {
+                        Debug.Log($"Listener: {listener} of event: {name} has thrown an exception: {e.Message}");
+                    }
+                }
             }
         }
 

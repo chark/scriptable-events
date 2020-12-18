@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using GameEvents.Bool;
 using GameEvents.Float;
 using GameEvents.Game;
@@ -102,6 +103,40 @@ namespace GameEvents
             listener.GameEvent = ScriptableObject.CreateInstance<GameEvent>();
 
             var count = new int[1];
+            listener.OnGameEvent.AddListener(() => count[0]++);
+
+            // Then.
+            gameObject.SetActive(true);
+            listener.GameEvent.RaiseGameEvent();
+
+            Assert.AreEqual(1, count[0]);
+            count[0] = 0;
+
+            gameObject.SetActive(false);
+            listener.GameEvent.RaiseGameEvent();
+
+            Assert.AreEqual(0, count[0]);
+        }
+
+
+        [Test]
+        public void ShouldNotBreakChainWhenExceptionIsThrown()
+        {
+            // Given.
+            var gameObject = new UnityEngine.GameObject();
+            gameObject.SetActive(false);
+
+            var listenerWithError = gameObject.AddComponent<GameEventListener>();
+            var listener = gameObject.AddComponent<GameEventListener>();
+
+            listenerWithError.OnGameEvent = new UnityEvent();
+            listenerWithError.GameEvent = ScriptableObject.CreateInstance<GameEvent>();
+
+            listener.OnGameEvent = new UnityEvent();
+            listener.GameEvent = listenerWithError.GameEvent;
+
+            var count = new int[1];
+            listenerWithError.OnGameEvent.AddListener(() => throw new NullReferenceException());
             listener.OnGameEvent.AddListener(() => count[0]++);
 
             // Then.
