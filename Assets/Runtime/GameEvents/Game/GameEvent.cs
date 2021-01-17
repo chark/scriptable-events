@@ -46,10 +46,8 @@ namespace GameEvents.Game
                 }
                 catch (Exception e)
                 {
-                    if (debug)
-                    {
-                        Debug.Log($"Listener: {listener} of event: {name} has thrown an exception: {e.Message}");
-                    }
+                    Debug.Log($"Listener: {listener} of event: {name} has thrown an exception.");
+                    Debug.LogException(e, this);
                 }
             }
         }
