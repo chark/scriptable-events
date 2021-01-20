@@ -1,0 +1,9 @@
+﻿{
+  "name": "Chark.GameEvents.Editor",
+  "references": [
+    "Chark.GameEvents"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

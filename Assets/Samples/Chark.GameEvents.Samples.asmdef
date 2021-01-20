@@ -1,8 +1,8 @@
 {
-    "name": "Chark.UnityScriptableObjects.Samples",
+    "name": "Chark.GameEvents.Samples",
     "references": [
-        "Chark.UnityScriptableObjects",
-        "Chark.UnityScriptableObjects.Editor"
+        "Chark.GameEvents",
+        "Chark.GameEvents.Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

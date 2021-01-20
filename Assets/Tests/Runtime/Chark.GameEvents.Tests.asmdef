@@ -1,8 +1,8 @@
 {
-    "name": "Chark.UnityScriptableObjects.Tests",
+    "name": "Chark.GameEvents.Tests",
     "references": [
         "UnityEngine.TestRunner",
-        "Chark.UnityScriptableObjects"
+        "Chark.GameEvents"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
