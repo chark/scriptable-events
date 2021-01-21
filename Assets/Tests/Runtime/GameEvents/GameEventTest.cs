@@ -171,7 +171,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 GameObjectGameEventListener,
                 GameObjectGameEvent,
-                GameObjectEvent,
+                GameObjectUnityEvent,
                 UnityEngine.GameObject
             >();
 
@@ -209,7 +209,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 IntGameEventListener,
                 IntGameEvent,
-                IntEvent,
+                IntUnityEvent,
                 int
             >();
 
@@ -245,7 +245,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 StringGameEventListener,
                 StringGameEvent,
-                StringEvent,
+                StringUnityEvent,
                 string
             >();
 
@@ -281,7 +281,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 TransformGameEventListener,
                 TransformGameEvent,
-                TransformEvent,
+                TransformUnityEvent,
                 UnityEngine.Transform
             >();
 
@@ -319,7 +319,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 Vector2GameEventListener,
                 Vector2GameEvent,
-                Vector2Event,
+                Vector2UnityEvent,
                 UnityEngine.Vector2
             >();
 
@@ -355,7 +355,7 @@ namespace GameEvents
             var tester = new GameEventTester<
                 Vector3GameEventListener,
                 Vector3GameEvent,
-                Vector3Event,
+                VectorUnity3Event,
                 UnityEngine.Vector3
             >();
 

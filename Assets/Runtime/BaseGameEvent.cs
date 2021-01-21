@@ -9,8 +9,6 @@ namespace GameEvents
     {
         #region Editor
 
-        // todo: add locking https://github.com/roboryantron/Unite2017/blob/master/Assets/Code/Variables/Editor/FloatReferenceDrawer.cs
-        [Multiline(4)]
         [SerializeField]
         [Tooltip("Description of the game event")]
         private string description;
