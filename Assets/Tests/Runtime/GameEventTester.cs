@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GameEvents.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEvents
+namespace GameEvents.Tests
 {
     public class GameEventTester<
         TGameEventListener,
@@ -12,9 +11,9 @@ namespace GameEvents
         TUnityEvent,
         TArgument
     >
-        where TGameEvent : ArgumentGameEvent<TArgument>
+        where TGameEvent : BaseGameEvent<TArgument>
         where TUnityEvent : UnityEvent<TArgument>, new()
-        where TGameEventListener : ArgumentGameEventListener<
+        where TGameEventListener : BaseGameEventListener<
             TGameEvent,
             TUnityEvent,
             TArgument
@@ -37,8 +36,10 @@ namespace GameEvents
             gameEvent = ScriptableObject.CreateInstance<TGameEvent>();
 
             var listener = gameObject.AddComponent<TGameEventListener>();
-            listener.OnGameEvent = onGameEvent;
-            listener.GameEvent = gameEvent;
+
+            // todo: do we need these in the API as its only for tests atm?
+            // listener.OnGameEvent = onGameEvent;
+            // listener.GameEvent = gameEvent;
         }
 
         public int GetEventCount()
@@ -63,7 +64,7 @@ namespace GameEvents
 
         public void RaiseGameEvent(TArgument argument)
         {
-            gameEvent.RaiseGameEvent(argument);
+            gameEvent.Raise(argument);
         }
 
         private void AddEventValue(TArgument value)

@@ -1,7 +1,7 @@
 ﻿using GameEvents.Transform;
 using UnityEngine;
 
-namespace GameEvents
+namespace GameEvents.Samples
 {
     [RequireComponent(typeof(Camera))]
     public class Shooter : MonoBehaviour
@@ -38,7 +38,7 @@ namespace GameEvents
 
             if (Physics.Raycast(ray, out var hit))
             {
-                shotGameEvent.RaiseGameEvent(hit.transform);
+                shotGameEvent.Raise(hit.transform);
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEvents
+namespace GameEvents.Samples
 {
     public class ShotHandler : MonoBehaviour
     {

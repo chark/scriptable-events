@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEvents
+namespace GameEvents.Smaples
 {
     [RequireComponent(typeof(Text))]
     public class Score : MonoBehaviour
