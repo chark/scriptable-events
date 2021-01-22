@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace ScriptableEvents.Smaples
+namespace ScriptableEvents.Samples
 {
     [RequireComponent(typeof(Text))]
     public class Score : MonoBehaviour
