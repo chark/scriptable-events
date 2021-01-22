@@ -14,6 +14,12 @@ namespace ScriptableEvents.Editor
         private SerializedProperty descriptionProperty;
         private SerializedProperty lockDescription;
 
+        private MonoScript monoScript;
+
+        // Cached description styles.
+        private GUIStyle descriptionLockStyle;
+        private GUIStyle descriptionStyle;
+        private float descriptionWidth;
 
         private TArg argValue;
 
@@ -23,42 +29,85 @@ namespace ScriptableEvents.Editor
 
         public void OnEnable()
         {
-            // todo: add locking https://github.com/roboryantron/Unite2017/blob/master/Assets/Code/Variables/Editor/FloatReferenceDrawer.cs
             descriptionProperty = serializedObject.FindProperty("description");
             lockDescription = serializedObject.FindProperty("lockDescription");
+
+            monoScript = MonoScript.FromScriptableObject(target as ScriptableObject);
+        }
+
+        private void DrawMonoScript()
+        {
+            GUI.enabled = false;
+            EditorGUILayout.ObjectField("Script", monoScript, typeof(TScriptableEvent), false);
+            GUI.enabled = true;
+        }
+
+        private void SetupDescriptionStyles()
+        {
+            if (descriptionLockStyle == null)
+            {
+                descriptionLockStyle = GUI.skin.GetStyle("IN LockButton");
+            }
+
+            if (descriptionStyle == null)
+            {
+                descriptionStyle = new GUIStyle(EditorStyles.textArea)
+                {
+                    richText = true,
+                    wordWrap = true
+                };
+            }
+
+            if (descriptionWidth <= 0)
+            {
+                descriptionWidth = EditorStyles.label.CalcSize(new GUIContent("Description")).x;
+            }
+        }
+
+        private void DrawDescription()
+        {
+            // Label.
+            EditorGUILayout.LabelField("Description");
+
+            // Label position.
+            var position = GUILayoutUtility.GetLastRect();
+            position.width = descriptionLockStyle.fixedWidth;
+            position.x = position.xMin + descriptionWidth;
+
+            // Lock button.
+            lockDescription.boolValue = EditorGUI.Toggle(
+                position,
+                GUIContent.none,
+                lockDescription.boolValue,
+                descriptionLockStyle
+            );
+
+            // Text.
+            GUI.enabled = !lockDescription.boolValue;
+            descriptionProperty.stringValue = EditorGUILayout.TextArea(
+                descriptionProperty.stringValue,
+                descriptionStyle
+            );
+
+            GUI.enabled = true;
         }
 
         public override void OnInspectorGUI()
         {
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", MonoScript.FromScriptableObject(target as ScriptableObject), typeof(TScriptableEvent), false);
-            GUI.enabled = true;
+            DrawMonoScript();
 
             EditorGUI.BeginChangeCheck();
 
-            // Description.
-            EditorGUILayout.LabelField("Description");
-            var descriptionLabelRect = GUILayoutUtility.GetLastRect();
-
-            var lockStyle = GUI.skin.GetStyle("IN LockButton");
-            descriptionLabelRect.x = descriptionLabelRect.xMin + EditorStyles.label.CalcSize(new GUIContent("Description")).x;
-            descriptionLabelRect.width = lockStyle.fixedWidth;
-            lockDescription.boolValue = EditorGUI.Toggle(descriptionLabelRect, GUIContent.none, lockDescription.boolValue, lockStyle);
-
-            GUI.enabled = !lockDescription.boolValue;
-            var style = new GUIStyle(EditorStyles.textArea);
-            style.richText = true;
-            descriptionProperty.stringValue = EditorGUILayout.TextArea(descriptionProperty.stringValue, style);
-            GUI.enabled = true;
-
-            // Description lock.
+            SetupDescriptionStyles();
+            DrawDescription();
 
             if (EditorGUI.EndChangeCheck())
             {
                 serializedObject.ApplyModifiedProperties();
             }
 
-            DrawPropertiesExcluding(serializedObject, descriptionProperty.name, lockDescription.name);
+            DrawPropertiesExcluding(serializedObject, descriptionProperty.name,
+                lockDescription.name);
 
             return;
 
