@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameEvents.Smaples
+namespace ScriptableEvents.Smaples
 {
     [RequireComponent(typeof(Text))]
     public class FloatFadeOutText : MonoBehaviour

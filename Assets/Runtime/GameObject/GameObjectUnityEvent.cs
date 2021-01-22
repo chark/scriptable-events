@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Events;
 
-namespace GameEvents.GameObject
+namespace ScriptableEvents.GameObject
 {
     [Serializable]
     public class GameObjectUnityEvent : UnityEvent<UnityEngine.GameObject>

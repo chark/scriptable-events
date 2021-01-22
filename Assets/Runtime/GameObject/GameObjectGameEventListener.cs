@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
-namespace GameEvents.GameObject
+namespace ScriptableEvents.GameObject
 {
-    [AddComponentMenu("Game Events/Game Object Game Event Listener")]
-    public class GameObjectGameEventListener
-        : BaseGameEventListener<GameObjectGameEvent, GameObjectUnityEvent, UnityEngine.GameObject>
+    [AddComponentMenu("Scriptable Events/Game Object Scriptable Event Listener")]
+    public class GameObjectScriptableEventListener
+        : BaseScriptableEventListener<
+            GameObjectScriptableEvent,
+            GameObjectUnityEvent,
+            UnityEngine.GameObject
+        >
     {
     }
 }

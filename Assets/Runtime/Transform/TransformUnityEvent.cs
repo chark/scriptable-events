@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Events;
 
-namespace GameEvents.Transform
+namespace ScriptableEvents.Transform
 {
     [Serializable]
     public class TransformUnityEvent : UnityEvent<UnityEngine.Transform>

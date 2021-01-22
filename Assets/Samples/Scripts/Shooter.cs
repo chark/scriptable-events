@@ -1,13 +1,13 @@
-﻿using GameEvents.Transform;
+﻿using ScriptableEvents.Transform;
 using UnityEngine;
 
-namespace GameEvents.Samples
+namespace ScriptableEvents.Samples
 {
     [RequireComponent(typeof(Camera))]
     public class Shooter : MonoBehaviour
     {
         [SerializeField]
-        private TransformGameEvent shotGameEvent = default;
+        private TransformScriptableEvent shotScriptableEvent = default;
 
         [SerializeField]
         private string shootButton = "Fire1";
@@ -38,7 +38,7 @@ namespace GameEvents.Samples
 
             if (Physics.Raycast(ray, out var hit))
             {
-                shotGameEvent.Raise(hit.transform);
+                shotScriptableEvent.Raise(hit.transform);
             }
         }
     }

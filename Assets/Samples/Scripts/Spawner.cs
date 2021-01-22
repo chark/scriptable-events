@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameEvents.Samples
+namespace ScriptableEvents.Samples
 {
     [RequireComponent(typeof(BoxCollider))]
     public class Spawner : MonoBehaviour

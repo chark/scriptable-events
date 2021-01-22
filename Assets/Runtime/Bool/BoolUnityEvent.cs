@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Events;
 
-namespace GameEvents.Bool
+namespace ScriptableEvents.Bool
 {
     [Serializable]
     public class BoolUnityEvent : UnityEvent<bool>

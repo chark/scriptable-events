@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Events;
 
-namespace GameEvents.Float
+namespace ScriptableEvents.Float
 {
     [Serializable]
     public class FloatUnityEvent : UnityEvent<float>

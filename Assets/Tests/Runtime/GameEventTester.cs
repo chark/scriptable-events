@@ -3,43 +3,43 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEvents.Tests
+namespace ScriptableEvents.Tests
 {
-    public class GameEventTester<
-        TGameEventListener,
-        TGameEvent,
+    public class ScriptableEventTester<
+        TScriptableEventListener,
+        TScriptableEvent,
         TUnityEvent,
         TArgument
     >
-        where TGameEvent : BaseGameEvent<TArgument>
+        where TScriptableEvent : BaseScriptableEvent<TArgument>
         where TUnityEvent : UnityEvent<TArgument>, new()
-        where TGameEventListener : BaseGameEventListener<
-            TGameEvent,
+        where TScriptableEventListener : BaseScriptableEventListener<
+            TScriptableEvent,
             TUnityEvent,
             TArgument
         >
     {
         private readonly List<TArgument> eventValues;
         private readonly UnityEngine.GameObject gameObject;
-        private readonly TGameEvent gameEvent;
+        private readonly TScriptableEvent ScriptableEvent;
 
-        public GameEventTester()
+        public ScriptableEventTester()
         {
             eventValues = new List<TArgument>();
 
             gameObject = new UnityEngine.GameObject();
             gameObject.SetActive(false);
 
-            var onGameEvent = new TUnityEvent();
-            onGameEvent.AddListener(AddEventValue);
+            var onScriptableEvent = new TUnityEvent();
+            onScriptableEvent.AddListener(AddEventValue);
 
-            gameEvent = ScriptableObject.CreateInstance<TGameEvent>();
+            ScriptableEvent = ScriptableObject.CreateInstance<TScriptableEvent>();
 
-            var listener = gameObject.AddComponent<TGameEventListener>();
+            var listener = gameObject.AddComponent<TScriptableEventListener>();
 
             // todo: do we need these in the API as its only for tests atm?
-            // listener.OnGameEvent = onGameEvent;
-            // listener.GameEvent = gameEvent;
+            // listener.OnScriptableEvent = onScriptableEvent;
+            // listener.ScriptableEvent = ScriptableEvent;
         }
 
         public int GetEventCount()
@@ -62,9 +62,9 @@ namespace GameEvents.Tests
             gameObject.SetActive(value);
         }
 
-        public void RaiseGameEvent(TArgument argument)
+        public void RaiseScriptableEvent(TArgument argument)
         {
-            gameEvent.Raise(argument);
+            ScriptableEvent.Raise(argument);
         }
 
         private void AddEventValue(TArgument value)

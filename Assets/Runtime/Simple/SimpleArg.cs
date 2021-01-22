@@ -1,4 +1,4 @@
-﻿namespace GameEvents.Simple
+﻿namespace ScriptableEvents.Simple
 {
     public class SimpleArg
     {
