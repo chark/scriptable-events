@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ScriptableEvents
+﻿namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
