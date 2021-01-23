@@ -4,11 +4,6 @@ namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
-        /// <return>
-        /// Registered listeners.
-        /// </return>
-        ICollection<IScriptableEventListener<TArg>> Listeners { get; }
-
         /// <summary>
         /// Raise this event with an argument.
         /// </summary>
@@ -23,5 +18,10 @@ namespace ScriptableEvents
         /// Remove a listener from this event.
         /// </summary>
         void Remove(IScriptableEventListener<TArg> listener);
+
+        /// <summary>
+        /// Remove all listeners from this event.
+        /// </summary>
+        void Clear();
     }
 }

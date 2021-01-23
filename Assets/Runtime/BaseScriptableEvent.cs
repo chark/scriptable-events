@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace ScriptableEvents
@@ -27,18 +26,9 @@ namespace ScriptableEvents
 
         #region Fields
 
-        // ReadOnlyCollection is used here so it wouldn't get modified via Listeners without having
-        // to use Add or Remove.
-        private readonly ReadOnlyCollection<IScriptableEventListener<TArg>> readOnlyListeners;
-
+        [NonSerialized]
         private readonly List<IScriptableEventListener<TArg>> listeners
             = new List<IScriptableEventListener<TArg>>();
-
-        #endregion
-
-        #region Properties
-
-        public ICollection<IScriptableEventListener<TArg>> Listeners => readOnlyListeners;
 
         #endregion
 
@@ -52,11 +42,6 @@ namespace ScriptableEvents
         #endregion
 
         #region Methods
-
-        protected BaseScriptableEvent()
-        {
-            readOnlyListeners = new ReadOnlyCollection<IScriptableEventListener<TArg>>(listeners);
-        }
 
         public void Raise(TArg arg)
         {
@@ -93,6 +78,31 @@ namespace ScriptableEvents
         public void Remove(IScriptableEventListener<TArg> listener)
         {
             listeners.Remove(listener);
+        }
+
+        public void Clear()
+        {
+            listeners.Clear();
+        }
+
+        /// <inheritdoc cref="BaseScriptableEvent{TArg}.Add"/>
+        public static BaseScriptableEvent<TArg> operator +(
+            BaseScriptableEvent<TArg> scriptableEvent,
+            IScriptableEventListener<TArg> scriptableEventListener
+        )
+        {
+            scriptableEvent.Add(scriptableEventListener);
+            return scriptableEvent;
+        }
+
+        /// <inheritdoc cref="BaseScriptableEvent{TArg}.Remove"/>
+        public static BaseScriptableEvent<TArg> operator -(
+            BaseScriptableEvent<TArg> scriptableEvent,
+            IScriptableEventListener<TArg> scriptableEventListener
+        )
+        {
+            scriptableEvent.Remove(scriptableEventListener);
+            return scriptableEvent;
         }
 
         private void Trace(IScriptableEventListener<TArg> listener, TArg arg)

@@ -1,4 +1,7 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
 namespace ScriptableEvents.Editor
@@ -12,6 +15,7 @@ namespace ScriptableEvents.Editor
 
         private TScriptableEvent scriptableEvent;
         private MonoScript monoScript;
+        private List<IScriptableEventListener<TArg>> listeners;
 
         // Cached properties.
         private SerializedProperty descriptionProperty;
@@ -64,6 +68,7 @@ namespace ScriptableEvents.Editor
         {
             scriptableEvent = target as TScriptableEvent;
             monoScript = MonoScript.FromScriptableObject(target as ScriptableObject);
+            listeners = FindListeners();
 
             descriptionProperty = serializedObject.FindProperty("description");
             lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
@@ -104,6 +109,16 @@ namespace ScriptableEvents.Editor
         /// Value that is entered in the event argument field.
         /// </returns>
         protected abstract TArg DrawArgField(TArg value);
+
+        private List<IScriptableEventListener<TArg>> FindListeners()
+        {
+            // Using reflection to fetch "listeners" as we don't want it to be exposed in the API.
+            var listenersField = typeof(BaseScriptableEvent<TArg>)
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .First(field => field.Name == "listeners");
+
+            return listenersField.GetValue(target) as List<IScriptableEventListener<TArg>>;
+        }
 
         private void DrawMonoScript()
         {
@@ -214,7 +229,6 @@ namespace ScriptableEvents.Editor
             }
 
             // Play mode info.
-            var listeners = scriptableEvent.Listeners;
             if (listeners.Count == 0)
             {
                 EditorGUILayout.HelpBox(
