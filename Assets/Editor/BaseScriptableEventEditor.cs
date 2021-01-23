@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace ScriptableEvents.Editor
@@ -11,15 +10,49 @@ namespace ScriptableEvents.Editor
     {
         #region Fields
 
-        private SerializedProperty descriptionProperty;
-        private SerializedProperty lockDescription;
-
+        private TScriptableEvent scriptableEvent;
         private MonoScript monoScript;
 
-        // Cached description styles.
+        // Cached properties.
+        private SerializedProperty descriptionProperty;
+        private SerializedProperty lockDescriptionProperty;
+        private SerializedProperty suppressExceptionsProperty;
+        private SerializedProperty traceProperty;
+
+        // Cached styles.
         private GUIStyle descriptionLockStyle;
         private GUIStyle descriptionStyle;
         private float descriptionWidth;
+
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly GUIContent DescriptionLabelContent = new GUIContent(
+            "Description",
+            "Custom description to provide more additional information"
+        );
+
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly GUIContent SuppressExceptionsLabelContent = new GUIContent(
+            "Suppress Exceptions",
+            "Should exceptions not break the listener chain"
+        );
+
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly GUIContent TraceLabelContent = new GUIContent(
+            "Trace",
+            "Should additional trace information be logged"
+        );
+
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly GUIContent RaiseLabelContent = new GUIContent(
+            "Raise event",
+            "Raise event and trigger added listeners (play mode only)"
+        );
+
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly GUIContent ListenerLabelContent = new GUIContent(
+            "Added listeners",
+            "Added listeners to this event (play mode only)"
+        );
 
         private TArg argValue;
 
@@ -29,11 +62,48 @@ namespace ScriptableEvents.Editor
 
         public void OnEnable()
         {
-            descriptionProperty = serializedObject.FindProperty("description");
-            lockDescription = serializedObject.FindProperty("lockDescription");
-
+            scriptableEvent = target as TScriptableEvent;
             monoScript = MonoScript.FromScriptableObject(target as ScriptableObject);
+
+            descriptionProperty = serializedObject.FindProperty("description");
+            lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
+            suppressExceptionsProperty = serializedObject.FindProperty("suppressExceptions");
+            traceProperty = serializedObject.FindProperty("trace");
         }
+
+        public override void OnInspectorGUI()
+        {
+            DrawMonoScript();
+
+            EditorGUI.BeginChangeCheck();
+
+            SetupStyles();
+            DrawDescription();
+
+            EditorGUILayout.Space();
+            DrawSuppressExceptions();
+            DrawTrace();
+
+            EditorGUILayout.Space();
+            DrawRaise();
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            EditorGUILayout.Space();
+            DrawListeners();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <returns>
+        /// Value that is entered in the event argument field.
+        /// </returns>
+        protected abstract TArg DrawArgField(TArg value);
 
         private void DrawMonoScript()
         {
@@ -42,7 +112,7 @@ namespace ScriptableEvents.Editor
             GUI.enabled = true;
         }
 
-        private void SetupDescriptionStyles()
+        private void SetupStyles()
         {
             if (descriptionLockStyle == null)
             {
@@ -60,14 +130,15 @@ namespace ScriptableEvents.Editor
 
             if (descriptionWidth <= 0)
             {
-                descriptionWidth = EditorStyles.label.CalcSize(new GUIContent("Description")).x;
+                var descriptionLabelSize = EditorStyles.label.CalcSize(DescriptionLabelContent);
+                descriptionWidth = descriptionLabelSize.x;
             }
         }
 
         private void DrawDescription()
         {
             // Label.
-            EditorGUILayout.LabelField("Description");
+            EditorGUILayout.LabelField(DescriptionLabelContent);
 
             // Label position.
             var position = GUILayoutUtility.GetLastRect();
@@ -75,15 +146,15 @@ namespace ScriptableEvents.Editor
             position.x = position.xMin + descriptionWidth;
 
             // Lock button.
-            lockDescription.boolValue = EditorGUI.Toggle(
+            lockDescriptionProperty.boolValue = EditorGUI.Toggle(
                 position,
                 GUIContent.none,
-                lockDescription.boolValue,
+                lockDescriptionProperty.boolValue,
                 descriptionLockStyle
             );
 
             // Text.
-            GUI.enabled = !lockDescription.boolValue;
+            GUI.enabled = !lockDescriptionProperty.boolValue;
             descriptionProperty.stringValue = EditorGUILayout.TextArea(
                 descriptionProperty.stringValue,
                 descriptionStyle
@@ -92,48 +163,29 @@ namespace ScriptableEvents.Editor
             GUI.enabled = true;
         }
 
-        public override void OnInspectorGUI()
+        private void DrawSuppressExceptions()
         {
-            DrawMonoScript();
-
-            EditorGUI.BeginChangeCheck();
-
-            SetupDescriptionStyles();
-            DrawDescription();
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-            }
-
-            DrawPropertiesExcluding(serializedObject, descriptionProperty.name,
-                lockDescription.name);
-
-            return;
-
-            base.OnInspectorGUI();
-
-            if (!(target is TScriptableEvent ScriptableEvent))
-            {
-                return;
-            }
-
-            GUI.enabled = Application.isPlaying;
-            EditorGUILayout.Space();
-
-            DrawRaise(ScriptableEvent);
-
-            EditorGUILayout.Space();
-            DrawReferences(ScriptableEvent);
+            suppressExceptionsProperty.boolValue = EditorGUILayout.Toggle(
+                SuppressExceptionsLabelContent,
+                suppressExceptionsProperty.boolValue
+            );
         }
 
-        #endregion
-
-        #region Methods
-
-        private void DrawRaise(TScriptableEvent scriptableEvent)
+        private void DrawTrace()
         {
-            DrawPlaymodeLabel("Raise event");
+            traceProperty.boolValue = EditorGUILayout.Toggle(
+                TraceLabelContent,
+                traceProperty.boolValue
+            );
+        }
+
+        private void DrawRaise()
+        {
+            // Label.
+            EditorGUILayout.LabelField(RaiseLabelContent);
+            GUI.enabled = Application.isPlaying;
+
+            // Edit mode input.
             GUILayout.BeginHorizontal();
 
             argValue = DrawArgField(argValue);
@@ -143,53 +195,42 @@ namespace ScriptableEvents.Editor
             }
 
             GUILayout.EndHorizontal();
+            GUI.enabled = true;
         }
 
-        /// <returns>
-        /// Value that is entered in the Scriptable Event argument field.
-        /// </returns>
-        protected abstract TArg DrawArgField(TArg value);
-
-        private static void DrawReferences<TArgument>(IScriptableEvent<TArgument> scriptableEvent)
+        private void DrawListeners()
         {
-            DrawListeners(scriptableEvent.Listeners);
-        }
+            EditorGUILayout.LabelField(ListenerLabelContent);
 
-        private static void DrawPlaymodeLabel(string text)
-        {
-            var labelSuffix = Application.isPlaying ? "" : "(play mode only)";
-            GUILayout.Label($"{text} {labelSuffix}");
-        }
-
-        private static void DrawListeners<T>(ICollection<T> listeners)
-        {
-            DrawPlaymodeLabel("Listeners");
-            if (Application.isPlaying)
-            {
-                if (listeners.Count == 0)
-                {
-                    EditorGUILayout.HelpBox(
-                        "There are no listeners listening for this event",
-                        MessageType.Warning
-                    );
-
-                    return;
-                }
-
-                foreach (var listener in listeners)
-                {
-                    if (listener is MonoBehaviour behaviour)
-                    {
-                        EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
-                    }
-                }
-            }
-            else
+            // Edit mode info.
+            if (!Application.isPlaying)
             {
                 EditorGUILayout.HelpBox(
-                    "Registered listeners will be displayed here",
+                    "Added listeners will be displayed here",
                     MessageType.Info
                 );
+
+                return;
+            }
+
+            // Play mode info.
+            var listeners = scriptableEvent.Listeners;
+            if (listeners.Count == 0)
+            {
+                EditorGUILayout.HelpBox(
+                    "There are no listeners added to this event",
+                    MessageType.Warning
+                );
+
+                return;
+            }
+
+            foreach (var listener in listeners)
+            {
+                if (listener is MonoBehaviour behaviour)
+                {
+                    EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
+                }
             }
         }
 
