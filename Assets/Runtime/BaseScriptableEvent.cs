@@ -9,9 +9,11 @@ namespace ScriptableEvents
     {
         #region Editor
 
+        // ReSharper disable once NotAccessedField.Local
         [SerializeField]
         private string description;
 
+        // ReSharper disable once NotAccessedField.Local
         [SerializeField]
         private bool lockDescription = true;
 
