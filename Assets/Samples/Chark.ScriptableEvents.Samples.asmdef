@@ -1,16 +1,7 @@
 {
-    "name": "Chark.ScriptableEvents.Samples",
-    "references": [
-        "Chark.ScriptableEvents",
-        "Chark.ScriptableEvents.Editor"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Chark.ScriptableEvents.Samples",
+  "references": [
+    "Chark.ScriptableEvents",
+    "Chark.ScriptableEvents.Editor"
+  ]
 }
