@@ -1,7 +1,14 @@
-﻿namespace ScriptableEvents
+﻿using System.Collections.Generic;
+
+namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
+        /// <returns>
+        /// List of listeners added to this event.
+        /// </returns>
+        IReadOnlyList<IScriptableEventListener<TArg>> Listeners { get; }
+
         /// <summary>
         /// Raise this event with an argument.
         /// </summary>

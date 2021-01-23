@@ -6,7 +6,7 @@ namespace ScriptableEvents.Vector3
     public class Vector3ScriptableEventListener
         : BaseScriptableEventListener<
             Vector3ScriptableEvent,
-            VectorUnity3Event,
+            Vector3UnityEvent,
             UnityEngine.Vector3
         >
     {

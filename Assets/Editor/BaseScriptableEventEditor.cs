@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace ScriptableEvents.Editor
@@ -9,13 +6,12 @@ namespace ScriptableEvents.Editor
     [CanEditMultipleObjects]
     public abstract class BaseScriptableEventEditor<TScriptableEvent, TArg>
         : UnityEditor.Editor
-        where TScriptableEvent : class, IScriptableEvent<TArg>
+        where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
     {
         #region Fields
 
         private TScriptableEvent scriptableEvent;
         private MonoScript monoScript;
-        private List<IScriptableEventListener<TArg>> listeners;
 
         // Cached properties.
         private SerializedProperty descriptionProperty;
@@ -67,8 +63,7 @@ namespace ScriptableEvents.Editor
         public void OnEnable()
         {
             scriptableEvent = target as TScriptableEvent;
-            monoScript = MonoScript.FromScriptableObject(target as ScriptableObject);
-            listeners = FindListeners();
+            monoScript = MonoScript.FromScriptableObject(scriptableEvent);
 
             descriptionProperty = serializedObject.FindProperty("description");
             lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
@@ -103,22 +98,16 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Methods
+        #region Overrides
 
         /// <returns>
         /// Value that is entered in the event argument field.
         /// </returns>
         protected abstract TArg DrawArgField(TArg value);
 
-        private List<IScriptableEventListener<TArg>> FindListeners()
-        {
-            // Using reflection to fetch "listeners" as we don't want it to be exposed in the API.
-            var listenersField = typeof(BaseScriptableEvent<TArg>)
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                .First(field => field.Name == "listeners");
+        #endregion
 
-            return listenersField.GetValue(target) as List<IScriptableEventListener<TArg>>;
-        }
+        #region Methods
 
         private void DrawMonoScript()
         {
@@ -229,7 +218,7 @@ namespace ScriptableEvents.Editor
             }
 
             // Play mode info.
-            if (listeners.Count == 0)
+            if (scriptableEvent.Listeners.Count == 0)
             {
                 EditorGUILayout.HelpBox(
                     "There are no listeners added to this event",
@@ -239,7 +228,7 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
-            foreach (var listener in listeners)
+            foreach (var listener in scriptableEvent.Listeners)
             {
                 if (listener is MonoBehaviour behaviour)
                 {

@@ -41,7 +41,9 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Methods
+        #region Overrides
+
+        public IReadOnlyList<IScriptableEventListener<TArg>> Listeners => listeners;
 
         public void Raise(TArg arg)
         {
@@ -85,25 +87,9 @@ namespace ScriptableEvents
             listeners.Clear();
         }
 
-        /// <inheritdoc cref="BaseScriptableEvent{TArg}.Add"/>
-        public static BaseScriptableEvent<TArg> operator +(
-            BaseScriptableEvent<TArg> scriptableEvent,
-            IScriptableEventListener<TArg> scriptableEventListener
-        )
-        {
-            scriptableEvent.Add(scriptableEventListener);
-            return scriptableEvent;
-        }
+        #endregion
 
-        /// <inheritdoc cref="BaseScriptableEvent{TArg}.Remove"/>
-        public static BaseScriptableEvent<TArg> operator -(
-            BaseScriptableEvent<TArg> scriptableEvent,
-            IScriptableEventListener<TArg> scriptableEventListener
-        )
-        {
-            scriptableEvent.Remove(scriptableEventListener);
-            return scriptableEvent;
-        }
+        #region Methods
 
         private void Trace(IScriptableEventListener<TArg> listener, TArg arg)
         {
