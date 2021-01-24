@@ -9,17 +9,20 @@ namespace ScriptableEvents
         #region Editor
 
         // ReSharper disable once NotAccessedField.Local
-        [SerializeField]
+        [SerializeField, TextArea]
+        [Tooltip("Custom description to provide more additional information")]
         private string description;
 
         // ReSharper disable once NotAccessedField.Local
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private bool lockDescription = true;
 
         [SerializeField]
+        [Tooltip("Should exceptions not break the listener chain")]
         private bool suppressExceptions;
 
         [SerializeField]
+        [Tooltip("Should additional trace information be logged")]
         private bool trace;
 
         #endregion

@@ -4,9 +4,8 @@ namespace ScriptableEvents.Tests
 {
     public static class TestExtensions
     {
-        private const BindingFlags Flags = BindingFlags.Instance
-                                           | BindingFlags.NonPublic
-                                           | BindingFlags.DeclaredOnly;
+        private const BindingFlags PrivateFieldBindingFlags =
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
         /// <summary>
         /// Set private field value with give name on this object.
@@ -27,7 +26,7 @@ namespace ScriptableEvents.Tests
             FieldInfo info;
             do
             {
-                info = type.GetField(name, Flags);
+                info = type.GetField(name, PrivateFieldBindingFlags);
             } while (info == null && (type = type.BaseType) != null);
 
             return info;

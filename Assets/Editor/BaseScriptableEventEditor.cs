@@ -1,16 +1,28 @@
-﻿using UnityEditor;
+﻿using System.Reflection;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
     [CanEditMultipleObjects]
-    public abstract class BaseScriptableEventEditor<TScriptableEvent, TArg>
-        : UnityEditor.Editor
-        where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
+    public abstract class BaseScriptableEventEditor<TArg> : UnityEditor.Editor
     {
         #region Fields
 
-        private TScriptableEvent scriptableEvent;
+        // Reflection.
+        private const BindingFlags PrivateFieldBindingFlags =
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+        // Labels.
+        private GUIContent descriptionLabelContent;
+        private GUIContent suppressExceptionsLabelContent;
+        private GUIContent traceLabelContent;
+        private GUIContent raiseLabelContent;
+        private GUIContent listenerLabelContent;
+
+        // Target properties.
+        private BaseScriptableEvent<TArg> scriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -24,36 +36,6 @@ namespace ScriptableEvents.Editor
         private GUIStyle descriptionStyle;
         private float descriptionWidth;
 
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly GUIContent DescriptionLabelContent = new GUIContent(
-            "Description",
-            "Custom description to provide more additional information"
-        );
-
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly GUIContent SuppressExceptionsLabelContent = new GUIContent(
-            "Suppress Exceptions",
-            "Should exceptions not break the listener chain"
-        );
-
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly GUIContent TraceLabelContent = new GUIContent(
-            "Trace",
-            "Should additional trace information be logged"
-        );
-
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly GUIContent RaiseLabelContent = new GUIContent(
-            "Raise event",
-            "Raise event and trigger added listeners (play mode only)"
-        );
-
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly GUIContent ListenerLabelContent = new GUIContent(
-            "Added listeners",
-            "Added listeners to this event (play mode only)"
-        );
-
         private TArg argValue;
 
         #endregion
@@ -62,7 +44,19 @@ namespace ScriptableEvents.Editor
 
         public void OnEnable()
         {
-            scriptableEvent = target as TScriptableEvent;
+            descriptionLabelContent = CreateLabelContent("description");
+            suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
+            traceLabelContent = CreateLabelContent("trace");
+            raiseLabelContent = new GUIContent(
+                "Raise Event",
+                "Raise event and trigger added listeners (play mode only)"
+            );
+            listenerLabelContent = new GUIContent(
+                "Added Listeners",
+                "Added listeners to this event (play mode only)"
+            );
+
+            scriptableEvent = target as BaseScriptableEvent<TArg>;
             monoScript = MonoScript.FromScriptableObject(scriptableEvent);
 
             descriptionProperty = serializedObject.FindProperty("description");
@@ -109,10 +103,23 @@ namespace ScriptableEvents.Editor
 
         #region Methods
 
+        private static GUIContent CreateLabelContent(string fieldName)
+        {
+            var text = ObjectNames.NicifyVariableName(fieldName);
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var tooltip = typeof(BaseScriptableEvent<TArg>)
+                .GetField(fieldName, PrivateFieldBindingFlags)
+                .GetCustomAttribute<TooltipAttribute>()
+                .tooltip;
+
+            return new GUIContent(text, tooltip);
+        }
+
         private void DrawMonoScript()
         {
             GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", monoScript, typeof(TScriptableEvent), false);
+            EditorGUILayout.ObjectField("Script", monoScript, scriptableEvent.GetType(), false);
             GUI.enabled = true;
         }
 
@@ -134,7 +141,7 @@ namespace ScriptableEvents.Editor
 
             if (descriptionWidth <= 0)
             {
-                var descriptionLabelSize = EditorStyles.label.CalcSize(DescriptionLabelContent);
+                var descriptionLabelSize = EditorStyles.label.CalcSize(descriptionLabelContent);
                 descriptionWidth = descriptionLabelSize.x;
             }
         }
@@ -142,7 +149,7 @@ namespace ScriptableEvents.Editor
         private void DrawDescription()
         {
             // Label.
-            EditorGUILayout.LabelField(DescriptionLabelContent);
+            EditorGUILayout.LabelField(descriptionLabelContent);
 
             // Label position.
             var position = GUILayoutUtility.GetLastRect();
@@ -170,7 +177,7 @@ namespace ScriptableEvents.Editor
         private void DrawSuppressExceptions()
         {
             suppressExceptionsProperty.boolValue = EditorGUILayout.Toggle(
-                SuppressExceptionsLabelContent,
+                suppressExceptionsLabelContent,
                 suppressExceptionsProperty.boolValue
             );
         }
@@ -178,7 +185,7 @@ namespace ScriptableEvents.Editor
         private void DrawTrace()
         {
             traceProperty.boolValue = EditorGUILayout.Toggle(
-                TraceLabelContent,
+                traceLabelContent,
                 traceProperty.boolValue
             );
         }
@@ -186,7 +193,7 @@ namespace ScriptableEvents.Editor
         private void DrawRaise()
         {
             // Label.
-            EditorGUILayout.LabelField(RaiseLabelContent);
+            EditorGUILayout.LabelField(raiseLabelContent);
             GUI.enabled = Application.isPlaying;
 
             // Edit mode input.
@@ -204,7 +211,7 @@ namespace ScriptableEvents.Editor
 
         private void DrawListeners()
         {
-            EditorGUILayout.LabelField(ListenerLabelContent);
+            EditorGUILayout.LabelField(listenerLabelContent);
 
             // Edit mode info.
             if (!Application.isPlaying)

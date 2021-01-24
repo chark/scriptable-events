@@ -4,8 +4,7 @@ using UnityEditor;
 namespace ScriptableEvents.Editor
 {
     [CustomEditor(typeof(SimpleScriptableEvent))]
-    public class SimpleScriptableEventEditor
-        : BaseScriptableEventEditor<SimpleScriptableEvent, SimpleArg>
+    public class SimpleScriptableEventEditor : BaseScriptableEventEditor<SimpleArg>
     {
         protected override SimpleArg DrawArgField(SimpleArg value)
         {

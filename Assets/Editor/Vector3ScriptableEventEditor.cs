@@ -5,8 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor
 {
     [CustomEditor(typeof(Vector3ScriptableEvent))]
-    public class Vector3ScriptableEventEditor
-        : BaseScriptableEventEditor<Vector3ScriptableEvent, UnityEngine.Vector3>
+    public class Vector3ScriptableEventEditor : BaseScriptableEventEditor<UnityEngine.Vector3>
     {
         protected override UnityEngine.Vector3 DrawArgField(UnityEngine.Vector3 value)
         {
