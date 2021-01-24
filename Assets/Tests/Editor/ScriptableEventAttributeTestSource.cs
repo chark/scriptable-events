@@ -21,7 +21,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "BoolScriptableEvent",
                 "Scriptable Events/Bool Scriptable Event",
-                "Scriptable Events/Bool Scriptable Event Listener"
+                "Scriptable Events/Bool Scriptable Event Listener",
+                1
             );
 
             yield return CreateTestCase<
@@ -30,7 +31,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "FloatScriptableEvent",
                 "Scriptable Events/Float Scriptable Event",
-                "Scriptable Events/Float Scriptable Event Listener"
+                "Scriptable Events/Float Scriptable Event Listener",
+                2
             );
 
             yield return CreateTestCase<
@@ -39,7 +41,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "GameObjectScriptableEvent",
                 "Scriptable Events/Game Object Scriptable Event",
-                "Scriptable Events/Game Object Scriptable Event Listener"
+                "Scriptable Events/Game Object Scriptable Event Listener",
+                3
             );
 
             yield return CreateTestCase<
@@ -48,7 +51,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "IntScriptableEvent",
                 "Scriptable Events/Int Scriptable Event",
-                "Scriptable Events/Int Scriptable Event Listener"
+                "Scriptable Events/Int Scriptable Event Listener",
+                4
             );
 
             yield return CreateTestCase<
@@ -57,7 +61,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "SimpleScriptableEvent",
                 "Scriptable Events/Simple Scriptable Event",
-                "Scriptable Events/Simple Scriptable Event Listener"
+                "Scriptable Events/Simple Scriptable Event Listener",
+                -10
             );
 
             yield return CreateTestCase<
@@ -66,7 +71,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "StringScriptableEvent",
                 "Scriptable Events/String Scriptable Event",
-                "Scriptable Events/String Scriptable Event Listener"
+                "Scriptable Events/String Scriptable Event Listener",
+                5
             );
 
             yield return CreateTestCase<
@@ -75,7 +81,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "TransformScriptableEvent",
                 "Scriptable Events/Transform Scriptable Event",
-                "Scriptable Events/Transform Scriptable Event Listener"
+                "Scriptable Events/Transform Scriptable Event Listener",
+                6
             );
 
             yield return CreateTestCase<
@@ -84,7 +91,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "Vector2ScriptableEvent",
                 "Scriptable Events/Vector2 Scriptable Event",
-                "Scriptable Events/Vector2 Scriptable Event Listener"
+                "Scriptable Events/Vector2 Scriptable Event Listener",
+                7
             );
 
             yield return CreateTestCase<
@@ -93,7 +101,8 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "Vector3ScriptableEvent",
                 "Scriptable Events/Vector3 Scriptable Event",
-                "Scriptable Events/Vector3 Scriptable Event Listener"
+                "Scriptable Events/Vector3 Scriptable Event Listener",
+                8
             );
         }
 
@@ -103,7 +112,8 @@ namespace ScriptableEvents.Editor.Tests
         >(
             string eventFileName,
             string eventMenuName,
-            string listenerMenuName
+            string listenerMenuName,
+            int order
         )
         {
             return new object[]
@@ -112,7 +122,8 @@ namespace ScriptableEvents.Editor.Tests
                 typeof(TScriptableEventListener),
                 eventFileName,
                 eventMenuName,
-                listenerMenuName
+                listenerMenuName,
+                order
             };
         }
     }
