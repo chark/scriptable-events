@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 505419882}
   - component: {fileID: 505419881}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: ColorDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2025,7 +2025,7 @@ GameObject:
   - component: {fileID: 2085729137}
   - component: {fileID: 2085729136}
   m_Layer: 0
-  m_Name: MaterialDataChangeEvent
+  m_Name: MaterialDataChangeEventListener
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2083,7 +2083,7 @@ GameObject:
   - component: {fileID: 2091594018}
   - component: {fileID: 2091594019}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: MetallicSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
