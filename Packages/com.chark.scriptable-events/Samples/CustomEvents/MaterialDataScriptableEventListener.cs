@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.CustomEvents
+namespace ScriptableEvents.Samples.CustomEvents
 {
     [AddComponentMenu("Custom Scriptable Events/Material Data Event Listener")]
     public class MaterialDataScriptableEventListener

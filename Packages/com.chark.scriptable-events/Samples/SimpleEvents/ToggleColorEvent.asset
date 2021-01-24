@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca9d72c0f5043e9b9ed7e25d63422f5, type: 3}
   m_Name: ToggleColorEvent
   m_EditorClassIdentifier: 
-  description: 
+  description: 'Toggles between whie and black colors. Raised when color toggle button
+    is clicked.
+
+'
   lockDescription: 1
   suppressExceptions: 0
   trace: 0

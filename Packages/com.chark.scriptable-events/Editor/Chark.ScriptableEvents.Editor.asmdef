@@ -1,5 +1,6 @@
 ﻿{
   "name": "Chark.ScriptableEvents.Editor",
+  "rootNamespace": "ScriptableEvents.Editor",
   "references": [
     "Chark.ScriptableEvents"
   ],

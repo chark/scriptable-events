@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Events;
 
-namespace ScriptableEvents.CustomEvents
+namespace ScriptableEvents.Samples.CustomEvents
 {
     [Serializable]
     public class MaterialDataUnityEvent : UnityEvent<MaterialData>

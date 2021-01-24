@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.CustomEvents
+namespace ScriptableEvents.Samples.CustomEvents
 {
     public class MaterialChanger : MonoBehaviour
     {
