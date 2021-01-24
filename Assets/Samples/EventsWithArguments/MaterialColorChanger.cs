@@ -12,12 +12,13 @@ namespace ScriptableEvents.EventsWithArguments
             material = GetComponent<MeshRenderer>().material;
         }
 
-        public void ToggleColor()
+        public void ChangeColor(float value)
         {
             var color = material.color;
-            material.color = color == Color.black
-                ? Color.white
-                : Color.black;
+            color.r = value;
+            color.g = value;
+            color.b = value;
+            material.color = color;
         }
     }
 }

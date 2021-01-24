@@ -3,7 +3,7 @@
 namespace ScriptableEvents.SimpleEvents
 {
     [RequireComponent(typeof(MeshRenderer))]
-    public class MaterialColorChanger : MonoBehaviour
+    public class MaterialColorToggle : MonoBehaviour
     {
         private Material material;
 
@@ -12,13 +12,12 @@ namespace ScriptableEvents.SimpleEvents
             material = GetComponent<MeshRenderer>().material;
         }
 
-        public void ChangeColor(float value)
+        public void ToggleColor()
         {
             var color = material.color;
-            color.r = value;
-            color.g = value;
-            color.b = value;
-            material.color = color;
+            material.color = color == Color.black
+                ? Color.white
+                : Color.black;
         }
     }
 }
