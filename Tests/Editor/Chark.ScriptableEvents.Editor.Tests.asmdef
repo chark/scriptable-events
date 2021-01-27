@@ -1,0 +1,14 @@
+{
+  "name": "Chark.ScriptableEvents.Editor.Tests",
+  "rootNamespace": "ScriptableEvents.Editor.Tests",
+  "references": [
+    "Chark.ScriptableEvents",
+    "Chark.ScriptableEvents.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "com.chark.scriptable-events",
+  "displayName": "Scriptable Events",
+  "author": {
+    "name": "CHARK",
+    "url": "https://chark.io"
+  },
+  "version": "1.0.0",
+  "unity": "2019.4",
+  "description": "Simple and extensible event system implemented via ScriptableObject.",
+  "keywords": [
+    "event",
+    "listener",
+    "scriptableobject",
+    "unity",
+    "architecture"
+  ],
+  "samples": [
+    {
+      "displayName": "Simple Events",
+      "description": "Shows how to use events without passing any arguments.",
+      "path": "Samples~/SimpleEvents"
+    },
+    {
+      "displayName": "Events With Arguments",
+      "description": "Shows how to use events with arguments.",
+      "path": "Samples~/EventsWithArguments"
+    },
+    {
+      "displayName": "Custom Events",
+      "description": "Shows how to create custom events, editors and pass custom data via events.",
+      "path": "Samples~/CustomEvents"
+    }
+  ]
+}
