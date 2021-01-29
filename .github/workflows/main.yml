@@ -1,4 +1,3 @@
-# TODO: automate based on https://medium.com/openupm/how-to-maintain-upm-package-part-1-7b4daf88d4c4
 name: CI
 
 on:
@@ -27,7 +26,7 @@ jobs:
         uses: webbertakken/unity-test-runner@v1.3
         with:
           projectPath: .
-          unityVersion: 2019.4.11f1
+          unityVersion: 2019.4.14f1
 
       # Test Results
       - name: Upload Test Results
