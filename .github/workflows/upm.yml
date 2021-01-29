@@ -1,0 +1,25 @@
+name: UPM
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch'     
+        required: true
+        default: 'upm'
+
+jobs:
+  split-upm:
+    name: Split UPM branch
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: split upm branch
+      run: |
+        git branch -d ${{ github.event.inputs.branch }} &> /dev/null || echo the branch not found
+        git subtree split -P "$PKG_ROOT" -b ${{ github.event.inputs.branch }}
+        git checkout ${{ github.event.inputs.branch }}
+        git push -f -u origin ${{ github.event.inputs.branch }}
+      env:
+        PKG_ROOT: Packages/com.chark.scriptable-events
