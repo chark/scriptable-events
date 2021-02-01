@@ -10,7 +10,7 @@ Most of the documented features can be imported as samples via Unity Package Man
 ## General
 
 ### Tips
-- When creating prefabs, event assets can be referenced in them. Then when you add in your prefabs into a scene, no additional setup is necessary!
+- When creating prefabs, event assets can be referenced in them. Then, when you add in your prefabs into a scene, no additional setup is necessary!
 - Event assets can be used to communicate between scenes, this is particularly useful when using [Multi Scene Editing](https://docs.unity3d.com/Manual/MultiSceneEditing.html).
 
 ### Event asset GUI
