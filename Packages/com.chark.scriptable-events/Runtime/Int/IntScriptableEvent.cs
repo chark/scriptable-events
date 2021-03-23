@@ -5,7 +5,7 @@ namespace ScriptableEvents.Int
     [CreateAssetMenu(
         fileName = "IntScriptableEvent",
         menuName = "Scriptable Events/Int Scriptable Event",
-        order = 4
+        order = 2
     )]
     public class IntScriptableEvent : BaseScriptableEvent<int>
     {

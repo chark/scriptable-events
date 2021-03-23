@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using ScriptableEvents.Bool;
+using ScriptableEvents.Component;
 using ScriptableEvents.Float;
 using ScriptableEvents.GameObject;
 using ScriptableEvents.Int;
@@ -16,46 +17,6 @@ namespace ScriptableEvents.Editor.Tests
         public IEnumerator GetEnumerator()
         {
             yield return CreateTestCase<
-                BoolScriptableEvent,
-                BoolScriptableEventListener
-            >(
-                "BoolScriptableEvent",
-                "Scriptable Events/Bool Scriptable Event",
-                "Scriptable Events/Bool Scriptable Event Listener",
-                1
-            );
-
-            yield return CreateTestCase<
-                FloatScriptableEvent,
-                FloatScriptableEventListener
-            >(
-                "FloatScriptableEvent",
-                "Scriptable Events/Float Scriptable Event",
-                "Scriptable Events/Float Scriptable Event Listener",
-                2
-            );
-
-            yield return CreateTestCase<
-                GameObjectScriptableEvent,
-                GameObjectScriptableEventListener
-            >(
-                "GameObjectScriptableEvent",
-                "Scriptable Events/Game Object Scriptable Event",
-                "Scriptable Events/Game Object Scriptable Event Listener",
-                3
-            );
-
-            yield return CreateTestCase<
-                IntScriptableEvent,
-                IntScriptableEventListener
-            >(
-                "IntScriptableEvent",
-                "Scriptable Events/Int Scriptable Event",
-                "Scriptable Events/Int Scriptable Event Listener",
-                4
-            );
-
-            yield return CreateTestCase<
                 SimpleScriptableEvent,
                 SimpleScriptableEventListener
             >(
@@ -66,23 +27,43 @@ namespace ScriptableEvents.Editor.Tests
             );
 
             yield return CreateTestCase<
+                BoolScriptableEvent,
+                BoolScriptableEventListener
+            >(
+                "BoolScriptableEvent",
+                "Scriptable Events/Bool Scriptable Event",
+                "Scriptable Events/Bool Scriptable Event Listener",
+                1
+            );
+
+            yield return CreateTestCase<
+                IntScriptableEvent,
+                IntScriptableEventListener
+            >(
+                "IntScriptableEvent",
+                "Scriptable Events/Int Scriptable Event",
+                "Scriptable Events/Int Scriptable Event Listener",
+                2
+            );
+
+            yield return CreateTestCase<
+                FloatScriptableEvent,
+                FloatScriptableEventListener
+            >(
+                "FloatScriptableEvent",
+                "Scriptable Events/Float Scriptable Event",
+                "Scriptable Events/Float Scriptable Event Listener",
+                3
+            );
+
+            yield return CreateTestCase<
                 StringScriptableEvent,
                 StringScriptableEventListener
             >(
                 "StringScriptableEvent",
                 "Scriptable Events/String Scriptable Event",
                 "Scriptable Events/String Scriptable Event Listener",
-                5
-            );
-
-            yield return CreateTestCase<
-                TransformScriptableEvent,
-                TransformScriptableEventListener
-            >(
-                "TransformScriptableEvent",
-                "Scriptable Events/Transform Scriptable Event",
-                "Scriptable Events/Transform Scriptable Event Listener",
-                6
+                4
             );
 
             yield return CreateTestCase<
@@ -92,7 +73,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector2ScriptableEvent",
                 "Scriptable Events/Vector2 Scriptable Event",
                 "Scriptable Events/Vector2 Scriptable Event Listener",
-                7
+                5
             );
 
             yield return CreateTestCase<
@@ -102,7 +83,37 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector3ScriptableEvent",
                 "Scriptable Events/Vector3 Scriptable Event",
                 "Scriptable Events/Vector3 Scriptable Event Listener",
+                6
+            );
+
+            yield return CreateTestCase<
+                TransformScriptableEvent,
+                TransformScriptableEventListener
+            >(
+                "TransformScriptableEvent",
+                "Scriptable Events/Transform Scriptable Event",
+                "Scriptable Events/Transform Scriptable Event Listener",
+                7
+            );
+
+            yield return CreateTestCase<
+                GameObjectScriptableEvent,
+                GameObjectScriptableEventListener
+            >(
+                "GameObjectScriptableEvent",
+                "Scriptable Events/Game Object Scriptable Event",
+                "Scriptable Events/Game Object Scriptable Event Listener",
                 8
+            );
+
+            yield return CreateTestCase<
+                ComponentScriptableEvent,
+                ComponentScriptableEventListener
+            >(
+                "ComponentScriptableEvent",
+                "Scriptable Events/Component Scriptable Event",
+                "Scriptable Events/Component Scriptable Event Listener",
+                9
             );
         }
 

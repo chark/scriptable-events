@@ -16,7 +16,7 @@ namespace ScriptableEvents.Tests
         TArg
     >
         where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
-        where TScriptableEventListener : Component, IScriptableEventListener<TArg>
+        where TScriptableEventListener : UnityEngine.Component, IScriptableEventListener<TArg>
         where TUnityEvent : UnityEvent<TArg>, new()
     {
         #region Fields

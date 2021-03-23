@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.GameObject
 {
-    [AddComponentMenu("Scriptable Events/Game Object Scriptable Event Listener", 3)]
+    [AddComponentMenu("Scriptable Events/Game Object Scriptable Event Listener", 8)]
     public class GameObjectScriptableEventListener
         : BaseScriptableEventListener<
             GameObjectScriptableEvent,
