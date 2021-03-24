@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.String
 {
-    [AddComponentMenu("Scriptable Events/String Scriptable Event Listener", 4)]
+    [AddComponentMenu("Scriptable Events/Listeners/String Scriptable Event Listener", 4)]
     public class StringScriptableEventListener
         : BaseScriptableEventListener<StringScriptableEvent, StringUnityEvent, string>
     {

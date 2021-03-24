@@ -2,6 +2,9 @@
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using ScriptableEvents.Bool;
+using ScriptableEvents.Collider;
+using ScriptableEvents.Collision;
+using ScriptableEvents.Component;
 using ScriptableEvents.Float;
 using ScriptableEvents.GameObject;
 using ScriptableEvents.Int;
@@ -18,22 +21,16 @@ namespace ScriptableEvents.Tests
         public IEnumerator GetEnumerator()
         {
             yield return CreateTestCase<
+                SimpleScriptableEvent,
+                SimpleScriptableEventListener,
+                SimpleUnityEvent
+            >(SimpleArg.Instance);
+
+            yield return CreateTestCase<
                 BoolScriptableEvent,
                 BoolScriptableEventListener,
                 BoolUnityEvent
             >(true);
-
-            yield return CreateTestCase<
-                FloatScriptableEvent,
-                FloatScriptableEventListener,
-                FloatUnityEvent
-            >(1.0f);
-
-            yield return CreateTestCase<
-                GameObjectScriptableEvent,
-                GameObjectScriptableEventListener,
-                GameObjectUnityEvent
-            >(new UnityEngine.GameObject());
 
             yield return CreateTestCase<
                 IntScriptableEvent,
@@ -42,22 +39,16 @@ namespace ScriptableEvents.Tests
             >(1);
 
             yield return CreateTestCase<
-                SimpleScriptableEvent,
-                SimpleScriptableEventListener,
-                SimpleUnityEvent
-            >(SimpleArg.Instance);
+                FloatScriptableEvent,
+                FloatScriptableEventListener,
+                FloatUnityEvent
+            >(1.0f);
 
             yield return CreateTestCase<
                 StringScriptableEvent,
                 StringScriptableEventListener,
                 StringUnityEvent
             >("hello");
-
-            yield return CreateTestCase<
-                TransformScriptableEvent,
-                TransformScriptableEventListener,
-                TransformUnityEvent
-            >(new UnityEngine.GameObject().transform);
 
             yield return CreateTestCase<
                 Vector2ScriptableEvent,
@@ -70,6 +61,36 @@ namespace ScriptableEvents.Tests
                 Vector3ScriptableEventListener,
                 Vector3UnityEvent
             >(UnityEngine.Vector3.one);
+
+            yield return CreateTestCase<
+                GameObjectScriptableEvent,
+                GameObjectScriptableEventListener,
+                GameObjectUnityEvent
+            >(new UnityEngine.GameObject());
+
+            yield return CreateTestCase<
+                TransformScriptableEvent,
+                TransformScriptableEventListener,
+                TransformUnityEvent
+            >(new UnityEngine.GameObject().transform);
+
+            yield return CreateTestCase<
+                ComponentScriptableEvent,
+                ComponentScriptableEventListener,
+                ComponentUnityEvent
+            >(new UnityEngine.Component());
+
+            yield return CreateTestCase<
+                ColliderScriptableEvent,
+                ColliderScriptableEventListener,
+                ColliderUnityEvent
+            >(new UnityEngine.Collider());
+
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener,
+                CollisionUnityEvent
+            >(new UnityEngine.Collision());
         }
 
         private static TestFixtureParameters CreateTestCase<

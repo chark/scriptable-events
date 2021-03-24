@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.Float
 {
-    [AddComponentMenu("Scriptable Events/Float Scriptable Event Listener", 3)]
+    [AddComponentMenu("Scriptable Events/Listeners/Float Scriptable Event Listener", 3)]
     public class FloatScriptableEventListener
         : BaseScriptableEventListener<FloatScriptableEvent, FloatUnityEvent, float>
     {

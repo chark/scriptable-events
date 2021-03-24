@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.Vector3
 {
-    [AddComponentMenu("Scriptable Events/Vector3 Scriptable Event Listener", 6)]
+    [AddComponentMenu("Scriptable Events/Listeners/Vector3 Scriptable Event Listener", 6)]
     public class Vector3ScriptableEventListener
         : BaseScriptableEventListener<
             Vector3ScriptableEvent,

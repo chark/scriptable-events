@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using ScriptableEvents.Bool;
+using ScriptableEvents.Collider;
+using ScriptableEvents.Collision;
 using ScriptableEvents.Component;
 using ScriptableEvents.Float;
 using ScriptableEvents.GameObject;
@@ -22,7 +24,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "SimpleScriptableEvent",
                 "Scriptable Events/Simple Scriptable Event",
-                "Scriptable Events/Simple Scriptable Event Listener",
+                "Scriptable Events/Listeners/Simple Scriptable Event Listener",
                 -10
             );
 
@@ -32,7 +34,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "BoolScriptableEvent",
                 "Scriptable Events/Bool Scriptable Event",
-                "Scriptable Events/Bool Scriptable Event Listener",
+                "Scriptable Events/Listeners/Bool Scriptable Event Listener",
                 1
             );
 
@@ -42,7 +44,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "IntScriptableEvent",
                 "Scriptable Events/Int Scriptable Event",
-                "Scriptable Events/Int Scriptable Event Listener",
+                "Scriptable Events/Listeners/Int Scriptable Event Listener",
                 2
             );
 
@@ -52,7 +54,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "FloatScriptableEvent",
                 "Scriptable Events/Float Scriptable Event",
-                "Scriptable Events/Float Scriptable Event Listener",
+                "Scriptable Events/Listeners/Float Scriptable Event Listener",
                 3
             );
 
@@ -62,7 +64,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "StringScriptableEvent",
                 "Scriptable Events/String Scriptable Event",
-                "Scriptable Events/String Scriptable Event Listener",
+                "Scriptable Events/Listeners/String Scriptable Event Listener",
                 4
             );
 
@@ -72,7 +74,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "Vector2ScriptableEvent",
                 "Scriptable Events/Vector2 Scriptable Event",
-                "Scriptable Events/Vector2 Scriptable Event Listener",
+                "Scriptable Events/Listeners/Vector2 Scriptable Event Listener",
                 5
             );
 
@@ -82,7 +84,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "Vector3ScriptableEvent",
                 "Scriptable Events/Vector3 Scriptable Event",
-                "Scriptable Events/Vector3 Scriptable Event Listener",
+                "Scriptable Events/Listeners/Vector3 Scriptable Event Listener",
                 6
             );
 
@@ -92,7 +94,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "TransformScriptableEvent",
                 "Scriptable Events/Transform Scriptable Event",
-                "Scriptable Events/Transform Scriptable Event Listener",
+                "Scriptable Events/Listeners/Transform Scriptable Event Listener",
                 7
             );
 
@@ -102,7 +104,7 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "GameObjectScriptableEvent",
                 "Scriptable Events/Game Object Scriptable Event",
-                "Scriptable Events/Game Object Scriptable Event Listener",
+                "Scriptable Events/Listeners/Game Object Scriptable Event Listener",
                 8
             );
 
@@ -112,8 +114,28 @@ namespace ScriptableEvents.Editor.Tests
             >(
                 "ComponentScriptableEvent",
                 "Scriptable Events/Component Scriptable Event",
-                "Scriptable Events/Component Scriptable Event Listener",
+                "Scriptable Events/Listeners/Component Scriptable Event Listener",
                 9
+            );
+
+            yield return CreateTestCase<
+                ColliderScriptableEvent,
+                ColliderScriptableEventListener
+            >(
+                "ColliderScriptableEvent",
+                "Scriptable Events/Collider Scriptable Event",
+                "Scriptable Events/Listeners/Collider Scriptable Event Listener",
+                10
+            );
+
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener
+            >(
+                "CollisionScriptableEvent",
+                "Scriptable Events/Collision Scriptable Event",
+                "Scriptable Events/Listeners/Collision Scriptable Event Listener",
+                11
             );
         }
 

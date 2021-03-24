@@ -79,7 +79,10 @@ namespace ScriptableEvents.Editor
             DrawTrace();
 
             EditorGUILayout.Space();
-            DrawRaise();
+            if (IsDrawRaise())
+            {
+                DrawRaise();
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -92,16 +95,23 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Overrides
+        #region Methods
 
         /// <returns>
         /// Value that is entered in the event argument field.
         /// </returns>
-        protected abstract TArg DrawArgField(TArg value);
+        protected virtual TArg DrawArgField(TArg value)
+        {
+            return value;
+        }
 
-        #endregion
-
-        #region Methods
+        /// <returns>
+        /// Should the raise button be drawn.
+        /// </returns>
+        protected virtual bool IsDrawRaise()
+        {
+            return true;
+        }
 
         private static GUIContent CreateLabelContent(string fieldName)
         {
