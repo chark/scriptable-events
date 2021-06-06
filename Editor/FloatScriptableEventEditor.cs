@@ -4,7 +4,7 @@ using UnityEditor;
 namespace ScriptableEvents.Editor
 {
     [CustomEditor(typeof(FloatScriptableEvent))]
-    public class FloatScriptableEventEditor : BaseScriptableEventEditor<float>
+    public class FloatScriptableEventEditor : TypedScriptableEventEditor<float>
     {
         protected override float DrawArgField(float value)
         {

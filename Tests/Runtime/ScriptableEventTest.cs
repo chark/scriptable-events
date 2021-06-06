@@ -12,12 +12,10 @@ namespace ScriptableEvents.Tests
     public class ScriptableEventTest<
         TScriptableEvent,
         TScriptableEventListener,
-        TUnityEvent,
         TArg
     >
         where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
         where TScriptableEventListener : Component, IScriptableEventListener<TArg>
-        where TUnityEvent : UnityEvent<TArg>, new()
     {
         #region Fields
 
@@ -25,7 +23,7 @@ namespace ScriptableEvents.Tests
 
         private List<TArg> capturedArgs;
         private TScriptableEvent scriptableEvent;
-        private TUnityEvent unityEvent;
+        private UnityEvent<TArg> unityEvent;
         private TScriptableEventListener scriptableEventListener;
 
         #endregion
@@ -121,7 +119,7 @@ namespace ScriptableEvents.Tests
 
         private void SetupUnityEvent()
         {
-            unityEvent = new TUnityEvent();
+            unityEvent = new UnityEvent<TArg>();
             unityEvent.AddListener(capturedArgs.Add);
         }
 
