@@ -49,3 +49,7 @@ crashlytics-build.properties
 
 # Rider.
 .idea/
+
+# Other Unity3D.
+UserSettings/EditorUserSettings.asset
+npm-debug.log

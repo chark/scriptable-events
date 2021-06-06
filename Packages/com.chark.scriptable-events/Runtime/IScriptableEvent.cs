@@ -4,10 +4,9 @@ namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
-        /// <returns>
-        /// List of listeners added to this event.
-        /// </returns>
-        IReadOnlyList<IScriptableEventListener<TArg>> Listeners { get; }
+#if UNITY_EDITOR
+        ICollection<object> RawEditorListeners { get; }
+#endif
 
         /// <summary>
         /// Raise this event with an argument.
