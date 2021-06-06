@@ -33,20 +33,31 @@ namespace ScriptableEvents
         private readonly List<IScriptableEventListener<TArg>> listeners
             = new List<IScriptableEventListener<TArg>>();
 
+#if UNITY_EDITOR
+        private readonly List<object> rawEditorListeners
+            = new List<object>();
+#endif
+
+        #endregion
+
+        #region Properties
+
+#if UNITY_EDITOR
+        ICollection<object> IScriptableEvent<TArg>.RawEditorListeners => rawEditorListeners;
+#endif
+
         #endregion
 
         #region Unity Lifecycle
 
         private void OnDisable()
         {
-            listeners.Clear();
+            Clear();
         }
 
         #endregion
 
         #region Overrides
-
-        public IReadOnlyList<IScriptableEventListener<TArg>> Listeners => listeners;
 
         public void Raise(TArg arg)
         {
@@ -77,16 +88,25 @@ namespace ScriptableEvents
                 return;
             }
 
+#if UNITY_EDITOR
+            rawEditorListeners.Add(listener);
+#endif
             listeners.Add(listener);
         }
 
         public void Remove(IScriptableEventListener<TArg> listener)
         {
+#if UNITY_EDITOR
+            rawEditorListeners.Remove(listener);
+#endif
             listeners.Remove(listener);
         }
 
         public void Clear()
         {
+#if UNITY_EDITOR
+            rawEditorListeners.Clear();
+#endif
             listeners.Clear();
         }
 

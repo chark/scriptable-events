@@ -3,19 +3,17 @@ using UnityEngine.Events;
 
 namespace ScriptableEvents
 {
-    public class BaseScriptableEventListener<TScriptableEvent, TUnityEvent, TArg>
+    public abstract class BaseScriptableEventListener<TArg>
         : MonoBehaviour, IScriptableEventListener<TArg>
-        where TScriptableEvent : BaseScriptableEvent<TArg>
-        where TUnityEvent : UnityEvent<TArg>
     {
         #region Editor
 
         [SerializeField]
-        private TScriptableEvent scriptableEvent;
+        private BaseScriptableEvent<TArg> scriptableEvent;
 
         [Space]
         [SerializeField]
-        private TUnityEvent onRaised;
+        private UnityEvent<TArg> onRaised;
 
         #endregion
 
@@ -25,7 +23,7 @@ namespace ScriptableEvents
         {
             if (scriptableEvent == null)
             {
-                Debug.LogError($"{typeof(TScriptableEvent).Name} is not assigned", this);
+                Debug.LogError("ScriptableEvent is not assigned", this);
                 return;
             }
 

@@ -3,8 +3,7 @@
 namespace ScriptableEvents.Int
 {
     [AddComponentMenu("Scriptable Events/Int Scriptable Event Listener", 4)]
-    public class IntScriptableEventListener
-        : BaseScriptableEventListener<IntScriptableEvent, IntUnityEvent, int>
+    public class IntScriptableEventListener : BaseScriptableEventListener<int>
     {
     }
 }
