@@ -4,7 +4,8 @@ using UnityEditor;
 namespace ScriptableEvents.Editor
 {
     [CustomEditor(typeof(GameObjectScriptableEvent))]
-    public class GameObjectScriptableEventEditor : BaseScriptableEventEditor<UnityEngine.GameObject>
+    public class GameObjectScriptableEventEditor
+        : TypedScriptableEventEditor<UnityEngine.GameObject>
     {
         protected override UnityEngine.GameObject DrawArgField(UnityEngine.GameObject value)
         {

@@ -43,7 +43,7 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Overrides
+        #region Public Methods
 
         public void OnRaised(TArg arg)
         {

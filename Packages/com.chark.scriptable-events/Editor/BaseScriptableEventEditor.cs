@@ -1,12 +1,13 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
     [CanEditMultipleObjects]
-    public abstract class BaseScriptableEventEditor<TArg> : UnityEditor.Editor
+    [CustomEditor(typeof(BaseScriptableEvent<>), true)]
+    public class BaseScriptableEventEditor : UnityEditor.Editor
     {
         #region Fields
 
@@ -18,11 +19,10 @@ namespace ScriptableEvents.Editor
         private GUIContent descriptionLabelContent;
         private GUIContent suppressExceptionsLabelContent;
         private GUIContent traceLabelContent;
-        private GUIContent raiseLabelContent;
         private GUIContent listenerLabelContent;
 
         // Target properties.
-        private BaseScriptableEvent<TArg> scriptableEvent;
+        private ScriptableObject scriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -36,27 +36,22 @@ namespace ScriptableEvents.Editor
         private GUIStyle descriptionStyle;
         private float descriptionWidth;
 
-        private TArg argValue;
-
         #endregion
 
         #region Unity Lifecycle
 
-        public void OnEnable()
+        internal virtual void OnEnable()
         {
             descriptionLabelContent = CreateLabelContent("description");
             suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
             traceLabelContent = CreateLabelContent("trace");
-            raiseLabelContent = new GUIContent(
-                "Raise Event",
-                "Raise event and trigger added listeners (play mode only)"
-            );
+
             listenerLabelContent = new GUIContent(
                 "Added Listeners",
                 "Added listeners to this event (play mode only)"
             );
 
-            scriptableEvent = target as BaseScriptableEvent<TArg>;
+            scriptableEvent = target as ScriptableObject;
             monoScript = MonoScript.FromScriptableObject(scriptableEvent);
 
             descriptionProperty = serializedObject.FindProperty("description");
@@ -68,47 +63,42 @@ namespace ScriptableEvents.Editor
         public override void OnInspectorGUI()
         {
             DrawMonoScript();
+            SetupStyles();
 
             EditorGUI.BeginChangeCheck();
-
-            SetupStyles();
             DrawDescription();
 
             EditorGUILayout.Space();
             DrawSuppressExceptions();
             DrawTrace();
-
-            EditorGUILayout.Space();
-            DrawRaise();
+            DrawAdditionalProperties();
 
             if (EditorGUI.EndChangeCheck())
             {
                 serializedObject.ApplyModifiedProperties();
             }
 
-            EditorGUILayout.Space();
             DrawListeners();
         }
 
         #endregion
 
-        #region Overrides
+        #region Internal Methods
 
-        /// <returns>
-        /// Value that is entered in the event argument field.
-        /// </returns>
-        protected abstract TArg DrawArgField(TArg value);
+        internal virtual void DrawAdditionalProperties()
+        {
+        }
 
         #endregion
 
-        #region Methods
+        #region Private Methods
 
         private static GUIContent CreateLabelContent(string fieldName)
         {
             var text = ObjectNames.NicifyVariableName(fieldName);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            var tooltip = typeof(BaseScriptableEvent<TArg>)
+            var tooltip = typeof(BaseScriptableEvent<>)
                 .GetField(fieldName, PrivateFieldBindingFlags)
                 .GetCustomAttribute<TooltipAttribute>()
                 .tooltip;
@@ -190,57 +180,49 @@ namespace ScriptableEvents.Editor
             );
         }
 
-        private void DrawRaise()
-        {
-            // Label.
-            EditorGUILayout.LabelField(raiseLabelContent);
-            GUI.enabled = Application.isPlaying;
-
-            // Edit mode input.
-            GUILayout.BeginHorizontal();
-
-            argValue = DrawArgField(argValue);
-            if (GUILayout.Button("Raise"))
-            {
-                scriptableEvent.Raise(argValue);
-            }
-
-            GUILayout.EndHorizontal();
-            GUI.enabled = true;
-        }
-
         private void DrawListeners()
         {
             EditorGUILayout.LabelField(listenerLabelContent);
 
-            // Edit mode info.
-            if (!Application.isPlaying)
+            if (Application.isPlaying)
+            {
+                var baseScriptableEventType = scriptableEvent.GetType().BaseType;
+
+                // ReSharper disable once PossibleNullReferenceException
+                var listenersField = baseScriptableEventType
+                    .GetField("listeners", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                // ReSharper disable once PossibleNullReferenceException
+                var listeners = listenersField
+                    .GetValue(scriptableEvent) as IEnumerable;
+
+                var listenerCount = 0;
+
+                // ReSharper disable once PossibleNullReferenceException
+                foreach (var listener in listeners)
+                {
+                    if (listener is MonoBehaviour behaviour)
+                    {
+                        EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
+                    }
+
+                    listenerCount++;
+                }
+
+                if (listenerCount == 0)
+                {
+                    EditorGUILayout.HelpBox(
+                        "There are no listeners added to this event",
+                        MessageType.Warning
+                    );
+                }
+            }
+            else
             {
                 EditorGUILayout.HelpBox(
                     "Added listeners will be displayed here",
                     MessageType.Info
                 );
-
-                return;
-            }
-
-            // Play mode info.
-            if (scriptableEvent.Listeners.Count == 0)
-            {
-                EditorGUILayout.HelpBox(
-                    "There are no listeners added to this event",
-                    MessageType.Warning
-                );
-
-                return;
-            }
-
-            foreach (var listener in scriptableEvent.Listeners)
-            {
-                if (listener is MonoBehaviour behaviour)
-                {
-                    EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
-                }
             }
         }
 

@@ -1,13 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace ScriptableEvents
+﻿namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
-#if UNITY_EDITOR
-        ICollection<object> RawEditorListeners { get; }
-#endif
-
         /// <summary>
         /// Raise this event with an argument.
         /// </summary>
