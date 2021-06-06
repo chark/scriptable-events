@@ -1,13 +1,6 @@
 ﻿using System.Collections;
-using ScriptableEvents.Bool;
-using ScriptableEvents.Float;
-using ScriptableEvents.GameObject;
-using ScriptableEvents.Int;
-using ScriptableEvents.Simple;
-using ScriptableEvents.String;
-using ScriptableEvents.Transform;
-using ScriptableEvents.Vector2;
-using ScriptableEvents.Vector3;
+using ScriptableEvents.Events;
+using ScriptableEvents.Listeners;
 
 namespace ScriptableEvents.Editor.Tests
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using ScriptableEvents.Simple;
+using ScriptableEvents.Events;
 using UnityEngine;
 
 namespace ScriptableEvents.Tests

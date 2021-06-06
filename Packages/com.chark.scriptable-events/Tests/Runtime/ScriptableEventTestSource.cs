@@ -1,15 +1,9 @@
 ﻿using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using ScriptableEvents.Bool;
-using ScriptableEvents.Float;
-using ScriptableEvents.GameObject;
-using ScriptableEvents.Int;
-using ScriptableEvents.Simple;
-using ScriptableEvents.String;
-using ScriptableEvents.Transform;
-using ScriptableEvents.Vector2;
-using ScriptableEvents.Vector3;
+using ScriptableEvents.Events;
+using ScriptableEvents.Listeners;
+using UnityEngine;
 
 namespace ScriptableEvents.Tests
 {
@@ -30,7 +24,7 @@ namespace ScriptableEvents.Tests
             yield return CreateTestCase<
                 GameObjectScriptableEvent,
                 GameObjectScriptableEventListener
-            >(new UnityEngine.GameObject());
+            >(new GameObject());
 
             yield return CreateTestCase<
                 IntScriptableEvent,
@@ -50,17 +44,17 @@ namespace ScriptableEvents.Tests
             yield return CreateTestCase<
                 TransformScriptableEvent,
                 TransformScriptableEventListener
-            >(new UnityEngine.GameObject().transform);
+            >(new GameObject().transform);
 
             yield return CreateTestCase<
                 Vector2ScriptableEvent,
                 Vector2ScriptableEventListener
-            >(UnityEngine.Vector2.one);
+            >(Vector2.one);
 
             yield return CreateTestCase<
                 Vector3ScriptableEvent,
                 Vector3ScriptableEventListener
-            >(UnityEngine.Vector3.one);
+            >(Vector3.one);
         }
 
         private static TestFixtureParameters CreateTestCase<
