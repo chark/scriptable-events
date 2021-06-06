@@ -11,10 +11,6 @@ namespace ScriptableEvents.Editor
     {
         #region Fields
 
-        // Reflection.
-        private const BindingFlags PrivateFieldBindingFlags =
-            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
-
         // Labels.
         private GUIContent descriptionLabelContent;
         private GUIContent suppressExceptionsLabelContent;
@@ -96,14 +92,24 @@ namespace ScriptableEvents.Editor
         private static GUIContent CreateLabelContent(string fieldName)
         {
             var text = ObjectNames.NicifyVariableName(fieldName);
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var tooltip = typeof(BaseScriptableEvent<>)
-                .GetField(fieldName, PrivateFieldBindingFlags)
-                .GetCustomAttribute<TooltipAttribute>()
-                .tooltip;
+            var tooltip = GetTooltip(fieldName);
 
             return new GUIContent(text, tooltip);
+        }
+
+        private static string GetTooltip(string fieldName)
+        {
+            var field = typeof(BaseScriptableEvent<>)
+                .GetField(
+                    fieldName,
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                );
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var attribute = field
+                .GetCustomAttribute<TooltipAttribute>();
+
+            return attribute.tooltip;
         }
 
         private void DrawMonoScript()
@@ -186,20 +192,10 @@ namespace ScriptableEvents.Editor
 
             if (Application.isPlaying)
             {
-                var baseScriptableEventType = scriptableEvent.GetType().BaseType;
-
-                // ReSharper disable once PossibleNullReferenceException
-                var listenersField = baseScriptableEventType
-                    .GetField("listeners", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                // ReSharper disable once PossibleNullReferenceException
-                var listeners = listenersField
-                    .GetValue(scriptableEvent) as IEnumerable;
-
                 var listenerCount = 0;
 
                 // ReSharper disable once PossibleNullReferenceException
-                foreach (var listener in listeners)
+                foreach (var listener in GetListeners())
                 {
                     if (listener is MonoBehaviour behaviour)
                     {
@@ -224,6 +220,21 @@ namespace ScriptableEvents.Editor
                     MessageType.Info
                 );
             }
+        }
+
+        private IEnumerable GetListeners()
+        {
+            var baseScriptableEventType = scriptableEvent.GetType().BaseType;
+
+            // ReSharper disable once PossibleNullReferenceException
+            var listenersField = baseScriptableEventType
+                .GetField("listeners", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            // ReSharper disable once PossibleNullReferenceException
+            var listeners = listenersField
+                .GetValue(scriptableEvent) as IEnumerable;
+
+            return listeners;
         }
 
         #endregion

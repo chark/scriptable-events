@@ -125,7 +125,7 @@ namespace ScriptableEvents.Tests
 
         private void SetupScriptableEventListener()
         {
-            var gameObject = new UnityEngine.GameObject();
+            var gameObject = new GameObject();
             gameObject.SetActive(false);
 
             scriptableEventListener = gameObject.AddComponent<TScriptableEventListener>();
