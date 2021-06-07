@@ -18,7 +18,7 @@ namespace ScriptableEvents.Editor
         private GUIContent listenerLabelContent;
 
         // Target properties.
-        private ScriptableObject scriptableEvent;
+        private ScriptableObject rawScriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -30,6 +30,8 @@ namespace ScriptableEvents.Editor
         // Cached styles.
         private GUIStyle descriptionLockStyle;
         private GUIStyle descriptionStyle;
+        private GUIStyle listenerSubLabelStyle;
+
         private float descriptionWidth;
 
         #endregion
@@ -41,14 +43,13 @@ namespace ScriptableEvents.Editor
             descriptionLabelContent = CreateLabelContent("description");
             suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
             traceLabelContent = CreateLabelContent("trace");
-
             listenerLabelContent = new GUIContent(
                 "Added Listeners",
                 "Added listeners to this event (play mode only)"
             );
 
-            scriptableEvent = target as ScriptableObject;
-            monoScript = MonoScript.FromScriptableObject(scriptableEvent);
+            rawScriptableEvent = target as ScriptableObject;
+            monoScript = MonoScript.FromScriptableObject(rawScriptableEvent);
 
             descriptionProperty = serializedObject.FindProperty("description");
             lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
@@ -115,7 +116,7 @@ namespace ScriptableEvents.Editor
         private void DrawMonoScript()
         {
             GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", monoScript, scriptableEvent.GetType(), false);
+            EditorGUILayout.ObjectField("Script", monoScript, rawScriptableEvent.GetType(), false);
             GUI.enabled = true;
         }
 
@@ -139,6 +140,16 @@ namespace ScriptableEvents.Editor
             {
                 var descriptionLabelSize = EditorStyles.label.CalcSize(descriptionLabelContent);
                 descriptionWidth = descriptionLabelSize.x;
+            }
+
+            if (listenerSubLabelStyle == null)
+            {
+                var labelSkin = GUI.skin.label;
+                listenerSubLabelStyle = new GUIStyle(labelSkin)
+                {
+                    fontSize = (int) (labelSkin.fontSize * 0.9f),
+                    wordWrap = true
+                };
             }
         }
 
@@ -192,26 +203,7 @@ namespace ScriptableEvents.Editor
 
             if (Application.isPlaying)
             {
-                var listenerCount = 0;
-
-                // ReSharper disable once PossibleNullReferenceException
-                foreach (var listener in GetListeners())
-                {
-                    if (listener is MonoBehaviour behaviour)
-                    {
-                        EditorGUILayout.ObjectField(behaviour, typeof(Object), true);
-                    }
-
-                    listenerCount++;
-                }
-
-                if (listenerCount == 0)
-                {
-                    EditorGUILayout.HelpBox(
-                        "There are no listeners added to this event",
-                        MessageType.Warning
-                    );
-                }
+                DrawPlayModeListeners();
             }
             else
             {
@@ -222,17 +214,69 @@ namespace ScriptableEvents.Editor
             }
         }
 
+        private void DrawPlayModeListeners()
+        {
+            CountListeners(out var listenerObjectCount, out var listenerRawCount);
+            if (listenerObjectCount == 0 && listenerRawCount == 0)
+            {
+                EditorGUILayout.HelpBox(
+                    "There are no listeners added to this event",
+                    MessageType.Warning
+                );
+
+                return;
+            }
+
+            EditorGUILayout.LabelField(
+                $"This event contains {listenerObjectCount} UnityEngine.Object listeners and " +
+                $"{listenerRawCount} other listeners",
+                listenerSubLabelStyle
+            );
+
+            DrawListenerFields();
+        }
+
+        private void CountListeners(out int listenerObjectCount, out int listenerRawCount)
+        {
+            listenerObjectCount = 0;
+            listenerRawCount = 0;
+
+            foreach (var listener in GetListeners())
+            {
+                if (listener is Object)
+                {
+                    listenerObjectCount++;
+                }
+                else
+                {
+                    listenerRawCount++;
+                }
+            }
+        }
+
+        private void DrawListenerFields()
+        {
+            foreach (var listener in GetListeners())
+            {
+                if (listener is Object listenerObject)
+                {
+                    EditorGUILayout.ObjectField(listenerObject, typeof(Object), true);
+                }
+            }
+        }
+
         private IEnumerable GetListeners()
         {
-            var baseScriptableEventType = scriptableEvent.GetType().BaseType;
+            var baseScriptableEventType = rawScriptableEvent.GetType().BaseType;
 
             // ReSharper disable once PossibleNullReferenceException
-            var listenersField = baseScriptableEventType
-                .GetField("listeners", BindingFlags.Instance | BindingFlags.NonPublic);
+            var listenersField = baseScriptableEventType.GetField(
+                "listeners",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
 
             // ReSharper disable once PossibleNullReferenceException
-            var listeners = listenersField
-                .GetValue(scriptableEvent) as IEnumerable;
+            var listeners = listenersField.GetValue(rawScriptableEvent) as IEnumerable;
 
             return listeners;
         }
