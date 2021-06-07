@@ -208,7 +208,7 @@ namespace ScriptableEvents.Editor
             else
             {
                 EditorGUILayout.HelpBox(
-                    "Added listeners will be displayed here",
+                    "Added listeners will be displayed here during playmode",
                     MessageType.Info
                 );
             }

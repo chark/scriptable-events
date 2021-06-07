@@ -1,4 +1,4 @@
-﻿namespace ScriptableEvents
+﻿namespace ScriptableEvents.Events
 {
     public class SimpleArg
     {

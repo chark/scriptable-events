@@ -9,6 +9,7 @@ namespace ScriptableEvents
         #region Editor
 
         [SerializeField]
+        [Tooltip("ScriptableEvent that triggers the onRaised UnityEvent")]
         private BaseScriptableEvent<TArg> scriptableEvent;
 
         [Space]
@@ -24,6 +25,7 @@ namespace ScriptableEvents
             if (scriptableEvent == null)
             {
                 Debug.LogError("ScriptableEvent is not assigned", this);
+                enabled = false;
                 return;
             }
 
@@ -34,7 +36,6 @@ namespace ScriptableEvents
         {
             if (scriptableEvent == null)
             {
-                // Can exit without logging as OnEnable should give enough info.
                 return;
             }
 
