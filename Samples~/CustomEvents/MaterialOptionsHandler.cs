@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace ScriptableEvents.Samples.CustomEvents
 {
     public class MaterialOptionsHandler : MonoBehaviour
     {
         [SerializeField]
-        private MaterialDataUnityEvent onMaterialChanged;
+        private UnityEvent<MaterialData> onMaterialChanged;
 
         private float metallic;
         private Color color = Color.white;

@@ -9,7 +9,10 @@ namespace ScriptableEvents.Samples.CustomEvents.Editor
     {
         protected override MaterialData DrawArgField(MaterialData value)
         {
-            value = new MaterialData(0f, Color.white);
+            if (value == null)
+            {
+                value = new MaterialData(0f, Color.white);
+            }
 
             EditorGUILayout.BeginVertical();
             var metallic = EditorGUILayout.Slider("Metallic", value.Metallic, 0f, 1f);
