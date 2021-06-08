@@ -4,22 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2021-06-01
-This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) to utilise generics.
+## [2.0.0] - 2021-06-08
+This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) in order to utilise generics.
 
 ### Added
-- Additional information will be shown on listener count on each `ScriptableEvent` asset, below "Added Listeners" label.
-- `TypedScriptableEventEditor`, which should be used if `Raise` button is required on event assets. The `BaseScriptableEvent` should no longer be used to.
+- `Add(Action<T>)` and `Remove(Action<T>)` methods under `IScriptableEvent`.
+- `TypedScriptableEventEditor` which should be used instead of `BaseScriptableEvent` if `Raise` button is required.
+- Additional listener info including listener counts (see below "Added Listeners" label on `IScriptableEvent` assets).
 
 ### Changed
-- Each event now exposes a generic `BaseScriptableEvent<T>` instead of a concrete implementation in the inspector. This means that the additional argument for the event type as well as the `UnityEvent` type is no longer required.
-- `BaseScriptableEventEditor` now by default applies to all `BaseScriptableEvent<T>` assets. This means that users no longer have to implement editors, unless the `Raise` button is required.
+- Each event now exposes a generic `BaseScriptableEvent<T>` instead of a concrete implementation in the inspector. The additional argument for the event type as well as the `UnityEvent` type is no longer required.
+- `BaseScriptableEventEditor` now by default applies to all `BaseScriptableEvent<T>` assets.
 - All events have been moved to `ScriptableEvents.Events` namespace to avoid clashing with Unity namespaces.
 - All listeners have been moved to `ScriptableEvents.Listeners` namespace to avoid clashing with Unity namespaces.
+- `trace` logs will now be logged in listeners to provide more useful info. However, `trace` will not provide listener information if a non-standard listener is used (see BaseScriptableEventListener.LogListenerTrace`).
 
 ### Removed
-- `Listeners` property from `IScriptableEvent` to simplify the API.
-- All `UnityEvent` implementations due to the use of generics.
+- `Listeners` property from `IScriptableEvent`.
+- All `UnityEvent` implementations.
+- Removed duplicate listener check.
 
 ## [1.0.1] - 2021-02-07
 

@@ -10,7 +10,7 @@ namespace ScriptableEvents.Editor
         // Labels.
         private GUIContent raiseLabelContent;
 
-        // Events.
+        // Event.
         private BaseScriptableEvent<TArg> scriptableEvent;
         private TArg argValue;
 

@@ -1,4 +1,6 @@
-﻿namespace ScriptableEvents
+﻿using System;
+
+namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
@@ -13,9 +15,19 @@
         void Add(IScriptableEventListener<TArg> listener);
 
         /// <summary>
+        /// Add a delegate listener to this event.
+        /// </summary>
+        void Add(Action<TArg> listener);
+
+        /// <summary>
         /// Remove a listener from this event.
         /// </summary>
         void Remove(IScriptableEventListener<TArg> listener);
+
+        /// <summary>
+        /// Remove a delegate listener from this event.
+        /// </summary>
+        void Remove(Action<TArg> listener);
 
         /// <summary>
         /// Remove all listeners from this event.
