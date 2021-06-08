@@ -9,33 +9,25 @@ namespace ScriptableEvents.Editor.Tests
         public IEnumerator GetEnumerator()
         {
             yield return CreateTestCase<
+                SimpleScriptableEvent,
+                SimpleScriptableEventListener
+            >(
+                "SimpleScriptableEvent",
+                "Scriptable Events/Simple Scriptable Event",
+                "Scriptable Events/Simple Scriptable Event Listener",
+                -100
+            );
+
+            #region Primitives
+
+            yield return CreateTestCase<
                 BoolScriptableEvent,
                 BoolScriptableEventListener
             >(
                 "BoolScriptableEvent",
                 "Scriptable Events/Bool Scriptable Event",
                 "Scriptable Events/Bool Scriptable Event Listener",
-                1
-            );
-
-            yield return CreateTestCase<
-                FloatScriptableEvent,
-                FloatScriptableEventListener
-            >(
-                "FloatScriptableEvent",
-                "Scriptable Events/Float Scriptable Event",
-                "Scriptable Events/Float Scriptable Event Listener",
-                2
-            );
-
-            yield return CreateTestCase<
-                GameObjectScriptableEvent,
-                GameObjectScriptableEventListener
-            >(
-                "GameObjectScriptableEvent",
-                "Scriptable Events/Game Object Scriptable Event",
-                "Scriptable Events/Game Object Scriptable Event Listener",
-                3
+                0
             );
 
             yield return CreateTestCase<
@@ -45,17 +37,37 @@ namespace ScriptableEvents.Editor.Tests
                 "IntScriptableEvent",
                 "Scriptable Events/Int Scriptable Event",
                 "Scriptable Events/Int Scriptable Event Listener",
-                4
+                1
             );
 
             yield return CreateTestCase<
-                SimpleScriptableEvent,
-                SimpleScriptableEventListener
+                LongScriptableEvent,
+                LongScriptableEventListener
             >(
-                "SimpleScriptableEvent",
-                "Scriptable Events/Simple Scriptable Event",
-                "Scriptable Events/Simple Scriptable Event Listener",
-                -10
+                "LongScriptableEvent",
+                "Scriptable Events/Long Scriptable Event",
+                "Scriptable Events/Long Scriptable Event Listener",
+                2
+            );
+
+            yield return CreateTestCase<
+                FloatScriptableEvent,
+                FloatScriptableEventListener
+            >(
+                "FloatScriptableEvent",
+                "Scriptable Events/Float Scriptable Event",
+                "Scriptable Events/Float Scriptable Event Listener",
+                3
+            );
+
+            yield return CreateTestCase<
+                DoubleScriptableEvent,
+                DoubleScriptableEventListener
+            >(
+                "DoubleScriptableEvent",
+                "Scriptable Events/Double Scriptable Event",
+                "Scriptable Events/Double Scriptable Event Listener",
+                4
             );
 
             yield return CreateTestCase<
@@ -68,15 +80,9 @@ namespace ScriptableEvents.Editor.Tests
                 5
             );
 
-            yield return CreateTestCase<
-                TransformScriptableEvent,
-                TransformScriptableEventListener
-            >(
-                "TransformScriptableEvent",
-                "Scriptable Events/Transform Scriptable Event",
-                "Scriptable Events/Transform Scriptable Event Listener",
-                6
-            );
+            #endregion
+
+            #region Structs
 
             yield return CreateTestCase<
                 Vector2ScriptableEvent,
@@ -85,7 +91,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector2ScriptableEvent",
                 "Scriptable Events/Vector2 Scriptable Event",
                 "Scriptable Events/Vector2 Scriptable Event Listener",
-                7
+                100
             );
 
             yield return CreateTestCase<
@@ -95,8 +101,95 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector3ScriptableEvent",
                 "Scriptable Events/Vector3 Scriptable Event",
                 "Scriptable Events/Vector3 Scriptable Event Listener",
-                8
+                101
             );
+
+
+            yield return CreateTestCase<
+                Collision2DScriptableEvent,
+                Collision2DScriptableEventListener
+            >(
+                "Collision2DScriptableEvent",
+                "Scriptable Events/Collision 2D Scriptable Event",
+                "Scriptable Events/Collision 2D Scriptable Event Listener",
+                102
+            );
+
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener
+            >(
+                "CollisionScriptableEvent",
+                "Scriptable Events/Collision Scriptable Event",
+                "Scriptable Events/Collision Scriptable Event Listener",
+                103
+            );
+
+            yield return CreateTestCase<
+                QuaternionScriptableEvent,
+                QuaternionScriptableEventListener
+            >(
+                "QuaternionScriptableEvent",
+                "Scriptable Events/Quaternion Scriptable Event",
+                "Scriptable Events/Quaternion Scriptable Event Listener",
+                104
+            );
+
+            yield return CreateTestCase<
+                ColorScriptableEvent,
+                ColorScriptableEventListener
+            >(
+                "ColorScriptableEvent",
+                "Scriptable Events/Color Scriptable Event",
+                "Scriptable Events/Color Scriptable Event Listener",
+                105
+            );
+
+            #endregion
+
+            #region Objects
+
+            yield return CreateTestCase<
+                Collider2DScriptableEvent,
+                Collider2DScriptableEventListener
+            >(
+                "Collider2DScriptableEvent",
+                "Scriptable Events/Collider 2D Scriptable Event",
+                "Scriptable Events/Collider 2D Scriptable Event Listener",
+                200
+            );
+
+            yield return CreateTestCase<
+                ColliderScriptableEvent,
+                ColliderScriptableEventListener
+            >(
+                "ColliderScriptableEvent",
+                "Scriptable Events/Collider Scriptable Event",
+                "Scriptable Events/Collider Scriptable Event Listener",
+                201
+            );
+
+            yield return CreateTestCase<
+                GameObjectScriptableEvent,
+                GameObjectScriptableEventListener
+            >(
+                "GameObjectScriptableEvent",
+                "Scriptable Events/Game Object Scriptable Event",
+                "Scriptable Events/Game Object Scriptable Event Listener",
+                202
+            );
+
+            yield return CreateTestCase<
+                TransformScriptableEvent,
+                TransformScriptableEventListener
+            >(
+                "TransformScriptableEvent",
+                "Scriptable Events/Transform Scriptable Event",
+                "Scriptable Events/Transform Scriptable Event Listener",
+                203
+            );
+
+            #endregion
         }
 
         private static object[] CreateTestCase<

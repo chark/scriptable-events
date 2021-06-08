@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Bool Scriptable Event Listener", 1)]
+    [AddComponentMenu("Scriptable Events/Bool Scriptable Event Listener", 0)]
     public class BoolScriptableEventListener : BaseScriptableEventListener<bool>
     {
     }

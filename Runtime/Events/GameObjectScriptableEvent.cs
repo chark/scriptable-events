@@ -5,7 +5,7 @@ namespace ScriptableEvents.Events
     [CreateAssetMenu(
         fileName = "GameObjectScriptableEvent",
         menuName = "Scriptable Events/Game Object Scriptable Event",
-        order = 3
+        order = 202
     )]
     public class GameObjectScriptableEvent : BaseScriptableEvent<GameObject>
     {
