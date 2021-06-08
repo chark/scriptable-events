@@ -11,6 +11,7 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - `Add(Action<T>)` and `Remove(Action<T>)` methods under `IScriptableEvent`.
 - `TypedScriptableEventEditor` which should be used instead of `BaseScriptableEvent` if `Raise` button is required.
 - Additional listener info including listener counts (see below "Added Listeners" label on `IScriptableEvent` assets).
+- Events, listeners and editors (except for `Collision*` as them doesn't make sense to raise it by hand) for `long`, `double`, `Quaternion`, `Collider`, `Collider2D`, `Collision`, `Collision2D` types.
 
 ### Changed
 - Each event now exposes a generic `BaseScriptableEvent<T>` instead of a concrete implementation in the inspector. The additional argument for the event type as well as the `UnityEvent` type is no longer required.
@@ -18,6 +19,7 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - All events have been moved to `ScriptableEvents.Events` namespace to avoid clashing with Unity namespaces.
 - All listeners have been moved to `ScriptableEvents.Listeners` namespace to avoid clashing with Unity namespaces.
 - `trace` logs will now be logged in listeners to provide more useful info. However, `trace` will not provide listener information if a non-standard listener is used (see BaseScriptableEventListener.LogListenerTrace`).
+- Order of components and scriptable events in menus.
 
 ### Removed
 - `Listeners` property from `IScriptableEvent`.
