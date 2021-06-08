@@ -70,15 +70,6 @@ namespace ScriptableEvents.Tests
         }
 
         [Test]
-        public void ShouldAddListenerTwiceAndRaiseEventOnce()
-        {
-            scriptableEvent.Add(scriptableEventListener);
-            scriptableEvent.Raise(arg);
-
-            Assert.AreEqual(1, capturedArgs.Count);
-        }
-
-        [Test]
         public void ShouldRemoveListenerAndRaiseEvent()
         {
             scriptableEvent.Remove(scriptableEventListener);
@@ -91,6 +82,32 @@ namespace ScriptableEvents.Tests
         public void ShouldClearAndRaiseEvent()
         {
             scriptableEvent.Clear();
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(0, capturedArgs.Count);
+        }
+
+        [Test]
+        public void ShouldAddActionListenerAndRaise()
+        {
+            scriptableEvent.Clear();
+
+            var listener = new Action<TArg>(capturedArgs.Add);
+            scriptableEvent.Add(listener);
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(1, capturedArgs.Count);
+        }
+
+
+        [Test]
+        public void ShouldAddAndRemoveActionListenerAndRaise()
+        {
+            scriptableEvent.Clear();
+
+            var listener = new Action<TArg>(capturedArgs.Add);
+            scriptableEvent.Add(listener);
+            scriptableEvent.Remove(listener);
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
