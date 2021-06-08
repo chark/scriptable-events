@@ -48,7 +48,21 @@ namespace ScriptableEvents
 
         public void OnRaised(TArg arg)
         {
+            if (scriptableEvent.Trace)
+            {
+                LogListenerTrace(arg);
+            }
+
             onRaised.Invoke(arg);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void LogListenerTrace(TArg arg)
+        {
+            Debug.Log($"Raised: {name}, arg: {arg}", this);
         }
 
         #endregion

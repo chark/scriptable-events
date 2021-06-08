@@ -29,9 +29,25 @@ namespace ScriptableEvents
 
         #region Fields
 
-        [NonSerialized]
-        private readonly List<IScriptableEventListener<TArg>> listeners
-            = new List<IScriptableEventListener<TArg>>();
+        private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
+
+#if UNITY_EDITOR
+        private readonly List<UnityEngine.Object> listenerObjects = new List<UnityEngine.Object>();
+#endif
+
+        #endregion
+
+        #region Properties
+
+        internal bool Trace => trace;
+
+#if UNITY_EDITOR
+        // ReSharper disable once UnusedMember.Local
+        private IReadOnlyList<UnityEngine.Object> ListenerObjects => listenerObjects;
+
+        // ReSharper disable once UnusedMember.Local
+        private int ListenerCount => listeners.Count;
+#endif
 
         #endregion
 
@@ -48,14 +64,14 @@ namespace ScriptableEvents
 
         public void Raise(TArg arg)
         {
-            for (var i = listeners.Count - 1; i >= 0; i--)
+            if (trace)
             {
-                var listener = listeners[i];
+                LogEventTrace(arg);
+            }
 
-                if (trace)
-                {
-                    Trace(listener, arg);
-                }
+            for (var index = listeners.Count - 1; index >= 0; index--)
+            {
+                var listener = listeners[index];
 
                 if (suppressExceptions)
                 {
@@ -70,21 +86,35 @@ namespace ScriptableEvents
 
         public void Add(IScriptableEventListener<TArg> listener)
         {
-            if (listeners.Contains(listener))
-            {
-                return;
-            }
+#if UNITY_EDITOR
+            AddListenerObject(listener);
+#endif
+            Add(listener.OnRaised);
+        }
 
+        public void Add(Action<TArg> listener)
+        {
             listeners.Add(listener);
         }
 
         public void Remove(IScriptableEventListener<TArg> listener)
+        {
+#if UNITY_EDITOR
+            RemoveListenerObject(listener);
+#endif
+            Remove(listener.OnRaised);
+        }
+
+        public void Remove(Action<TArg> listener)
         {
             listeners.Remove(listener);
         }
 
         public void Clear()
         {
+#if UNITY_EDITOR
+            ClearListenerObjects();
+#endif
             listeners.Clear();
         }
 
@@ -92,32 +122,50 @@ namespace ScriptableEvents
 
         #region Private Methods
 
-        private void Trace(IScriptableEventListener<TArg> listener, TArg arg)
+        private void LogEventTrace(TArg arg)
         {
-            Debug.Log($"Raise event: {name}, listener: {listener}, arg: {arg}", this);
+            Debug.Log($"Raise: {name}, arg: {arg}", this);
         }
 
-        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg arg)
+        private void OnRaiseSuppressed(Action<TArg> listener, TArg arg)
         {
             try
             {
-                listener.OnRaised(arg);
+                listener.Invoke(arg);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Debug.LogError(
-                    $"Listener: {listener} of event: {name} has thrown an exception.",
-                    this
-                );
-
-                Debug.LogException(e, this);
+                Debug.LogException(exception, this);
             }
         }
 
-        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg arg)
+        private static void OnRaise(Action<TArg> listener, TArg arg)
         {
-            listener.OnRaised(arg);
+            listener.Invoke(arg);
         }
+
+#if UNITY_EDITOR
+        private void AddListenerObject(IScriptableEventListener<TArg> listener)
+        {
+            if (listener is UnityEngine.Object listenerObject)
+            {
+                listenerObjects.Add(listenerObject);
+            }
+        }
+
+        private void RemoveListenerObject(IScriptableEventListener<TArg> listener)
+        {
+            if (listener is UnityEngine.Object listenerObject)
+            {
+                listenerObjects.Remove(listenerObject);
+            }
+        }
+
+        private void ClearListenerObjects()
+        {
+            listenerObjects.Clear();
+        }
+#endif
 
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -18,7 +18,6 @@ namespace ScriptableEvents.Editor
         private GUIContent listenerLabelContent;
 
         // Target properties.
-        private ScriptableObject rawScriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -40,27 +39,16 @@ namespace ScriptableEvents.Editor
 
         internal virtual void OnEnable()
         {
-            descriptionLabelContent = CreateLabelContent("description");
-            suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
-            traceLabelContent = CreateLabelContent("trace");
-            listenerLabelContent = new GUIContent(
-                "Added Listeners",
-                "Added listeners to this event (play mode only)"
-            );
-
-            rawScriptableEvent = target as ScriptableObject;
-            monoScript = MonoScript.FromScriptableObject(rawScriptableEvent);
-
-            descriptionProperty = serializedObject.FindProperty("description");
-            lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
-            suppressExceptionsProperty = serializedObject.FindProperty("suppressExceptions");
-            traceProperty = serializedObject.FindProperty("trace");
+            SetupLabelContent();
+            SetupMonoScript();
+            SetupSerializedProperties();
         }
 
         public override void OnInspectorGUI()
         {
-            DrawMonoScript();
             SetupStyles();
+
+            DrawMonoScript();
 
             EditorGUI.BeginChangeCheck();
             DrawDescription();
@@ -75,6 +63,7 @@ namespace ScriptableEvents.Editor
                 serializedObject.ApplyModifiedProperties();
             }
 
+            EditorGUILayout.Space();
             DrawListeners();
         }
 
@@ -88,90 +77,120 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Private Methods
+        #region Setup Methods
 
-        private static GUIContent CreateLabelContent(string fieldName)
+        private void SetupLabelContent()
         {
-            var text = ObjectNames.NicifyVariableName(fieldName);
-            var tooltip = GetTooltip(fieldName);
-
-            return new GUIContent(text, tooltip);
+            descriptionLabelContent = CreateLabelContent("description");
+            suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
+            traceLabelContent = CreateLabelContent("trace");
+            listenerLabelContent = new GUIContent(
+                "Added Listeners",
+                "Added listeners to this event (play mode only)"
+            );
         }
 
-        private static string GetTooltip(string fieldName)
+        private void SetupMonoScript()
         {
-            var field = typeof(BaseScriptableEvent<>)
-                .GetField(
-                    fieldName,
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
-                );
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var attribute = field
-                .GetCustomAttribute<TooltipAttribute>();
-
-            return attribute.tooltip;
+            var scriptableObject = target as ScriptableObject;
+            monoScript = MonoScript.FromScriptableObject(scriptableObject);
         }
 
-        private void DrawMonoScript()
+        private void SetupSerializedProperties()
         {
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", monoScript, rawScriptableEvent.GetType(), false);
-            GUI.enabled = true;
+            descriptionProperty = serializedObject.FindProperty("description");
+            lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
+            suppressExceptionsProperty = serializedObject.FindProperty("suppressExceptions");
+            traceProperty = serializedObject.FindProperty("trace");
         }
 
         private void SetupStyles()
         {
             if (descriptionLockStyle == null)
             {
-                descriptionLockStyle = GUI.skin.GetStyle("IN LockButton");
+                SetupDescriptionLockStyle();
             }
 
             if (descriptionStyle == null)
             {
-                descriptionStyle = new GUIStyle(EditorStyles.textArea)
-                {
-                    richText = true,
-                    wordWrap = true
-                };
+                SetupDescriptionStyle();
             }
 
             if (descriptionWidth <= 0)
             {
-                var descriptionLabelSize = EditorStyles.label.CalcSize(descriptionLabelContent);
-                descriptionWidth = descriptionLabelSize.x;
+                SetupDescriptionWidth();
             }
 
             if (listenerSubLabelStyle == null)
             {
-                var labelSkin = GUI.skin.label;
-                listenerSubLabelStyle = new GUIStyle(labelSkin)
-                {
-                    fontSize = (int) (labelSkin.fontSize * 0.9f),
-                    wordWrap = true
-                };
+                SetupListenerSubLabelStyle();
             }
+        }
+
+        private void SetupDescriptionLockStyle()
+        {
+            descriptionLockStyle = GUI.skin.GetStyle("IN LockButton");
+        }
+
+        private void SetupDescriptionStyle()
+        {
+            descriptionStyle = new GUIStyle(EditorStyles.textArea)
+            {
+                richText = true,
+                wordWrap = true
+            };
+        }
+
+        private void SetupDescriptionWidth()
+        {
+            var descriptionLabelSize = EditorStyles.label.CalcSize(descriptionLabelContent);
+            descriptionWidth = descriptionLabelSize.x;
+        }
+
+        private void SetupListenerSubLabelStyle()
+        {
+            var labelSkin = GUI.skin.label;
+            listenerSubLabelStyle = new GUIStyle(labelSkin)
+            {
+                fontSize = (int) (labelSkin.fontSize * 0.9f),
+                wordWrap = true
+            };
+        }
+
+        #endregion
+
+        #region Private Draw Methods
+
+        private void DrawMonoScript()
+        {
+            GUI.enabled = false;
+            EditorGUILayout.ObjectField("Script", monoScript, target.GetType(), false);
+            GUI.enabled = true;
         }
 
         private void DrawDescription()
         {
-            // Label.
             EditorGUILayout.LabelField(descriptionLabelContent);
+            DrawDescriptionLockButton();
+            DrawDescriptionTextArea();
+        }
 
-            // Label position.
+        private void DrawDescriptionLockButton()
+        {
             var position = GUILayoutUtility.GetLastRect();
             position.width = descriptionLockStyle.fixedWidth;
             position.x = position.xMin + descriptionWidth;
 
-            // Lock button.
             lockDescriptionProperty.boolValue = EditorGUI.Toggle(
                 position,
                 GUIContent.none,
                 lockDescriptionProperty.boolValue,
                 descriptionLockStyle
             );
+        }
 
-            // Text.
+        private void DrawDescriptionTextArea()
+        {
             GUI.enabled = !lockDescriptionProperty.boolValue;
             descriptionProperty.stringValue = EditorGUILayout.TextArea(
                 descriptionProperty.stringValue,
@@ -216,8 +235,8 @@ namespace ScriptableEvents.Editor
 
         private void DrawPlayModeListeners()
         {
-            CountListeners(out var listenerObjectCount, out var listenerRawCount);
-            if (listenerObjectCount == 0 && listenerRawCount == 0)
+            var listenerCount = GetPropertyValue<int>("ListenerCount");
+            if (listenerCount == 0)
             {
                 EditorGUILayout.HelpBox(
                     "There are no listeners added to this event",
@@ -227,58 +246,63 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
+            var listenerObjects = GetPropertyValue<IReadOnlyList<Object>>("ListenerObjects");
             EditorGUILayout.LabelField(
-                $"This event contains {listenerObjectCount} UnityEngine.Object listeners and " +
-                $"{listenerRawCount} other listeners",
+                $"Event contains {listenerObjects.Count} UnityEngine.Object listeners and " +
+                $"{listenerCount - listenerObjects.Count} other listeners",
                 listenerSubLabelStyle
             );
 
-            DrawListenerFields();
+            DrawListenerFields(listenerObjects);
         }
 
-        private void CountListeners(out int listenerObjectCount, out int listenerRawCount)
+        private static void DrawListenerFields(IEnumerable<Object> listenerObjects)
         {
-            listenerObjectCount = 0;
-            listenerRawCount = 0;
-
-            foreach (var listener in GetListeners())
+            foreach (var listenerObject in listenerObjects)
             {
-                if (listener is Object)
-                {
-                    listenerObjectCount++;
-                }
-                else
-                {
-                    listenerRawCount++;
-                }
+                EditorGUILayout.ObjectField(listenerObject, typeof(Object), true);
             }
         }
 
-        private void DrawListenerFields()
+        #endregion
+
+        #region Private Utility Methods
+
+        private static GUIContent CreateLabelContent(string fieldName)
         {
-            foreach (var listener in GetListeners())
-            {
-                if (listener is Object listenerObject)
-                {
-                    EditorGUILayout.ObjectField(listenerObject, typeof(Object), true);
-                }
-            }
+            var text = ObjectNames.NicifyVariableName(fieldName);
+            var tooltip = GetTooltip(fieldName);
+
+            return new GUIContent(text, tooltip);
         }
 
-        private IEnumerable GetListeners()
+        private static string GetTooltip(string fieldName)
         {
-            var baseScriptableEventType = rawScriptableEvent.GetType().BaseType;
+            var field = typeof(BaseScriptableEvent<>)
+                .GetField(
+                    fieldName,
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
+                );
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var attribute = field
+                .GetCustomAttribute<TooltipAttribute>();
+
+            return attribute.tooltip;
+        }
+
+        private T GetPropertyValue<T>(string propertyName)
+        {
+            var baseType = target.GetType().BaseType;
 
             // ReSharper disable once PossibleNullReferenceException
-            var listenersField = baseScriptableEventType.GetField(
-                "listeners",
-                BindingFlags.Instance | BindingFlags.NonPublic
+            var property = baseType.GetProperty(
+                propertyName,
+                BindingFlags.NonPublic | BindingFlags.Instance
             );
 
             // ReSharper disable once PossibleNullReferenceException
-            var listeners = listenersField.GetValue(rawScriptableEvent) as IEnumerable;
-
-            return listeners;
+            return (T) property.GetValue(target);
         }
 
         #endregion
