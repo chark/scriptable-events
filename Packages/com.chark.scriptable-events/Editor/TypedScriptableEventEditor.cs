@@ -7,10 +7,8 @@ namespace ScriptableEvents.Editor
     {
         #region Fields
 
-        // Labels.
         private GUIContent raiseLabelContent;
 
-        // Event.
         private BaseScriptableEvent<TArg> scriptableEvent;
         private TArg argValue;
 
@@ -55,11 +53,9 @@ namespace ScriptableEvents.Editor
 
         private void DrawRaise()
         {
-            // Label.
             EditorGUILayout.LabelField(raiseLabelContent);
             GUI.enabled = Application.isPlaying;
 
-            // Edit mode input.
             GUILayout.BeginHorizontal();
 
             argValue = DrawArgField(argValue);
