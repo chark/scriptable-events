@@ -59,7 +59,7 @@ namespace ScriptableEvents.Tests
             LogAssert.ignoreFailingMessages = true;
 
             scriptableEvent.SetField("suppressExceptions", true);
-            scriptableEvent.Add(new MockScriptableEventListener<TArg>
+            scriptableEvent.AddListener(new MockScriptableEventListener<TArg>
             {
                 Action = capturedArg => throw new Exception()
             });
@@ -72,7 +72,7 @@ namespace ScriptableEvents.Tests
         [Test]
         public void ShouldRemoveListenerAndRaiseEvent()
         {
-            scriptableEvent.Remove(scriptableEventListener);
+            scriptableEvent.RemoveListener(scriptableEventListener);
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
@@ -81,33 +81,7 @@ namespace ScriptableEvents.Tests
         [Test]
         public void ShouldClearAndRaiseEvent()
         {
-            scriptableEvent.Clear();
-            scriptableEvent.Raise(arg);
-
-            Assert.AreEqual(0, capturedArgs.Count);
-        }
-
-        [Test]
-        public void ShouldAddActionListenerAndRaise()
-        {
-            scriptableEvent.Clear();
-
-            var listener = new Action<TArg>(capturedArgs.Add);
-            scriptableEvent.Add(listener);
-            scriptableEvent.Raise(arg);
-
-            Assert.AreEqual(1, capturedArgs.Count);
-        }
-
-
-        [Test]
-        public void ShouldAddAndRemoveActionListenerAndRaise()
-        {
-            scriptableEvent.Clear();
-
-            var listener = new Action<TArg>(capturedArgs.Add);
-            scriptableEvent.Add(listener);
-            scriptableEvent.Remove(listener);
+            scriptableEvent.RemoveListeners();
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace ScriptableEvents
 {
@@ -37,21 +35,8 @@ namespace ScriptableEvents
 
         #region Fields
 
-        private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
-
-        #endregion
-
-        #region Custom Editor Fields & Properties
-
-#if UNITY_EDITOR
-        private readonly List<Object> editorListenerObjects = new List<Object>();
-
-        // ReSharper disable once UnusedMember.Local
-        private IReadOnlyList<Object> ListenerObjects => editorListenerObjects;
-
-        // ReSharper disable once UnusedMember.Local
-        private int ListenerCount => listeners.Count;
-#endif
+        private readonly List<IScriptableEventListener<TArg>> listeners =
+            new List<IScriptableEventListener<TArg>>();
 
         #endregion
 
@@ -59,14 +44,14 @@ namespace ScriptableEvents
 
         private void OnDisable()
         {
-            Clear();
+            RemoveListeners();
         }
 
         #endregion
 
         #region Public Methods
 
-        public void Raise(TArg arg)
+        public void Raise(TArg value)
         {
             for (var index = listeners.Count - 1; index >= 0; index--)
             {
@@ -74,30 +59,21 @@ namespace ScriptableEvents
 
                 if (trace)
                 {
-                    LogRaise(listener, arg);
+                    LogRaise(listener, value);
                 }
 
                 if (suppressExceptions)
                 {
-                    OnRaiseSuppressed(listener, arg);
+                    OnRaiseSuppressed(listener, value);
                 }
                 else
                 {
-                    OnRaise(listener, arg);
+                    OnRaise(listener, value);
                 }
             }
         }
 
-        public void Add(IScriptableEventListener<TArg> listener)
-        {
-#if UNITY_EDITOR
-            AddEditorListener(listener);
-#endif
-
-            Add(listener.OnRaised);
-        }
-
-        public void Add(Action<TArg> listener)
+        public void AddListener(IScriptableEventListener<TArg> listener)
         {
             if (trace)
             {
@@ -107,15 +83,7 @@ namespace ScriptableEvents
             listeners.Add(listener);
         }
 
-        public void Remove(IScriptableEventListener<TArg> listener)
-        {
-#if UNITY_EDITOR
-            RemoveEditorListener(listener);
-#endif
-            Remove(listener.OnRaised);
-        }
-
-        public void Remove(Action<TArg> listener)
+        public void RemoveListener(IScriptableEventListener<TArg> listener)
         {
             if (trace)
             {
@@ -125,16 +93,13 @@ namespace ScriptableEvents
             listeners.Remove(listener);
         }
 
-        public void Clear()
+        public void RemoveListeners()
         {
             if (trace)
             {
-                LogClear();
+                LogRemove();
             }
 
-#if UNITY_EDITOR
-            ClearEditorListeners();
-#endif
             listeners.Clear();
         }
 
@@ -142,11 +107,11 @@ namespace ScriptableEvents
 
         #region Private Methods
 
-        private void OnRaiseSuppressed(Action<TArg> listener, TArg arg)
+        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg value)
         {
             try
             {
-                listener.Invoke(arg);
+                listener.OnRaised(value);
             }
             catch (Exception exception)
             {
@@ -154,80 +119,34 @@ namespace ScriptableEvents
             }
         }
 
-        private static void OnRaise(Action<TArg> listener, TArg arg)
+        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg value)
         {
-            listener.Invoke(arg);
+            listener.OnRaised(value);
         }
 
         #endregion
 
         #region Private Logging Methods
 
-        private void LogRaise(Action<TArg> listener, TArg arg)
+        private void LogRaise(IScriptableEventListener<TArg> listener, TArg value)
         {
-            Debug.Log($"Raise listener: {GetListenerName(listener)}, arg: {arg}", this);
+            Debug.Log($"Raise listener: {listener}, value: {value}", this);
         }
 
-        private void LogAdd(Action<TArg> listener)
+        private void LogAdd(IScriptableEventListener<TArg> listener)
         {
-            Debug.Log($"Adding listener: {GetListenerName(listener)}", this);
+            Debug.Log($"Adding listener: {listener}", this);
         }
 
-        private void LogRemove(Action<TArg> listener)
+        private void LogRemove(IScriptableEventListener<TArg> listener)
         {
-            Debug.Log($"Removing listener: {GetListenerName(listener)}", this);
+            Debug.Log($"Removing listener: {listener}", this);
         }
 
-        private void LogClear()
+        private void LogRemove()
         {
-            Debug.Log("Clearing listeners", this);
+            Debug.Log("Removing listeners", this);
         }
-
-        private static string GetListenerName(Action<TArg> listener)
-        {
-            var method = listener.Method;
-            var parameters = method
-                .GetParameters()
-                .Select(parameter => parameter.ParameterType.Name);
-
-            var parameterName = string.Join(", ", parameters);
-            var methodName = $"{method.Name}({parameterName})";
-
-            var reflectedType = method.ReflectedType;
-            if (reflectedType == null)
-            {
-                return methodName;
-            }
-
-            return $"{reflectedType.FullName}.{methodName}";
-        }
-
-        #endregion
-
-        #region Private Custom Editor Methods
-
-#if UNITY_EDITOR
-        private void AddEditorListener(IScriptableEventListener<TArg> listener)
-        {
-            if (listener is Object listenerObject)
-            {
-                editorListenerObjects.Add(listenerObject);
-            }
-        }
-
-        private void RemoveEditorListener(IScriptableEventListener<TArg> listener)
-        {
-            if (listener is Object listenerObject)
-            {
-                editorListenerObjects.Remove(listenerObject);
-            }
-        }
-
-        private void ClearEditorListeners()
-        {
-            editorListenerObjects.Clear();
-        }
-#endif
 
         #endregion
     }

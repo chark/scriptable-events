@@ -20,7 +20,7 @@ namespace ScriptableEvents.Tests
             };
 
             var simpleScriptableEvent = ScriptableObject.CreateInstance<SimpleScriptableEvent>();
-            simpleScriptableEvent.Add(mockScriptableEventListener);
+            simpleScriptableEvent.AddListener(mockScriptableEventListener);
 
             simpleScriptableEvent.Raise();
 

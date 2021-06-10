@@ -22,19 +22,19 @@ namespace ScriptableEvents.Editor
             return attribute.tooltip;
         }
 
-        internal static T GetPropertyValue<T>(
+        internal static T GetFieldValue<T>(
             this object obj,
-            string propertyName,
-            BindingFlags bindingFlags = BindingFlags.NonPublic |
-                                        BindingFlags.Instance
+            string fieldName,
+            BindingFlags bindingFlags = BindingFlags.Instance |
+                                        BindingFlags.NonPublic
         )
         {
             var type = obj.GetType();
 
-            PropertyInfo info;
+            FieldInfo info;
             do
             {
-                info = type.GetProperty(propertyName, bindingFlags);
+                info = type.GetField(fieldName, bindingFlags);
             } while (info == null && (type = type.BaseType) != null);
 
             if (info == null)

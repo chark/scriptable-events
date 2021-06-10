@@ -6,9 +6,9 @@ namespace ScriptableEvents.Tests
     {
         public Action<TArg> Action { get; set; }
 
-        public void OnRaised(TArg arg)
+        public void OnRaised(TArg value)
         {
-            Action?.Invoke(arg);
+            Action?.Invoke(value);
         }
     }
 }
