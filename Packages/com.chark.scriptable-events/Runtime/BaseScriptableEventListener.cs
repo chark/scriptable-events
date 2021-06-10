@@ -44,25 +44,11 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Public Methods
+        #region Methods
 
         public void OnRaised(TArg arg)
         {
-            if (scriptableEvent.Trace)
-            {
-                LogOnRaised(arg);
-            }
-
             onRaised.Invoke(arg);
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void LogOnRaised(TArg arg)
-        {
-            Debug.Log($"Raised: {name}, arg: {arg}", this);
         }
 
         #endregion
