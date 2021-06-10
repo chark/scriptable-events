@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
-    public class TypedScriptableEventEditor<TArg> : BaseScriptableEventEditor
+    public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
     {
         #region Fields
 
@@ -32,10 +32,7 @@ namespace ScriptableEvents.Editor
 
         #region Protected Methods
 
-        protected virtual TArg DrawArgField(TArg arg)
-        {
-            return arg;
-        }
+        protected abstract TArg DrawArgField(TArg arg);
 
         #endregion
 

@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(BaseScriptableEvent<>), true)]
-    public class BaseScriptableEventEditor : UnityEditor.Editor
+    public abstract class BaseScriptableEventEditor : UnityEditor.Editor
     {
         #region Fields
 
@@ -77,7 +75,7 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Setup Methods
+        #region Private Setup Methods
 
         private void SetupLabelContent()
         {
@@ -235,7 +233,7 @@ namespace ScriptableEvents.Editor
 
         private void DrawPlayModeListeners()
         {
-            var listenerCount = GetPropertyValue<int>("ListenerCount");
+            var listenerCount = target.GetPropertyValue<int>("ListenerCount");
             if (listenerCount == 0)
             {
                 EditorGUILayout.HelpBox(
@@ -246,7 +244,7 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
-            var listenerObjects = GetPropertyValue<IReadOnlyList<Object>>("ListenerObjects");
+            var listenerObjects = target.GetPropertyValue<IReadOnlyList<Object>>("ListenerObjects");
             EditorGUILayout.LabelField(
                 $"Event contains {listenerObjects.Count} UnityEngine.Object listeners and " +
                 $"{listenerCount - listenerObjects.Count} other listeners",
@@ -271,38 +269,9 @@ namespace ScriptableEvents.Editor
         private static GUIContent CreateLabelContent(string fieldName)
         {
             var text = ObjectNames.NicifyVariableName(fieldName);
-            var tooltip = GetTooltip(fieldName);
+            var tooltip = typeof(BaseScriptableEvent<>).GetTooltip(fieldName);
 
             return new GUIContent(text, tooltip);
-        }
-
-        private static string GetTooltip(string fieldName)
-        {
-            var field = typeof(BaseScriptableEvent<>)
-                .GetField(
-                    fieldName,
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly
-                );
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var attribute = field
-                .GetCustomAttribute<TooltipAttribute>();
-
-            return attribute.tooltip;
-        }
-
-        private T GetPropertyValue<T>(string propertyName)
-        {
-            var baseType = target.GetType().BaseType;
-
-            // ReSharper disable once PossibleNullReferenceException
-            var property = baseType.GetProperty(
-                propertyName,
-                BindingFlags.NonPublic | BindingFlags.Instance
-            );
-
-            // ReSharper disable once PossibleNullReferenceException
-            return (T) property.GetValue(target);
         }
 
         #endregion

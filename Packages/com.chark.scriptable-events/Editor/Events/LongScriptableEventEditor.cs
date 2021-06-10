@@ -4,7 +4,7 @@ using UnityEditor;
 namespace ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(LongScriptableEvent))]
-    public class LongScriptableEventEditor : TypedScriptableEventEditor<long>
+    public class LongScriptableEventEditor : BaseScriptableEventEditor<long>
     {
         protected override long DrawArgField(long value)
         {

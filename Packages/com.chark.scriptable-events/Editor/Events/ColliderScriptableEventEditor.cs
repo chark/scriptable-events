@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(ColliderScriptableEvent))]
-    public class ColliderScriptableEventEditor : TypedScriptableEventEditor<Collider>
+    public class ColliderScriptableEventEditor : BaseScriptableEventEditor<Collider>
     {
         protected override Collider DrawArgField(Collider value)
         {
