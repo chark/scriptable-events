@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableEvents
 {
-    public abstract class BaseScriptableEvent<TArg> : ScriptableObject, IScriptableEvent<TArg>
+    public abstract class BaseScriptableEvent<TArg> : ScriptableObject
     {
         #region Editor
 
@@ -51,6 +51,9 @@ namespace ScriptableEvents
 
         #region Public Methods
 
+        /// <summary>
+        /// Raise this event with an argument.
+        /// </summary>
         public void Raise(TArg value)
         {
             for (var index = listeners.Count - 1; index >= 0; index--)
@@ -73,6 +76,9 @@ namespace ScriptableEvents
             }
         }
 
+        /// <summary>
+        /// Add a listener to this event.
+        /// </summary>
         public void AddListener(IScriptableEventListener<TArg> listener)
         {
             if (trace)
@@ -83,6 +89,9 @@ namespace ScriptableEvents
             listeners.Add(listener);
         }
 
+        /// <summary>
+        /// Remove a listener from this event.
+        /// </summary>
         public void RemoveListener(IScriptableEventListener<TArg> listener)
         {
             if (trace)
@@ -93,6 +102,9 @@ namespace ScriptableEvents
             listeners.Remove(listener);
         }
 
+        /// <summary>
+        /// Remove all listeners from this event.
+        /// </summary>
         public void RemoveListeners()
         {
             if (trace)

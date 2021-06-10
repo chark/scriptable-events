@@ -14,8 +14,8 @@ namespace ScriptableEvents.Tests
         TScriptableEventListener,
         TArg
     >
-        where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
-        where TScriptableEventListener : Component, IScriptableEventListener<TArg>
+        where TScriptableEvent : BaseScriptableEvent<TArg>
+        where TScriptableEventListener : BaseScriptableEventListener<TArg>
     {
         #region Fields
 

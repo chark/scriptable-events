@@ -4,7 +4,7 @@ using ScriptableEvents.Listeners;
 
 namespace ScriptableEvents.Editor.Tests
 {
-    public class ScriptableEventAttributeTestSource : IEnumerable
+    internal class ScriptableEventAttributeTestSource : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {

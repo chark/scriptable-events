@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.Tests
 {
     [TestFixtureSource(typeof(ScriptableEventAttributeTestSource))]
-    public class ScriptableEventAttributeTest
+    internal class ScriptableEventAttributeTest
     {
         private readonly Type eventType;
         private readonly Type listenerType;
