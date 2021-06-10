@@ -29,7 +29,7 @@ namespace ScriptableEvents
                 return;
             }
 
-            scriptableEvent.Add(this);
+            scriptableEvent.AddListener(this);
         }
 
         private void OnDisable()
@@ -39,16 +39,16 @@ namespace ScriptableEvents
                 return;
             }
 
-            scriptableEvent.Remove(this);
+            scriptableEvent.RemoveListener(this);
         }
 
         #endregion
 
         #region Methods
 
-        public void OnRaised(TArg arg)
+        public void OnRaised(TArg value)
         {
-            onRaised.Invoke(arg);
+            onRaised.Invoke(value);
         }
 
         #endregion

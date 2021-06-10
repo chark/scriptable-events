@@ -1,37 +1,25 @@
-﻿using System;
-
-namespace ScriptableEvents
+﻿namespace ScriptableEvents
 {
     public interface IScriptableEvent<TArg>
     {
         /// <summary>
         /// Raise this event with an argument.
         /// </summary>
-        void Raise(TArg arg);
+        void Raise(TArg value);
 
         /// <summary>
         /// Add a listener to this event.
         /// </summary>
-        void Add(IScriptableEventListener<TArg> listener);
-
-        /// <summary>
-        /// Add a delegate listener to this event.
-        /// </summary>
-        void Add(Action<TArg> listener);
+        void AddListener(IScriptableEventListener<TArg> listener);
 
         /// <summary>
         /// Remove a listener from this event.
         /// </summary>
-        void Remove(IScriptableEventListener<TArg> listener);
-
-        /// <summary>
-        /// Remove a delegate listener from this event.
-        /// </summary>
-        void Remove(Action<TArg> listener);
+        void RemoveListener(IScriptableEventListener<TArg> listener);
 
         /// <summary>
         /// Remove all listeners from this event.
         /// </summary>
-        void Clear();
+        void RemoveListeners();
     }
 }

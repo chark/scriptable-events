@@ -32,7 +32,7 @@ namespace ScriptableEvents.Editor
 
         #region Protected Methods
 
-        protected abstract TArg DrawArgField(TArg arg);
+        protected abstract TArg DrawArgField(TArg value);
 
         #endregion
 

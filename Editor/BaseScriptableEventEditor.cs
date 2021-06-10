@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
@@ -233,7 +235,9 @@ namespace ScriptableEvents.Editor
 
         private void DrawPlayModeListeners()
         {
-            var listenerCount = target.GetPropertyValue<int>("ListenerCount");
+            GetListeners(out var objectListeners, out var otherListeners);
+
+            var listenerCount = objectListeners.Count + otherListeners.Count;
             if (listenerCount == 0)
             {
                 EditorGUILayout.HelpBox(
@@ -244,14 +248,15 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
-            var listenerObjects = target.GetPropertyValue<IReadOnlyList<Object>>("ListenerObjects");
             EditorGUILayout.LabelField(
-                $"Event contains {listenerObjects.Count} UnityEngine.Object listeners and " +
-                $"{listenerCount - listenerObjects.Count} other listeners",
+                $"Event contains {objectListeners.Count} UnityEngine.Object listeners and " +
+                $"{otherListeners.Count} other listeners",
                 listenerSubLabelStyle
             );
 
-            DrawListenerFields(listenerObjects);
+            DrawListenerFields(objectListeners);
+            EditorGUILayout.Space();
+            DrawListenerFields(otherListeners);
         }
 
         private static void DrawListenerFields(IEnumerable<Object> listenerObjects)
@@ -259,6 +264,15 @@ namespace ScriptableEvents.Editor
             foreach (var listenerObject in listenerObjects)
             {
                 EditorGUILayout.ObjectField(listenerObject, null, false);
+            }
+        }
+
+        private static void DrawListenerFields(IEnumerable<string> listenerNames)
+        {
+            var height = GUILayout.Height(EditorGUIUtility.singleLineHeight);
+            foreach (var listenerName in listenerNames)
+            {
+                EditorGUILayout.SelectableLabel(listenerName, EditorStyles.textField, height);
             }
         }
 
@@ -272,6 +286,25 @@ namespace ScriptableEvents.Editor
             var tooltip = typeof(BaseScriptableEvent<>).GetTooltip(fieldName);
 
             return new GUIContent(text, tooltip);
+        }
+
+        private void GetListeners(out List<Object> objectListeners, out List<string> namedListeners)
+        {
+            objectListeners = new List<Object>();
+            namedListeners = new List<string>();
+
+            foreach (var listener in target.GetFieldValue<IEnumerable>("listeners"))
+            {
+                if (listener is Object listenerObject)
+                {
+                    objectListeners.Add(listenerObject);
+                }
+                else
+                {
+                    var listenerName = listener.ToString();
+                    namedListeners.Add(listenerName);
+                }
+            }
         }
 
         #endregion
