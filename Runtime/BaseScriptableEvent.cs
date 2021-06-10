@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents
 {
@@ -13,9 +14,13 @@ namespace ScriptableEvents
         [Tooltip("Custom description to provide more additional information")]
         private string description;
 
+#pragma warning disable CS0414
+
         // ReSharper disable once NotAccessedField.Local
         [SerializeField, HideInInspector]
         private bool lockDescription = true;
+
+#pragma warning restore CS0414
 
         [SerializeField]
         [Tooltip("Should exceptions not break the listener chain")]
@@ -32,7 +37,7 @@ namespace ScriptableEvents
         private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
 
 #if UNITY_EDITOR
-        private readonly List<UnityEngine.Object> listenerObjects = new List<UnityEngine.Object>();
+        private readonly List<Object> listenerObjects = new List<Object>();
 #endif
 
         #endregion
@@ -43,7 +48,7 @@ namespace ScriptableEvents
 
 #if UNITY_EDITOR
         // ReSharper disable once UnusedMember.Local
-        private IReadOnlyList<UnityEngine.Object> ListenerObjects => listenerObjects;
+        private IReadOnlyList<Object> ListenerObjects => listenerObjects;
 
         // ReSharper disable once UnusedMember.Local
         private int ListenerCount => listeners.Count;
@@ -66,7 +71,7 @@ namespace ScriptableEvents
         {
             if (trace)
             {
-                LogEventTrace(arg);
+                LogRaise(arg);
             }
 
             for (var index = listeners.Count - 1; index >= 0; index--)
@@ -86,32 +91,58 @@ namespace ScriptableEvents
 
         public void Add(IScriptableEventListener<TArg> listener)
         {
+            if (trace)
+            {
+                LogAdd(listener);
+            }
+
 #if UNITY_EDITOR
             AddListenerObject(listener);
 #endif
-            Add(listener.OnRaised);
+
+            listeners.Add(listener.OnRaised);
         }
 
         public void Add(Action<TArg> listener)
         {
+            if (trace)
+            {
+                LogAdd();
+            }
+
             listeners.Add(listener);
         }
 
         public void Remove(IScriptableEventListener<TArg> listener)
         {
+            if (trace)
+            {
+                LogRemove(listener);
+            }
+
 #if UNITY_EDITOR
             RemoveListenerObject(listener);
 #endif
-            Remove(listener.OnRaised);
+            listeners.Remove(listener.OnRaised);
         }
 
         public void Remove(Action<TArg> listener)
         {
+            if (trace)
+            {
+                LogRemove();
+            }
+
             listeners.Remove(listener);
         }
 
         public void Clear()
         {
+            if (trace)
+            {
+                LogClear();
+            }
+
 #if UNITY_EDITOR
             ClearListenerObjects();
 #endif
@@ -121,11 +152,6 @@ namespace ScriptableEvents
         #endregion
 
         #region Private Methods
-
-        private void LogEventTrace(TArg arg)
-        {
-            Debug.Log($"Raise: {name}, arg: {arg}", this);
-        }
 
         private void OnRaiseSuppressed(Action<TArg> listener, TArg arg)
         {
@@ -147,7 +173,7 @@ namespace ScriptableEvents
 #if UNITY_EDITOR
         private void AddListenerObject(IScriptableEventListener<TArg> listener)
         {
-            if (listener is UnityEngine.Object listenerObject)
+            if (listener is Object listenerObject)
             {
                 listenerObjects.Add(listenerObject);
             }
@@ -155,7 +181,7 @@ namespace ScriptableEvents
 
         private void RemoveListenerObject(IScriptableEventListener<TArg> listener)
         {
-            if (listener is UnityEngine.Object listenerObject)
+            if (listener is Object listenerObject)
             {
                 listenerObjects.Remove(listenerObject);
             }
@@ -166,6 +192,44 @@ namespace ScriptableEvents
             listenerObjects.Clear();
         }
 #endif
+
+        #endregion
+
+        #region Private Logging Methods
+
+        private void LogRaise(TArg arg)
+        {
+            Debug.Log($"Raise arg: {arg}", this);
+        }
+
+        private void LogAdd(object listener = null)
+        {
+            if (listener is Object listenerObject)
+            {
+                Debug.Log($"Adding listener: {listenerObject.name}", this);
+            }
+            else
+            {
+                Debug.Log("Adding listener", this);
+            }
+        }
+
+        private void LogRemove(object listener = null)
+        {
+            if (listener is Object listenerObject)
+            {
+                Debug.Log($"Adding listener: {listenerObject.name}", this);
+            }
+            else
+            {
+                Debug.Log("Removing listener", this);
+            }
+        }
+
+        private void LogClear()
+        {
+            Debug.Log("Clearing listeners", this);
+        }
 
         #endregion
     }

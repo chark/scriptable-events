@@ -4,7 +4,7 @@ using UnityEditor;
 namespace ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(BoolScriptableEvent))]
-    public class BoolScriptableEventEditor : TypedScriptableEventEditor<bool>
+    public class BoolScriptableEventEditor : BaseScriptableEventEditor<bool>
     {
         protected override bool DrawArgField(bool value)
         {

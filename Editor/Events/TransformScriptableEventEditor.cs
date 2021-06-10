@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(TransformScriptableEvent))]
-    public class TransformScriptableEventEditor : TypedScriptableEventEditor<Transform>
+    public class TransformScriptableEventEditor : BaseScriptableEventEditor<Transform>
     {
         protected override Transform DrawArgField(Transform value)
         {

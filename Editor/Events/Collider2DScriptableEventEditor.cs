@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(Collider2DScriptableEvent))]
-    public class Collider2DScriptableEventEditor : TypedScriptableEventEditor<Collider2D>
+    public class Collider2DScriptableEventEditor : BaseScriptableEventEditor<Collider2D>
     {
         protected override Collider2D DrawArgField(Collider2D value)
         {

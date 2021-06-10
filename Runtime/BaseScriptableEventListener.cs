@@ -50,7 +50,7 @@ namespace ScriptableEvents
         {
             if (scriptableEvent.Trace)
             {
-                LogListenerTrace(arg);
+                LogOnRaised(arg);
             }
 
             onRaised.Invoke(arg);
@@ -60,7 +60,7 @@ namespace ScriptableEvents
 
         #region Private Methods
 
-        private void LogListenerTrace(TArg arg)
+        private void LogOnRaised(TArg arg)
         {
             Debug.Log($"Raised: {name}, arg: {arg}", this);
         }
