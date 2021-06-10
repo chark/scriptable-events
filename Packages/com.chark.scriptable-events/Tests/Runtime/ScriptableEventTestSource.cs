@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ScriptableEvents.Tests
 {
-    public class ScriptableEventTestSource : IEnumerable
+    internal class ScriptableEventTestSource : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace ScriptableEvents.Tests
 {
     [TestFixture]
-    public class SimpleScriptableEventTest
+    internal class SimpleScriptableEventTest
     {
         // Requires additional test case as SimpleScriptableEvent introduces a new method.
         [Test]
