@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Samples.CustomEvents.Editor
 {
     [CustomEditor(typeof(MaterialDataScriptableEvent))]
-    public class MaterialDataScriptableEventEditor : TypedScriptableEventEditor<MaterialData>
+    public class MaterialDataScriptableEventEditor : BaseScriptableEventEditor<MaterialData>
     {
         protected override MaterialData DrawArgField(MaterialData value)
         {
