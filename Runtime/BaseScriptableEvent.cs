@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -27,7 +28,9 @@ namespace ScriptableEvents
         private bool suppressExceptions;
 
         [SerializeField]
-        [Tooltip("Should additional trace information be logged")]
+        [Tooltip(
+            "Should additional trace information be logged. Enabling this will degrade performance!"
+        )]
         private bool trace;
 
         #endregion
@@ -91,23 +94,18 @@ namespace ScriptableEvents
 
         public void Add(IScriptableEventListener<TArg> listener)
         {
-            if (trace)
-            {
-                LogAdd(listener);
-            }
-
 #if UNITY_EDITOR
             AddListenerObject(listener);
 #endif
 
-            listeners.Add(listener.OnRaised);
+            Add(listener.OnRaised);
         }
 
         public void Add(Action<TArg> listener)
         {
             if (trace)
             {
-                LogAdd();
+                LogAdd(listener);
             }
 
             listeners.Add(listener);
@@ -115,22 +113,17 @@ namespace ScriptableEvents
 
         public void Remove(IScriptableEventListener<TArg> listener)
         {
-            if (trace)
-            {
-                LogRemove(listener);
-            }
-
 #if UNITY_EDITOR
             RemoveListenerObject(listener);
 #endif
-            listeners.Remove(listener.OnRaised);
+            Remove(listener.OnRaised);
         }
 
         public void Remove(Action<TArg> listener)
         {
             if (trace)
             {
-                LogRemove();
+                LogRemove(listener);
             }
 
             listeners.Remove(listener);
@@ -202,33 +195,38 @@ namespace ScriptableEvents
             Debug.Log($"Raise arg: {arg}", this);
         }
 
-        private void LogAdd(object listener = null)
+        private void LogAdd(Action<TArg> listener)
         {
-            if (listener is Object listenerObject)
-            {
-                Debug.Log($"Adding listener: {listenerObject.name}", this);
-            }
-            else
-            {
-                Debug.Log("Adding listener", this);
-            }
+            Debug.Log($"Adding listener: {GetListenerName(listener)}", this);
         }
 
-        private void LogRemove(object listener = null)
+        private void LogRemove(Action<TArg> listener)
         {
-            if (listener is Object listenerObject)
-            {
-                Debug.Log($"Adding listener: {listenerObject.name}", this);
-            }
-            else
-            {
-                Debug.Log("Removing listener", this);
-            }
+            Debug.Log($"Removing listener: {GetListenerName(listener)}", this);
         }
 
         private void LogClear()
         {
             Debug.Log("Clearing listeners", this);
+        }
+
+        private static string GetListenerName(Action<TArg> listener)
+        {
+            var method = listener.Method;
+            var parameters = method
+                .GetParameters()
+                .Select(parameter => parameter.ParameterType.Name);
+
+            var parameterName = string.Join(", ", parameters);
+            var methodName = $"{method.Name}({parameterName})";
+
+            var reflectedType = method.ReflectedType;
+            if (reflectedType == null)
+            {
+                return methodName;
+            }
+
+            return $"{reflectedType.FullName}.{methodName}";
         }
 
         #endregion
