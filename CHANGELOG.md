@@ -17,7 +17,7 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - Each event now exposes a generic `BaseScriptableEvent<T>` instead of a concrete implementation in the inspector. The additional argument for the event type as well as the `UnityEvent` type is no longer required.
 - All events have been moved to `ScriptableEvents.Events` namespace to avoid clashing with Unity namespaces.
 - All listeners have been moved to `ScriptableEvents.Listeners` namespace to avoid clashing with Unity namespaces.
-- `trace` logs will provide more info for events and will also enable logging in listeners to provide more useful info. However, `trace` will not provide listener information if a non-standard listener (`Action<T>` or custom `IScriptableEventListener<T>`) is used.
+- `trace` logging will provide listener method info, however it will impact the performance.
 - Order of components and scriptable events in menus.
 
 ### Removed

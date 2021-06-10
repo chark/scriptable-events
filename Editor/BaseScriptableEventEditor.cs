@@ -258,7 +258,7 @@ namespace ScriptableEvents.Editor
         {
             foreach (var listenerObject in listenerObjects)
             {
-                EditorGUILayout.ObjectField(listenerObject, typeof(Object), true);
+                EditorGUILayout.ObjectField(listenerObject, null, false);
             }
         }
 

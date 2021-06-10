@@ -39,19 +39,15 @@ namespace ScriptableEvents
 
         private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
 
-#if UNITY_EDITOR
-        private readonly List<Object> listenerObjects = new List<Object>();
-#endif
-
         #endregion
 
-        #region Properties
-
-        internal bool Trace => trace;
+        #region Custom Editor Fields & Properties
 
 #if UNITY_EDITOR
+        private readonly List<Object> editorListenerObjects = new List<Object>();
+
         // ReSharper disable once UnusedMember.Local
-        private IReadOnlyList<Object> ListenerObjects => listenerObjects;
+        private IReadOnlyList<Object> ListenerObjects => editorListenerObjects;
 
         // ReSharper disable once UnusedMember.Local
         private int ListenerCount => listeners.Count;
@@ -72,14 +68,14 @@ namespace ScriptableEvents
 
         public void Raise(TArg arg)
         {
-            if (trace)
-            {
-                LogRaise(arg);
-            }
-
             for (var index = listeners.Count - 1; index >= 0; index--)
             {
                 var listener = listeners[index];
+
+                if (trace)
+                {
+                    LogRaise(listener, arg);
+                }
 
                 if (suppressExceptions)
                 {
@@ -95,7 +91,7 @@ namespace ScriptableEvents
         public void Add(IScriptableEventListener<TArg> listener)
         {
 #if UNITY_EDITOR
-            AddListenerObject(listener);
+            AddEditorListener(listener);
 #endif
 
             Add(listener.OnRaised);
@@ -114,7 +110,7 @@ namespace ScriptableEvents
         public void Remove(IScriptableEventListener<TArg> listener)
         {
 #if UNITY_EDITOR
-            RemoveListenerObject(listener);
+            RemoveEditorListener(listener);
 #endif
             Remove(listener.OnRaised);
         }
@@ -137,7 +133,7 @@ namespace ScriptableEvents
             }
 
 #if UNITY_EDITOR
-            ClearListenerObjects();
+            ClearEditorListeners();
 #endif
             listeners.Clear();
         }
@@ -163,36 +159,13 @@ namespace ScriptableEvents
             listener.Invoke(arg);
         }
 
-#if UNITY_EDITOR
-        private void AddListenerObject(IScriptableEventListener<TArg> listener)
-        {
-            if (listener is Object listenerObject)
-            {
-                listenerObjects.Add(listenerObject);
-            }
-        }
-
-        private void RemoveListenerObject(IScriptableEventListener<TArg> listener)
-        {
-            if (listener is Object listenerObject)
-            {
-                listenerObjects.Remove(listenerObject);
-            }
-        }
-
-        private void ClearListenerObjects()
-        {
-            listenerObjects.Clear();
-        }
-#endif
-
         #endregion
 
         #region Private Logging Methods
 
-        private void LogRaise(TArg arg)
+        private void LogRaise(Action<TArg> listener, TArg arg)
         {
-            Debug.Log($"Raise arg: {arg}", this);
+            Debug.Log($"Raise listener: {GetListenerName(listener)}, arg: {arg}", this);
         }
 
         private void LogAdd(Action<TArg> listener)
@@ -228,6 +201,33 @@ namespace ScriptableEvents
 
             return $"{reflectedType.FullName}.{methodName}";
         }
+
+        #endregion
+
+        #region Private Custom Editor Methods
+
+#if UNITY_EDITOR
+        private void AddEditorListener(IScriptableEventListener<TArg> listener)
+        {
+            if (listener is Object listenerObject)
+            {
+                editorListenerObjects.Add(listenerObject);
+            }
+        }
+
+        private void RemoveEditorListener(IScriptableEventListener<TArg> listener)
+        {
+            if (listener is Object listenerObject)
+            {
+                editorListenerObjects.Remove(listenerObject);
+            }
+        }
+
+        private void ClearEditorListeners()
+        {
+            editorListenerObjects.Clear();
+        }
+#endif
 
         #endregion
     }
