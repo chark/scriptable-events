@@ -1,3 +1,4 @@
+[Unity Package Manager]: https://docs.unity3d.com/Manual/upm-ui.html
 [Unity Event]: https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html
 [Samples~]: ../Samples%7E
 [Simple Events]: ../Samples%7E/SimpleEvents
@@ -7,12 +8,12 @@
 # Documentation
 
 ## Samples
-The documented features can be imported as samples via _Unity Package Manager_ from the [Samples~] directory:
+The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. If you get stuck, check the corresponding sample:
 <p align="center">
   <img src="samples.png"/>
 </p>
 
-## Getting Started
+## Getting Started (Simple Events)
 The simplest use case of _Scriptable Events_ is when you want to notify a system that something happened without providing any context. To do so, you need two elements: a _Simple Scriptable Event_ and a _Simple Scriptable Event Listener_.
 
 First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Scriptable Events/Simple Scriptable Event_. You can name the event as you prefer and place it anywhere in your project:
@@ -53,7 +54,7 @@ public class TriggerEvent : MonoBehaviour
 }
 ```
 
-## Passing Arguments
+## Passing Arguments (Events With Arguments)
 In most situations you'll want to pass an argument when triggering an event. For example, if the player takes damage, you might want to notify your systems with the amount of damage taken.
 
 For such uses cases, this package provides a set of events with commonly used argument types. To create an event asset which accepts an argument, right-click in the project window and select an event from _Scriptable Events/_ menu which has the required type:
@@ -92,7 +93,7 @@ public class TriggerEvent : MonoBehaviour
 }
 ```
 
-## Creating Custom Events
+## Creating Custom Events (Custom Events)
 In some cases using the built-in argument types is not sufficient. For example, if the player takes damage, you might also want to pass a reference to the object that dealt damage to the player. In this case passing only the damage taken is not enough, you need to pass a `class` argument which contains both of those values. For this you'll need to create a custom event.
 
 To start, create a container `class` for your event data. In this case we'll pass the values needed to change the `Metallic` and `Color` properties of a material:
