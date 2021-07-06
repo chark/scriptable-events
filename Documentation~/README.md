@@ -15,24 +15,22 @@ The documented features can be imported as samples via _Unity Package Manager_ f
 ## Getting Started
 The simplest use case of _Scriptable Events_ is when you want to notify a system that something happened without providing any context. To do so, you need two elements: a _Simple Scriptable Event_ and a _Simple Scriptable Event Listener_.
 
-First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Scriptable Events/Simple Scriptable Event_. You can name the event as you'd like and place it anywhere in your project:
+First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Scriptable Events/Simple Scriptable Event_. You can name the event as you prefer and place it anywhere in your project:
 <p align="center">
   <img src="simple-scriptable-event.png"/>
 </p>
 
-Next, select a _GameObject_ of your liking in the scene and add a _Simple Scriptable Event listener_:
+Next, select a _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
 <p align="center">
   <img src="simple-scriptable-event-listener.png"/>
 </p>
 
-Once you've added a listener, insert your event asset into the _Scriptable Event_ field (1). In the _On Raised_ [Unity Event] field (2), insert the methods you'd like to be triggered by the event.
-
-For example, if you wanted to change a color of an object, your setup might look like the following as seen in the _Simple Events_ sample:
+Once you've added a listener, insert your event asset into the _Scriptable Event_ field (1). In the _On Raised_ [Unity Event] field (2), insert the methods you'd like to be triggered by the event. For example, if you wanted to change a color of an object, your setup might look like the following as seen in the _Simple Events_ sample:
 <p align="center">
   <img src="simple-scriptable-event-sample.png"/>
 </p>
 
-Now that you have your listener ready, you need to trigger the event. This can be done from a [Unity Event] via the `Raise` method or by selecting the event asset and clicking the _Raise_ button when the game is running:
+Now that you have your listener ready, you need to trigger the event. This can be done from a [Unity Event] by calling `SimpleScriptableEvent.Raise` method or by selecting the event asset and clicking the _Raise_ button when the game is running:
 <p align="center">
   <img hspace="2%" width="45%" src="simple-scriptable-event-raise-unity-event.png"/>
   <img hspace="2%" width="45%" src="simple-scriptable-event-raise.png"/>
@@ -56,7 +54,7 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Passing Arguments
-In most situations you'll want to pass an argument when triggering an event. For example, if the player takes damage, you want to notify your systems with the amount of damage taken (the following examples are based on [Events With Arguments] sample).
+In most situations you'll want to pass an argument when triggering an event. For example, if the player takes damage, you might want to notify your systems with the amount of damage taken.
 
 For such uses cases, this package provides a set of events with commonly used argument types. To create an event asset which accepts an argument, right-click in the project window and select an event from _Scriptable Events/_ menu which has the required type:
 <p align="center">
@@ -95,9 +93,9 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Creating Custom Events
-In some cases using the built-in argument types is not sufficient. For example, if the player takes damage, you might also want to pass a reference to the object that dealt damage to the player. In this case passing only the damage taken is not enough, you need to pass a `class` or a `struct` argument which contains both of those values. For this you'll need to create a custom event (the following examples are based on [Custom Events] sample).
+In some cases using the built-in argument types is not sufficient. For example, if the player takes damage, you might also want to pass a reference to the object that dealt damage to the player. In this case passing only the damage taken is not enough, you need to pass a `class` argument which contains both of those values. For this you'll need to create a custom event.
 
-To start of, create a container `class` or a `struct` for your event data. In this case we'll pass the values needed to change the `Metallic` and `Color` properties of a material:
+To start, create a container `class` for your event data. In this case we'll pass the values needed to change the `Metallic` and `Color` properties of a material:
 ```cs
 public class MaterialData
 {
@@ -127,7 +125,7 @@ public class MaterialDataScriptableEvent : BaseScriptableEvent<MaterialData>
 }
 ```
 
-Then, define a listener component for your event. In this case the `AddComponentMenu` attribute is optional, however it is recommended to add it to keep things organized:
+Then, define a listener component for your event. Note that in this case the `AddComponentMenu` attribute is optional, however it is recommended to add it to keep things organized:
 ```cs
 using ScriptableEvents;
 using UnityEngine;
@@ -165,7 +163,7 @@ public class MaterialOptionsHandler : MonoBehaviour
 }
 ```
 
-Optionally you can add a custom editor for your event. This will allow you to click the _Raise_ button on your custom event when the game is playing. To do so, create an editor class which inherits `BaseScriptableEventEditor` in the **Editor** directory:
+Optionally you can add a custom editor for your event. This will allow you to click the _Raise_ button on your custom event during runtime. To do so, create an editor class which inherits `BaseScriptableEventEditor` in the **Editor** directory:
 ```cs
 using ScriptableEvents.Editor;
 using UnityEditor;
