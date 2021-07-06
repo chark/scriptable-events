@@ -11,10 +11,10 @@ Simple and extensible event system implemented via `ScriptableObject`, based on 
 </p>
 
 ## Features
-- Can be used with minimal or no code at all.
-- Default event and listener implementations for commonly used types.
-- Strongly typed.
-- Ability to easily add custom events and inspector GUIs.
+- Can be used with minimal or no code at all
+- Default event and listener implementations for commonly used types
+- Strongly typed
+- Ability to easily add custom events and inspector GUIs
 
 ## Installation
 This package can be installed via [OpenUPM](https://openupm.com/packages/com.chark.scriptable-events/):
