@@ -73,7 +73,27 @@ To trigger the event follow the same steps as with _Simple Scriptable Event_. Ho
   <img src="scriptable-event-raise-dynamic.png"/>
 </p>
 
-Alternatively you can trigger the event via code:
+This example shows how to trigger a _Scriptable Event_ from a built-in Unity component, however you might want to invoke these events from your classes. To do so, define a [Unity Event] with an appropriate type in the following way:
+```cs
+using UnityEngine;
+using UnityEngine.Events;
+
+public class ExampleUnityEventUsage : MonoBehaviour
+{
+    [SerializeField]
+    private UnityEvent<float> onValueChanged;
+
+    private void Start()
+    {
+        // Your argument value.
+        var value = 1.0f;
+
+        onValueChanged.Invoke(value);
+    }
+}
+```
+
+Alternatively you can trigger the event via code if you prefer not to use [Unity Event] functionality:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
