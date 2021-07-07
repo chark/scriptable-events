@@ -62,13 +62,13 @@ For such uses cases, this package provides a set of events with commonly used ar
   <img src="scriptable-event-arg.png"/>
 </p>
 
-Next, you'll need to add a listener. Each corresponding _Scriptable Event_ type provides a listener component. Each typed listener works in the same fashion as _Simple Scriptable Event Listener_. The only caveat is when inserting your methods into the _On Raised_ [Unity Event] field. In this case make sure to select a **dynamic** method:
+Next, you'll need to add a listener. Each corresponding _Scriptable Event_ type provides a listener component. Each typed listener works in the same fashion as _Simple Scriptable Event Listener_. The only caveat is when inserting your methods into the _On Raised_ [Unity Event] field, make sure to select a **dynamic** method:
 <p align="center">
   <img hspace="2%" width="40%" src="scriptable-event-listener-components.png"/>
   <img hspace="2%" width="40%" src="scriptable-event-listener-dynamic.png"/>
 </p>
 
-To trigger the event follow the same steps as with _Simple Scriptable Event_. However, make sure to select a **dynamic** `Raise` method:
+To trigger the event, follow the same steps as with _Simple Scriptable Event_. However, make sure to select a **dynamic** `Raise` method:
 <p align="center">
   <img src="scriptable-event-raise-dynamic.png"/>
 </p>
@@ -132,7 +132,7 @@ public class MaterialData
 }
 ```
 
-Next, define a `Scriptable Event` asset which will accept your argument. Note the `CreateAssetMenu` attribute, as it defines where your event will be located in the _Create_ menu:
+Next, define a _Scriptable Event_ asset which will accept your argument. Note the `CreateAssetMenu` attribute, as it defines where your event will be located in the _Create_ menu:
 ```cs
 using ScriptableEvents;
 using UnityEngine;
