@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using ScriptableEvents.Simple;
+using ScriptableEvents.Events;
 using UnityEngine;
 
 namespace ScriptableEvents.Tests
 {
     [TestFixture]
-    public class SimpleScriptableEventTest
+    internal class SimpleScriptableEventTest
     {
         // Requires additional test case as SimpleScriptableEvent introduces a new method.
         [Test]
@@ -20,7 +20,7 @@ namespace ScriptableEvents.Tests
             };
 
             var simpleScriptableEvent = ScriptableObject.CreateInstance<SimpleScriptableEvent>();
-            simpleScriptableEvent.Add(mockScriptableEventListener);
+            simpleScriptableEvent.AddListener(mockScriptableEventListener);
 
             simpleScriptableEvent.Raise();
 

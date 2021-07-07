@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableEvents
 {
-    public abstract class BaseScriptableEvent<TArg> : ScriptableObject, IScriptableEvent<TArg>
+    public abstract class BaseScriptableEvent<TArg> : ScriptableObject
     {
         #region Editor
 
@@ -13,25 +13,30 @@ namespace ScriptableEvents
         [Tooltip("Custom description to provide more additional information")]
         private string description;
 
+#pragma warning disable CS0414
+
         // ReSharper disable once NotAccessedField.Local
         [SerializeField, HideInInspector]
         private bool lockDescription = true;
+
+#pragma warning restore CS0414
 
         [SerializeField]
         [Tooltip("Should exceptions not break the listener chain")]
         private bool suppressExceptions;
 
         [SerializeField]
-        [Tooltip("Should additional trace information be logged")]
+        [Tooltip(
+            "Should additional trace information be logged. Enabling this will degrade performance!"
+        )]
         private bool trace;
 
         #endregion
 
         #region Fields
 
-        [NonSerialized]
-        private readonly List<IScriptableEventListener<TArg>> listeners
-            = new List<IScriptableEventListener<TArg>>();
+        private readonly List<IScriptableEventListener<TArg>> listeners =
+            new List<IScriptableEventListener<TArg>>();
 
         #endregion
 
@@ -39,86 +44,120 @@ namespace ScriptableEvents
 
         private void OnDisable()
         {
-            listeners.Clear();
+            RemoveListeners();
         }
 
         #endregion
 
-        #region Overrides
+        #region Public Methods
 
-        public IReadOnlyList<IScriptableEventListener<TArg>> Listeners => listeners;
-
-        public void Raise(TArg arg)
+        /// <summary>
+        /// Raise this event with an argument.
+        /// </summary>
+        public void Raise(TArg value)
         {
-            for (var i = listeners.Count - 1; i >= 0; i--)
+            for (var index = listeners.Count - 1; index >= 0; index--)
             {
-                var listener = listeners[i];
+                var listener = listeners[index];
 
                 if (trace)
                 {
-                    Trace(listener, arg);
+                    LogRaise(listener, value);
                 }
 
                 if (suppressExceptions)
                 {
-                    OnRaiseSuppressed(listener, arg);
+                    OnRaiseSuppressed(listener, value);
                 }
                 else
                 {
-                    OnRaise(listener, arg);
+                    OnRaise(listener, value);
                 }
             }
         }
 
-        public void Add(IScriptableEventListener<TArg> listener)
+        /// <summary>
+        /// Add a listener to this event.
+        /// </summary>
+        public void AddListener(IScriptableEventListener<TArg> listener)
         {
-            if (listeners.Contains(listener))
+            if (trace)
             {
-                return;
+                LogAdd(listener);
             }
 
             listeners.Add(listener);
         }
 
-        public void Remove(IScriptableEventListener<TArg> listener)
+        /// <summary>
+        /// Remove a listener from this event.
+        /// </summary>
+        public void RemoveListener(IScriptableEventListener<TArg> listener)
         {
+            if (trace)
+            {
+                LogRemove(listener);
+            }
+
             listeners.Remove(listener);
         }
 
-        public void Clear()
+        /// <summary>
+        /// Remove all listeners from this event.
+        /// </summary>
+        public void RemoveListeners()
         {
+            if (trace)
+            {
+                LogRemove();
+            }
+
             listeners.Clear();
         }
 
         #endregion
 
-        #region Methods
+        #region Private Methods
 
-        private void Trace(IScriptableEventListener<TArg> listener, TArg arg)
-        {
-            Debug.Log($"Raise event: {name}, listener: {listener}, arg: {arg}", this);
-        }
-
-        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg arg)
+        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg value)
         {
             try
             {
-                listener.OnRaised(arg);
+                listener.OnRaised(value);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Debug.LogError(
-                    $"Listener: {listener} of event: {name} has thrown an exception.",
-                    this
-                );
-
-                Debug.LogException(e, this);
+                Debug.LogException(exception, this);
             }
         }
 
-        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg arg)
+        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg value)
         {
-            listener.OnRaised(arg);
+            listener.OnRaised(value);
+        }
+
+        #endregion
+
+        #region Private Logging Methods
+
+        private void LogRaise(IScriptableEventListener<TArg> listener, TArg value)
+        {
+            Debug.Log($"Raise listener: {listener}, value: {value}", this);
+        }
+
+        private void LogAdd(IScriptableEventListener<TArg> listener)
+        {
+            Debug.Log($"Adding listener: {listener}", this);
+        }
+
+        private void LogRemove(IScriptableEventListener<TArg> listener)
+        {
+            Debug.Log($"Removing listener: {listener}", this);
+        }
+
+        private void LogRemove()
+        {
+            Debug.Log("Removing listeners", this);
         }
 
         #endregion

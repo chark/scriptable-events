@@ -11,7 +11,7 @@ namespace ScriptableEvents.Samples.CustomEvents.Editor
         {
             if (value == null)
             {
-                return new MaterialData(0f, Color.white);
+                value = new MaterialData(0f, Color.white);
             }
 
             EditorGUILayout.BeginVertical();

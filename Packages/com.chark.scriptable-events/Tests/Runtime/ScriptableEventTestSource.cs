@@ -1,81 +1,65 @@
 ﻿using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using ScriptableEvents.Bool;
-using ScriptableEvents.Float;
-using ScriptableEvents.GameObject;
-using ScriptableEvents.Int;
-using ScriptableEvents.Simple;
-using ScriptableEvents.String;
-using ScriptableEvents.Transform;
-using ScriptableEvents.Vector2;
-using ScriptableEvents.Vector3;
+using ScriptableEvents.Events;
+using ScriptableEvents.Listeners;
+using UnityEngine;
 
 namespace ScriptableEvents.Tests
 {
-    public class ScriptableEventTestSource : IEnumerable
+    internal class ScriptableEventTestSource : IEnumerable
     {
         public IEnumerator GetEnumerator()
         {
             yield return CreateTestCase<
                 BoolScriptableEvent,
-                BoolScriptableEventListener,
-                BoolUnityEvent
+                BoolScriptableEventListener
             >(true);
 
             yield return CreateTestCase<
                 FloatScriptableEvent,
-                FloatScriptableEventListener,
-                FloatUnityEvent
+                FloatScriptableEventListener
             >(1.0f);
 
             yield return CreateTestCase<
                 GameObjectScriptableEvent,
-                GameObjectScriptableEventListener,
-                GameObjectUnityEvent
-            >(new UnityEngine.GameObject());
+                GameObjectScriptableEventListener
+            >(new GameObject());
 
             yield return CreateTestCase<
                 IntScriptableEvent,
-                IntScriptableEventListener,
-                IntUnityEvent
+                IntScriptableEventListener
             >(1);
 
             yield return CreateTestCase<
                 SimpleScriptableEvent,
-                SimpleScriptableEventListener,
-                SimpleUnityEvent
+                SimpleScriptableEventListener
             >(SimpleArg.Instance);
 
             yield return CreateTestCase<
                 StringScriptableEvent,
-                StringScriptableEventListener,
-                StringUnityEvent
+                StringScriptableEventListener
             >("hello");
 
             yield return CreateTestCase<
                 TransformScriptableEvent,
-                TransformScriptableEventListener,
-                TransformUnityEvent
-            >(new UnityEngine.GameObject().transform);
+                TransformScriptableEventListener
+            >(new GameObject().transform);
 
             yield return CreateTestCase<
                 Vector2ScriptableEvent,
-                Vector2ScriptableEventListener,
-                Vector2UnityEvent
-            >(UnityEngine.Vector2.one);
+                Vector2ScriptableEventListener
+            >(Vector2.one);
 
             yield return CreateTestCase<
                 Vector3ScriptableEvent,
-                Vector3ScriptableEventListener,
-                Vector3UnityEvent
-            >(UnityEngine.Vector3.one);
+                Vector3ScriptableEventListener
+            >(Vector3.one);
         }
 
         private static TestFixtureParameters CreateTestCase<
             TScriptableEvent,
-            TScriptableEventListener,
-            TUnityEvent
+            TScriptableEventListener
         >(object arg)
         {
             var attribute = new TestFixtureAttribute(arg)
@@ -84,7 +68,6 @@ namespace ScriptableEvents.Tests
                 {
                     typeof(TScriptableEvent),
                     typeof(TScriptableEventListener),
-                    typeof(TUnityEvent),
                     arg.GetType()
                 }
             };

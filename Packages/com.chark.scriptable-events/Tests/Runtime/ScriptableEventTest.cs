@@ -12,12 +12,10 @@ namespace ScriptableEvents.Tests
     public class ScriptableEventTest<
         TScriptableEvent,
         TScriptableEventListener,
-        TUnityEvent,
         TArg
     >
-        where TScriptableEvent : ScriptableObject, IScriptableEvent<TArg>
-        where TScriptableEventListener : Component, IScriptableEventListener<TArg>
-        where TUnityEvent : UnityEvent<TArg>, new()
+        where TScriptableEvent : BaseScriptableEvent<TArg>
+        where TScriptableEventListener : BaseScriptableEventListener<TArg>
     {
         #region Fields
 
@@ -25,7 +23,7 @@ namespace ScriptableEvents.Tests
 
         private List<TArg> capturedArgs;
         private TScriptableEvent scriptableEvent;
-        private TUnityEvent unityEvent;
+        private UnityEvent<TArg> unityEvent;
         private TScriptableEventListener scriptableEventListener;
 
         #endregion
@@ -47,16 +45,6 @@ namespace ScriptableEvents.Tests
         }
 
         [Test]
-        public void ShouldGetListeners()
-        {
-            var listeners = scriptableEvent.Listeners;
-
-            // By default one listener is added in this test.
-            Assert.AreEqual(1, listeners.Count);
-            Assert.AreEqual(scriptableEventListener, listeners.First());
-        }
-
-        [Test]
         public void ShouldRaiseEvent()
         {
             scriptableEvent.Raise(arg);
@@ -71,7 +59,7 @@ namespace ScriptableEvents.Tests
             LogAssert.ignoreFailingMessages = true;
 
             scriptableEvent.SetField("suppressExceptions", true);
-            scriptableEvent.Add(new MockScriptableEventListener<TArg>
+            scriptableEvent.AddListener(new MockScriptableEventListener<TArg>
             {
                 Action = capturedArg => throw new Exception()
             });
@@ -82,18 +70,9 @@ namespace ScriptableEvents.Tests
         }
 
         [Test]
-        public void ShouldAddListenerTwiceAndRaiseEventOnce()
-        {
-            scriptableEvent.Add(scriptableEventListener);
-            scriptableEvent.Raise(arg);
-
-            Assert.AreEqual(1, capturedArgs.Count);
-        }
-
-        [Test]
         public void ShouldRemoveListenerAndRaiseEvent()
         {
-            scriptableEvent.Remove(scriptableEventListener);
+            scriptableEvent.RemoveListener(scriptableEventListener);
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
@@ -102,7 +81,7 @@ namespace ScriptableEvents.Tests
         [Test]
         public void ShouldClearAndRaiseEvent()
         {
-            scriptableEvent.Clear();
+            scriptableEvent.RemoveListeners();
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
@@ -120,13 +99,13 @@ namespace ScriptableEvents.Tests
 
         private void SetupUnityEvent()
         {
-            unityEvent = new TUnityEvent();
+            unityEvent = new UnityEvent<TArg>();
             unityEvent.AddListener(capturedArgs.Add);
         }
 
         private void SetupScriptableEventListener()
         {
-            var gameObject = new UnityEngine.GameObject();
+            var gameObject = new GameObject();
             gameObject.SetActive(false);
 
             scriptableEventListener = gameObject.AddComponent<TScriptableEventListener>();

@@ -3,19 +3,18 @@ using UnityEngine.Events;
 
 namespace ScriptableEvents
 {
-    public class BaseScriptableEventListener<TScriptableEvent, TUnityEvent, TArg>
+    public abstract class BaseScriptableEventListener<TArg>
         : MonoBehaviour, IScriptableEventListener<TArg>
-        where TScriptableEvent : BaseScriptableEvent<TArg>
-        where TUnityEvent : UnityEvent<TArg>
     {
         #region Editor
 
         [SerializeField]
-        private TScriptableEvent scriptableEvent;
+        [Tooltip("ScriptableEvent that triggers the onRaised UnityEvent")]
+        private BaseScriptableEvent<TArg> scriptableEvent;
 
         [Space]
         [SerializeField]
-        private TUnityEvent onRaised;
+        private UnityEvent<TArg> onRaised;
 
         #endregion
 
@@ -25,31 +24,31 @@ namespace ScriptableEvents
         {
             if (scriptableEvent == null)
             {
-                Debug.LogError($"{typeof(TScriptableEvent).Name} is not assigned", this);
+                Debug.LogError("ScriptableEvent is not assigned", this);
+                enabled = false;
                 return;
             }
 
-            scriptableEvent.Add(this);
+            scriptableEvent.AddListener(this);
         }
 
         private void OnDisable()
         {
             if (scriptableEvent == null)
             {
-                // Can exit without logging as OnEnable should give enough info.
                 return;
             }
 
-            scriptableEvent.Remove(this);
+            scriptableEvent.RemoveListener(this);
         }
 
         #endregion
 
-        #region Overrides
+        #region Methods
 
-        public void OnRaised(TArg arg)
+        public void OnRaised(TArg value)
         {
-            onRaised.Invoke(arg);
+            onRaised.Invoke(value);
         }
 
         #endregion

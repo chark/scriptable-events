@@ -1,219 +1,191 @@
+[Unity Package Manager]: https://docs.unity3d.com/Manual/upm-ui.html
+[Unity Event]: https://docs.unity3d.com/ScriptReference/Events.UnityEvent.html
+[Samples~]: ../Samples%7E
+[Simple Events]: ../Samples%7E/SimpleEvents
+[Events With Arguments]: ../Samples%7E/EventsWithArguments
+[Custom Events]: ../Samples%7E/CustomEvents
+
 # Documentation
-Most of the documented features can be imported as samples via Unity Package Manager or taken directly from [Samples](../Samples%7E) directory.
 
-## Table of contents
-- [General](#general)
-- [Simple events](#simple-events)
-- [Events with arguments](#events-with-arguments)
-- [Custom events](#custom-events)
-
-## General
-
-### Tips
-- When creating prefabs, event assets can be referenced in them. Then, when you add in your prefabs into a scene, no additional setup is necessary!
-- Event assets can be used to communicate between scenes, this is particularly useful when using [Multi Scene Editing](https://docs.unity3d.com/Manual/MultiSceneEditing.html).
-
-### Event asset GUI
+## Samples
+The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. If you get stuck, check the corresponding sample:
 <p align="center">
-  <img src="simple-event.png"/>
+  <img src="samples.png"/>
 </p>
 
-- Description - custom description for the event, what it does, etc, [Rich Text](https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/StyledText.html) is also supported.
-- Lock button - disables the _Description_ field, useful to avoid accidental edits.
-- Suppress Exceptions - if an event has more than one listener, the first listener to throw an exception will break the chain. When enabled, the exception will get logged and other listeners will continue firing.
-- Trace - enable additional logging.
-- Raise Event - _Raise_ the event, available only in Play Mode.
-- Added Listeners - shows listeners which are subscribed to the event, available only in Play Mode.
+## Getting Started (Simple Events)
+The simplest use case of _Scriptable Events_ is when you need to notify a system that something happened without providing any context. To do so, you need two elements: a _Simple Scriptable Event_ and a _Simple Scriptable Event Listener_.
 
-## Simple Events
-Simple events are useful when you need to _ping_ a `MonoBehaviour` in order to trigger an action. For example, the player loses, and the game needs to show a game over screen (complete example can be found [here](../Samples~/SimpleEvents)).
-
-### Event asset
-To create a simple event, _right click_ in the _Project_ window, and select _Create -> Scriptable Events -> Simple Scriptable Event_. This will create a `SimpleScriptableEvent` asset file, you can name the file however you like and place it anywhere in your project.
-
-### Raise event
-After you have prepared the event, you will want to _Raise_ it. This can be done by dragging the event asset into any `UnityEvent` available on one of your `MonoBehaviour` and selecting the `Raise` method:
+First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Create/Scriptable Events/Simple Scriptable Event_. You can name the event as you prefer and place it anywhere in your project:
 <p align="center">
-  <img src="simple-event-raise.png"/>
+  <img src="simple-scriptable-event.png"/>
 </p>
 
-Alternatively you can _Raise_ the event from within a script:
+Next, select a _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
+<p align="center">
+  <img src="simple-scriptable-event-listener.png"/>
+</p>
+
+Once you've added a listener, insert your event asset into the _Scriptable Event_ field (1). In the _On Raised_ [Unity Event] field (2) add the methods you'd like to be triggered by the event. For example, if you need to change a color of an object, your setup might look like the following as seen in the _Simple Events_ sample:
+<p align="center">
+  <img src="simple-scriptable-event-sample.png"/>
+</p>
+
+Now that you have your listener ready, you need to trigger the event. This can be done from a [Unity Event] by calling `SimpleScriptableEvent.Raise` method or by selecting the event asset and clicking the _Raise_ button during runtime:
+<p align="center">
+  <img hspace="2%" width="40%" src="simple-scriptable-event-raise-unity-event.png"/>
+  <img hspace="2%" width="40%" src="simple-scriptable-event-raise.png"/>
+</p>
+
+Alternatively you can trigger the event via code:
 ```cs
-[SerializedField]
-private SimpleScriptableEvent simpleScriptableEvent;
+using ScriptableEvents.Events;
+using UnityEngine;
 
-...
-
-simpleScriptableEvent.Raise();
-```
-
-### Event listener
-Next thing you will need is a listener, select any `GameObject` in the scene, click _Add Component_ and select _Scriptable Events -> Simple Scriptable Event Listener_. Then, slot in the event asset in _Scriptable Event_ field and add a callback to the _On Raised_ `UnityEvent` under the listener which will invoke a method on a `MonoBehaviour`:
-<p align="center">
-  <img src="simple-event-listener.png"/>
-</p>
-
-Alternatively, you can subscribe to an event via a script:
-```cs
-public class CustomListener : MonoBehaviour, IScriptableEventListener<SimpleArg>
+public class TriggerEvent : MonoBehaviour
 {
     [SerializeField]
-    private SimpleScriptableEvent simpleScriptableEvent;
+    private SimpleScriptableEvent scriptableEvent;
 
-    public void OnRaised(SimpleArg arg)
+    private void Start()
     {
-        // Handle event.
-    }
-
-    private void OnEnable()
-    {
-        simpleScriptableEvent.Add(this);
-    }
-
-    private void OnDisable()
-    {
-        simpleScriptableEvent.Remove(this);
+        scriptableEvent.Raise();
     }
 }
 ```
 
-## Events with arguments
-Events with arguments are useful when you need to pass around data instead of just _pinging_. For example, the player picks up a coin, and you need to increment the score counter by a certain amount based on the coins value (complete example can be found [here](../Samples~/EventsWithArguments)).
+## Passing Arguments (Events With Arguments)
+In some situations might need to pass an argument when triggering an event. For example, if the player takes damage, you might need to notify your systems with the amount of damage taken.
 
-### Event asset
-To create an event with an argument, the approach is similar to [Simple Events](#simple-events). Simply _right click_ in the _Project_ window, and select _Create -> Scriptable Events -> {Type} Scriptable Event_, where _{Type}_ is the type of the data you want to pass.
-
-### Raise event
-To _Raise_ event with an argument, you will first need a `UnityEvent` that accepts a value of desired type. For each `ScriptableEvent` exists a `UnityEvent` with given type (see `ScriptableEvents.{Type}.{Type}UnityEvent` for existing implementations).
-
-After that is sorted, you will need to expose the `UnityEvent` and `Invoke` it in your script, for example a `UnityEvent` that accepts `float` would looks like:
-```cs
-[SerializedField]
-private ScriptableEvents.Float.FloatUnityEvent floatUnityEvent;
-
-...
-
-floatUnityEvent.Invoke(1.0f);
-```
-
-Then, to raise the `ScriptableEvent`, drag it into the exposed `UnityEvent` of specific type and select the **Dynamic** `Raise` method. This will ensure that the value passed to the `UnityEvent` gets forwarded to the `Raise` method:
+For such uses cases, this package provides a set of events with commonly used argument types. To create an event asset which accepts an argument, right-click in the project window and select an event from _Create/Scriptable Events/*_ menu which has the required type:
 <p align="center">
-  <img src="argument-event-raise.png"/>
+  <img src="scriptable-event-arg.png"/>
 </p>
 
-Alternatively, you can _Raise_ the event from a script:
+Next, you'll need to add a listener. Each corresponding _Scriptable Event_ type provides a listener component. Each typed listener works in the same fashion as _Simple Scriptable Event Listener_. The only caveat is when inserting your methods into the _On Raised_ [Unity Event] field. In this case make sure to select a **dynamic** method:
+<p align="center">
+  <img hspace="2%" width="40%" src="scriptable-event-listener-components.png"/>
+  <img hspace="2%" width="40%" src="scriptable-event-listener-dynamic.png"/>
+</p>
+
+To trigger the event follow the same steps as with _Simple Scriptable Event_. However, make sure to select a **dynamic** `Raise` method:
+<p align="center">
+  <img src="scriptable-event-raise-dynamic.png"/>
+</p>
+
+Alternatively you can trigger the event via code:
 ```cs
-[SerializedField]
-private FloatScriptableEvent floatScriptableEvent;
+using ScriptableEvents.Events;
+using UnityEngine;
 
-...
-
-floatScriptableEvent.Raise(1.0f);
-```
-
-### Event listener
-Next thing you will need is a listener. The approach of adding a listener is similar to [Simple Events](#simple-events) as well. Select any `GameObject` in the scene, click _Add Component_ and select _Scriptable Events -> {Type} Scriptable Event Listener_. The only difference is that when selecting your method, you must select a **Dynamic** method.
-
-When subscribing via a script, you will also need to specify a different type argument rather than using `SimpleArg`, in this example `float` is used:
-```cs
-public class CustomListener : MonoBehaviour, IScriptableEventListener<float>
+public class TriggerEvent : MonoBehaviour
 {
     [SerializeField]
-    private FloatScriptableEvent floatScriptableEvent;
+    private FloatScriptableEvent scriptableEvent;
 
-    public void OnRaised(float arg)
+    private void Start()
     {
-        // Handle event.
-    }
+        // Your argument value.
+        var value = 1.0f;
 
-    private void OnEnable()
-    {
-        floatScriptableEvent.Add(this);
-    }
-
-    private void OnDisable()
-    {
-        floatScriptableEvent.Remove(this);
+        scriptableEvent.Raise(value);
     }
 }
 ```
 
-## Custom Events
-You can also create custom events where you can pass any kind of data. For example, the player loses, and you want to send the reference to the player, and the enemy which collided with the player (complete example can be found [here](../Samples~/CustomEvents)).
+## Creating Custom Events (Custom Events)
+In some cases using the built-in argument types is not sufficient. For example, if the player takes damage, you might also need to pass a reference to the object that dealt damage to the player. In this case passing only the damage taken is not enough, you need to pass a `class` argument which contains both of those values. For this you'll need to create a custom event.
 
-First define the data that you want to send:
+To start, create a container `class` for your event data. In this example we'll pass the values needed to change the `Metallic` and `Color` properties of a material:
 ```cs
-public class CustomData
+public class MaterialData
 {
-    public float ValueA { get; }
+    public float Metallic { get; }
 
-    public int ValueB { get; }
+    public Color Color { get; }
 
-    public MaterialData(float valueA, int valueB)
+    public MaterialData(float metallic, Color color)
     {
-        ValueA = valueA;
-        ValueB = valueB;
+        Metallic = metallic;
+        Color = color;
     }
 }
 ```
 
-Similarly to [Events with arguments](#events-with-arguments) you will need a `UnityEvent` which accepts your custom data type:
+Next, define a `Scriptable Event` asset which will accept your argument. Note the `CreateAssetMenu` attribute, as it defines where your event will be located in the _Create_ menu:
 ```cs
-[Serializable]
-public CustomDataUnityEvent : UnityEvent<CustomData>
-{
-}
-```
+using ScriptableEvents;
+using UnityEngine;
 
-Next up, define the scriptable event:
-```cs
 [CreateAssetMenu(
-    fileName = "CustomDataScriptableEvent",
-    menuName = "Custom Scriptable Events/Custom Data Scriptable Event"
+    fileName = "MaterialDataScriptableEvent",
+    menuName = "Custom Scriptable Events/Material Data Scriptable Event"
 )]
-public class CustomDataScriptableEvent : BaseScriptableEvent<CustomData>
+public class MaterialDataScriptableEvent : BaseScriptableEvent<MaterialData>
 {
 }
 ```
 
-Finally, create a listener which will glue everything together:
+Then, define a listener component for your event. Note that in this case the `AddComponentMenu` attribute is optional, however it is recommended to add it to keep things organized:
 ```cs
-[AddComponentMenu("Custom Scriptable Events/Custom Data Event Listener")]
-public class CustomDataScriptableEventListener
-    : BaseScriptableEventListener<
-        CustomDataScriptableEvent,
-        CustomDataUnityEvent,
-        CustomData
-    >
+using ScriptableEvents;
+using UnityEngine;
+
+[AddComponentMenu("Custom Scriptable Events/Material Data Event Listener")]
+public class MaterialDataScriptableEventListener : BaseScriptableEventListener<MaterialData>
 {
 }
 ```
 
-After setting everything, you can use your custom event the same way as described in [Events with arguments](#events-with-arguments). However, you will not be able to use additional GUI features as with built-in events. To solve this, define a custom editor script (make sure to place it under `Editor` directory):
+Finally, you'll need to trigger the event. As usual, this can be done via a [Unity Event] or by directly calling the `Raise` method via code:
 ```cs
-[CustomEditor(typeof(CustomDataScriptableEvent))]
-public class CustomDataScriptableEventEditor : BaseScriptableEventEditor<CustomData>
+using UnityEngine;
+using UnityEngine.Events;
+
+public class MaterialOptionsHandler : MonoBehaviour
 {
-    protected override CustomData DrawArgField(CustomData value)
+    [SerializeField]
+    private UnityEvent<MaterialData> onMaterialChanged;
+
+    [SerializeField]
+    private MaterialDataScriptableEvent scriptableEvent;
+
+    private void Start()
     {
-        // Initially the value will be null as BaseScriptableEventEditor does not know how to
-        // construct an instance of CustomData.
+        // Your argument value.
+        var value = new MaterialData(metallic, color);
+
+        // Via Unity Event.
+        onMaterialChanged.Invoke(value);
+
+        // Or via code.
+        scriptableEvent.Raise(value)
+    }
+}
+```
+
+**Optionally** you can add a custom editor. This will allow you to click the _Raise_ button on your custom event asset during runtime. To do so, create an editor class which inherits `BaseScriptableEventEditor`. Make sure to place this class in the **Editor** directory, or your project will not build:
+```cs
+using ScriptableEvents.Editor;
+using UnityEditor;
+using UnityEngine;
+
+[CustomEditor(typeof(MaterialDataScriptableEvent))]
+public class MaterialDataScriptableEventEditor : BaseScriptableEventEditor<MaterialData>
+{
+    protected override MaterialData DrawArgField(MaterialData value)
+    {
         if (value == null)
         {
-            return new CustomData(0f, 0);
+            value = new MaterialData(0f, Color.white);
         }
 
-        // Add input fields under the inspector. Note that these can also be objects - you can drag
-        // them in from the scene window!
-
-        // Also note that you can omit this step if your data is complex. For example,
-        // SimpleScriptableEvent does not render any fields.
         EditorGUILayout.BeginVertical();
-        var valueA = EditorGUILayout.FloatField("Value A", value.ValueA);
-        var valueB = EditorGUILayout.IntField("Value B", value.ValueB);
+        var metallic = EditorGUILayout.Slider("Metallic", value.Metallic, 0f, 1f);
+        var color = EditorGUILayout.ColorField("Color", value.Color);
         EditorGUILayout.EndVertical();
 
-        return new CustomData(valueA, valueB);
+        return new MaterialData(metallic, color);
     }
 }
 ```

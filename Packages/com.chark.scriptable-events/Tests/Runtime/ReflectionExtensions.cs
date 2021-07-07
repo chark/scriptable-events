@@ -2,7 +2,7 @@
 
 namespace ScriptableEvents.Tests
 {
-    public static class TestExtensions
+    internal static class TestExtensions
     {
         private const BindingFlags PrivateFieldBindingFlags =
             BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
@@ -10,7 +10,7 @@ namespace ScriptableEvents.Tests
         /// <summary>
         /// Set private field value with give name on this object.
         /// </summary>
-        public static void SetField(this object obj, string name, object value)
+        internal static void SetField(this object obj, string name, object value)
         {
             var field = obj.GetField(name);
             field.SetValue(obj, value);
@@ -19,7 +19,7 @@ namespace ScriptableEvents.Tests
         /// <returns>
         /// Private field from this this with given name.
         /// </returns>
-        public static FieldInfo GetField(this object obj, string name)
+        internal static FieldInfo GetField(this object obj, string name)
         {
             var type = obj.GetType();
 

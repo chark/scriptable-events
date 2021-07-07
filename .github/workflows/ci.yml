@@ -1,3 +1,4 @@
+# See: https://game.ci/docs/github/getting-started
 name: CI
 
 on:
@@ -6,31 +7,43 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
 jobs:
   test:
     name: Unity Tests Workflow
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        unityVersion:
+          - 2020.3.13f1
+
     steps:
+
       # Checkout
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
           lfs: true
 
-      # Test
-      - name: Run Tests
-        id: testRunner
-        uses: webbertakken/unity-test-runner@v1.3
+      # Cache
+      - uses: actions/cache@v2
         with:
-          projectPath: .
-          unityVersion: 2019.4.14f1
+          path: Library
+          key: Library
+
+      # Test
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v2
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       # Test Results
       - name: Upload Test Results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
+        if: always()
         with:
-          name: Test results
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
+          name: Test Restuls
+          path: ${{ steps.tests.outputs.artifactsPath }}

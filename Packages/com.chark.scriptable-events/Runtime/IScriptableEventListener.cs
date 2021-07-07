@@ -5,6 +5,6 @@
         /// <summary>
         /// Handle raised event by accepting its argument.
         /// </summary>
-        void OnRaised(TArg arg);
+        void OnRaised(TArg value);
     }
 }
