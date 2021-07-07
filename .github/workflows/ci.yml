@@ -39,8 +39,9 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-        # Output
-      - uses: actions/upload-artifact@v2
+      # Test Results
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
         with:
-          name: Build
-          path: build
+          name: Test Restuls
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
