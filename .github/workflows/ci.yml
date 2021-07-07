@@ -34,6 +34,7 @@ jobs:
       # Test
       - name: Run tests
         uses: game-ci/unity-test-runner@v2
+        id: tests
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
@@ -42,6 +43,7 @@ jobs:
       # Test Results
       - name: Upload Test Results
         uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: Test Restuls
-          path: ${{ steps.testRunner.outputs.artifactsPath }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
