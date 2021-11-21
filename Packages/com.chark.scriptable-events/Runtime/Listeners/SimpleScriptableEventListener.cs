@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Simple Scriptable Event Listener", -100)]
+    [AddComponentMenu(
+        "Scriptable Events/Simple Scriptable Event Listener",
+        ScriptableEventConstants.SimpleScriptableEventOrder + 0
+    )]
     public class SimpleScriptableEventListener : BaseScriptableEventListener<SimpleArg>
     {
     }
