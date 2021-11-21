@@ -44,6 +44,12 @@ namespace ScriptableEvents.Editor
             }
         }
 
+        private string EventArgFullName => eventArgsScript.GetClass().FullName;
+
+        private string EventPrettyName => ObjectNames.NicifyVariableName(eventName);
+
+        private string ListenerPrettyName => ObjectNames.NicifyVariableName(listenerName);
+
         #endregion
 
         #region Unity Lifecycle
@@ -158,9 +164,10 @@ namespace ScriptableEvents.Editor
 
         private void CreateEvent()
         {
-            var eventTemplate = LoadTemplate("ScriptableEventTemplate");
-            var eventScript = CreateEventScript(eventTemplate);
-            // todo: listeners
+            var eventScript = CreateEventScript("ScriptableEventTemplate");
+            var listenerScript = CreateListenerScript("ScriptableEventListenerTemplate");
+            Debug.Log(eventScript);
+            Debug.Log(listenerScript);
             // todo: editor
             // todo: create script files
             // todo: reimport assets
@@ -172,28 +179,29 @@ namespace ScriptableEvents.Editor
 
         #region Private Script Creation Methods
 
-        private string CreateEventScript(TextAsset template)
+        private string CreateEventScript(string templateName)
         {
-            var eventMenuName = ObjectNames.NicifyVariableName(eventName);
-
-            var eventArgsClass = eventArgsScript.GetClass();
-            var eventArgNamespace = eventArgsClass.Namespace;
-            var eventArgFullName = eventArgsClass.FullName;
-
-            var context = new Dictionary<string, object>
+            return CreateScript(templateName, new Dictionary<string, object>
             {
                 ["EVENT_NAMESPACE"] = eventNamespace,
                 ["EVENT_NAME"] = eventName,
                 ["EVENT_FILE_NAME"] = eventName,
                 ["EVENT_MENU_ORDER"] = eventMenuOrder,
-                ["EVENT_MENU_NAME"] = eventMenuName,
-                ["EVENT_ARG_NAMESPACE"] = eventArgNamespace,
-                ["EVENT_ARG_FULL_NAME"] = eventArgFullName,
-            };
+                ["EVENT_MENU_NAME"] = EventPrettyName,
+                ["EVENT_ARG_FULL_NAME"] = EventArgFullName
+            });
+        }
 
-            var script = CreateScript(template, context);
-
-            return script;
+        private string CreateListenerScript(string templateName)
+        {
+            return CreateScript(templateName, new Dictionary<string, object>
+            {
+                ["LISTENER_NAMESPACE"] = listenerNamespace,
+                ["LISTENER_NAME"] = listenerName,
+                ["LISTENER_MENU_ORDER"] = listenerMenuOrder,
+                ["LISTENER_MENU_NAME"] = ListenerPrettyName,
+                ["EVENT_ARG_FULL_NAME"] = EventArgFullName
+            });
         }
 
         #endregion
@@ -205,8 +213,9 @@ namespace ScriptableEvents.Editor
             return eventArgsScript != script && script != null;
         }
 
-        private static string CreateScript(TextAsset template, Dictionary<string, object> context)
+        private static string CreateScript(string templateName, Dictionary<string, object> context)
         {
+            var template = LoadTemplate(templateName);
             var builder = new StringBuilder(template.text);
 
             foreach (var pair in context)
