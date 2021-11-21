@@ -1,0 +1,11 @@
+﻿namespace EVENT_NAMESPACE
+{
+    [CreateAssetMenu(
+        fileName = "EVENT_FILE_NAME",
+        menuName = "Scriptable Events/EVENT_MENU_NAME",
+        order = ScriptableEvents.ScriptableEventConstants.CustomScriptableEventOrder + EVENT_MENU_ORDER
+    )]
+    public class EVENT_NAME : ScriptableEvents.Events.BaseScriptableEvent<EVENT_ARG_FULL_NAME>
+    {
+    }
+}
