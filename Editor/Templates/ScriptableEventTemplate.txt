@@ -1,4 +1,6 @@
-﻿namespace EVENT_NAMESPACE
+﻿using UnityEngine;
+
+namespace EVENT_NAMESPACE
 {
     [CreateAssetMenu(
         fileName = "EVENT_FILE_NAME",
