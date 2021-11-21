@@ -164,24 +164,28 @@ namespace ScriptableEvents.Editor
 
         private void CreateEvent()
         {
-            var eventScript = CreateEventScript("ScriptableEventTemplate");
-            var listenerScript = CreateListenerScript("ScriptableEventListenerTemplate");
+            var eventScript = CreateEventScript();
+            var listenerScript = CreateListenerScript();
+            var editorScript = CreateEditorScript();
+
             Debug.Log(eventScript);
             Debug.Log(listenerScript);
-            // todo: editor
+            Debug.Log(editorScript);
+
             // todo: create script files
             // todo: reimport assets
             // todo: improve editor UX (pre-fill fields)
             // todo: trim input
+            // todo: tests
         }
 
         #endregion
 
         #region Private Script Creation Methods
 
-        private string CreateEventScript(string templateName)
+        private string CreateEventScript()
         {
-            return CreateScript(templateName, new Dictionary<string, object>
+            return CreateScript("ScriptableEventTemplate", new Dictionary<string, object>
             {
                 ["EVENT_NAMESPACE"] = eventNamespace,
                 ["EVENT_NAME"] = eventName,
@@ -192,14 +196,26 @@ namespace ScriptableEvents.Editor
             });
         }
 
-        private string CreateListenerScript(string templateName)
+        private string CreateListenerScript()
         {
-            return CreateScript(templateName, new Dictionary<string, object>
+            return CreateScript("ScriptableEventListenerTemplate", new Dictionary<string, object>
             {
                 ["LISTENER_NAMESPACE"] = listenerNamespace,
                 ["LISTENER_NAME"] = listenerName,
                 ["LISTENER_MENU_ORDER"] = listenerMenuOrder,
                 ["LISTENER_MENU_NAME"] = ListenerPrettyName,
+                ["EVENT_ARG_FULL_NAME"] = EventArgFullName
+            });
+        }
+
+        private string CreateEditorScript()
+        {
+            return CreateScript("ScriptableEventEditorTemplate", new Dictionary<string, object>
+            {
+                ["EVENT_NAMESPACE"] = eventNamespace,
+                ["EDITOR_NAMESPACE"] = editorNamespace,
+                ["EVENT_NAME"] = eventName,
+                ["EDITOR_NAME"] = editorName,
                 ["EVENT_ARG_FULL_NAME"] = EventArgFullName
             });
         }
