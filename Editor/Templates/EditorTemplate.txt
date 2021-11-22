@@ -1,0 +1,15 @@
+﻿using UnityEditor;
+
+namespace ${EDITOR_NAMESPACE}
+{
+    [CustomEditor(typeof(${EVENT_NAME}))]
+    public class ${EDITOR_NAME} : BaseScriptableEventEditor<${EVENT_ARG_NAME}>
+    {
+        protected override ${EVENT_ARG_NAME} DrawArgField(${EVENT_ARG_NAME} value)
+        {
+            // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on your
+            // ${EVENT_NAME} asset.
+            return value;
+        }
+    }
+}
