@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Collision Scriptable Event Listener",
-        ScriptableEventConstants.UnityPrimitiveScriptableEventOrder + 3
+        ScriptableEventConstants.MenuNamePrefix + "/Collision Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
     )]
     public class CollisionScriptableEventListener : BaseScriptableEventListener<Collision>
     {

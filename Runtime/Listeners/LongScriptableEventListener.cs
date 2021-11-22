@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Long Scriptable Event Listener",
-        ScriptableEventConstants.PrimitiveScriptableEventOrder + 2
+        ScriptableEventConstants.MenuNamePrefix + "/Long Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
     )]
     public class LongScriptableEventListener : BaseScriptableEventListener<long>
     {

@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Quaternion Scriptable Event Listener",
-        ScriptableEventConstants.UnityPrimitiveScriptableEventOrder + 4
+        ScriptableEventConstants.MenuNamePrefix + "/Quaternion Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
     )]
     public class QuaternionScriptableEventListener : BaseScriptableEventListener<Quaternion>
     {

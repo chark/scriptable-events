@@ -4,8 +4,8 @@ using UnityEngine;
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Simple Scriptable Event Listener",
-        ScriptableEventConstants.SimpleScriptableEventOrder + 0
+        ScriptableEventConstants.MenuNamePrefix + "/Simple Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderSimpleEvent + 0
     )]
     public class SimpleScriptableEventListener : BaseScriptableEventListener<SimpleArg>
     {

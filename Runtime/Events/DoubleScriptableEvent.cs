@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "DoubleScriptableEvent",
-        menuName = "Scriptable Events/Double Scriptable Event",
-        order = ScriptableEventConstants.PrimitiveScriptableEventOrder + 4
+        menuName = ScriptableEventConstants.MenuNamePrefix + "/Double Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
     )]
     public class DoubleScriptableEvent : BaseScriptableEvent<double>
     {

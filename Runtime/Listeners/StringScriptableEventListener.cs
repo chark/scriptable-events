@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/String Scriptable Event Listener",
-        ScriptableEventConstants.PrimitiveScriptableEventOrder + 5
+        ScriptableEventConstants.MenuNamePrefix + "/String Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
     )]
     public class StringScriptableEventListener : BaseScriptableEventListener<string>
     {
