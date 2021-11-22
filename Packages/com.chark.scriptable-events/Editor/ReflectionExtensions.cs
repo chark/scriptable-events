@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
+    /// <summary>
+    /// Extensions to fetch values via reflection.
+    /// </summary>
     internal static class ReflectionExtensions
     {
+        /// <returns>
+        /// Tooltip text from a given field.
+        /// </returns>
         internal static string GetTooltip(
             this Type type,
             string fieldName,
@@ -22,6 +28,9 @@ namespace ScriptableEvents.Editor
             return attribute.tooltip;
         }
 
+        /// <returns>
+        /// Value of specified type and name on an object instance.
+        /// </returns>
         internal static T GetFieldValue<T>(
             this object obj,
             string fieldName,
