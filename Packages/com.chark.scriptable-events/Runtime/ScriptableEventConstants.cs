@@ -1,11 +1,14 @@
 ﻿namespace ScriptableEvents
 {
+    /// <summary>
+    /// Constants used in the ScriptableEvent package to reduce duplication.
+    /// </summary>
     public static class ScriptableEventConstants
     {
         /// <summary>
         /// Menu order of event tools.
         /// </summary>
-        public const int MenuToolsOrder = -200;
+        public const int MenuOrderTools = -200;
 
         /// <summary>
         /// Menu order of event assets which use simple arguments.
