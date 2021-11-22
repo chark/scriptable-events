@@ -13,8 +13,8 @@ namespace ScriptableEvents.Editor.Tests
                 SimpleScriptableEventListener
             >(
                 "SimpleScriptableEvent",
-                "Scriptable Events/Simple Scriptable Event",
-                "Scriptable Events/Simple Scriptable Event Listener",
+                "Scriptable Event/Simple Scriptable Event",
+                "Scriptable Event/Simple Scriptable Event Listener",
                 -100
             );
 
@@ -25,8 +25,8 @@ namespace ScriptableEvents.Editor.Tests
                 BoolScriptableEventListener
             >(
                 "BoolScriptableEvent",
-                "Scriptable Events/Bool Scriptable Event",
-                "Scriptable Events/Bool Scriptable Event Listener",
+                "Scriptable Event/Bool Scriptable Event",
+                "Scriptable Event/Bool Scriptable Event Listener",
                 0
             );
 
@@ -35,8 +35,8 @@ namespace ScriptableEvents.Editor.Tests
                 IntScriptableEventListener
             >(
                 "IntScriptableEvent",
-                "Scriptable Events/Int Scriptable Event",
-                "Scriptable Events/Int Scriptable Event Listener",
+                "Scriptable Event/Int Scriptable Event",
+                "Scriptable Event/Int Scriptable Event Listener",
                 1
             );
 
@@ -45,8 +45,8 @@ namespace ScriptableEvents.Editor.Tests
                 LongScriptableEventListener
             >(
                 "LongScriptableEvent",
-                "Scriptable Events/Long Scriptable Event",
-                "Scriptable Events/Long Scriptable Event Listener",
+                "Scriptable Event/Long Scriptable Event",
+                "Scriptable Event/Long Scriptable Event Listener",
                 2
             );
 
@@ -55,8 +55,8 @@ namespace ScriptableEvents.Editor.Tests
                 FloatScriptableEventListener
             >(
                 "FloatScriptableEvent",
-                "Scriptable Events/Float Scriptable Event",
-                "Scriptable Events/Float Scriptable Event Listener",
+                "Scriptable Event/Float Scriptable Event",
+                "Scriptable Event/Float Scriptable Event Listener",
                 3
             );
 
@@ -65,8 +65,8 @@ namespace ScriptableEvents.Editor.Tests
                 DoubleScriptableEventListener
             >(
                 "DoubleScriptableEvent",
-                "Scriptable Events/Double Scriptable Event",
-                "Scriptable Events/Double Scriptable Event Listener",
+                "Scriptable Event/Double Scriptable Event",
+                "Scriptable Event/Double Scriptable Event Listener",
                 4
             );
 
@@ -75,8 +75,8 @@ namespace ScriptableEvents.Editor.Tests
                 StringScriptableEventListener
             >(
                 "StringScriptableEvent",
-                "Scriptable Events/String Scriptable Event",
-                "Scriptable Events/String Scriptable Event Listener",
+                "Scriptable Event/String Scriptable Event",
+                "Scriptable Event/String Scriptable Event Listener",
                 5
             );
 
@@ -89,8 +89,8 @@ namespace ScriptableEvents.Editor.Tests
                 Vector2ScriptableEventListener
             >(
                 "Vector2ScriptableEvent",
-                "Scriptable Events/Vector2 Scriptable Event",
-                "Scriptable Events/Vector2 Scriptable Event Listener",
+                "Scriptable Event/Vector2 Scriptable Event",
+                "Scriptable Event/Vector2 Scriptable Event Listener",
                 100
             );
 
@@ -99,8 +99,8 @@ namespace ScriptableEvents.Editor.Tests
                 Vector3ScriptableEventListener
             >(
                 "Vector3ScriptableEvent",
-                "Scriptable Events/Vector3 Scriptable Event",
-                "Scriptable Events/Vector3 Scriptable Event Listener",
+                "Scriptable Event/Vector3 Scriptable Event",
+                "Scriptable Event/Vector3 Scriptable Event Listener",
                 101
             );
 
@@ -110,8 +110,8 @@ namespace ScriptableEvents.Editor.Tests
                 Collision2DScriptableEventListener
             >(
                 "Collision2DScriptableEvent",
-                "Scriptable Events/Collision 2D Scriptable Event",
-                "Scriptable Events/Collision 2D Scriptable Event Listener",
+                "Scriptable Event/Collision 2D Scriptable Event",
+                "Scriptable Event/Collision 2D Scriptable Event Listener",
                 102
             );
 
@@ -120,8 +120,8 @@ namespace ScriptableEvents.Editor.Tests
                 CollisionScriptableEventListener
             >(
                 "CollisionScriptableEvent",
-                "Scriptable Events/Collision Scriptable Event",
-                "Scriptable Events/Collision Scriptable Event Listener",
+                "Scriptable Event/Collision Scriptable Event",
+                "Scriptable Event/Collision Scriptable Event Listener",
                 103
             );
 
@@ -130,8 +130,8 @@ namespace ScriptableEvents.Editor.Tests
                 QuaternionScriptableEventListener
             >(
                 "QuaternionScriptableEvent",
-                "Scriptable Events/Quaternion Scriptable Event",
-                "Scriptable Events/Quaternion Scriptable Event Listener",
+                "Scriptable Event/Quaternion Scriptable Event",
+                "Scriptable Event/Quaternion Scriptable Event Listener",
                 104
             );
 
@@ -140,8 +140,8 @@ namespace ScriptableEvents.Editor.Tests
                 ColorScriptableEventListener
             >(
                 "ColorScriptableEvent",
-                "Scriptable Events/Color Scriptable Event",
-                "Scriptable Events/Color Scriptable Event Listener",
+                "Scriptable Event/Color Scriptable Event",
+                "Scriptable Event/Color Scriptable Event Listener",
                 105
             );
 
@@ -154,8 +154,8 @@ namespace ScriptableEvents.Editor.Tests
                 Collider2DScriptableEventListener
             >(
                 "Collider2DScriptableEvent",
-                "Scriptable Events/Collider 2D Scriptable Event",
-                "Scriptable Events/Collider 2D Scriptable Event Listener",
+                "Scriptable Event/Collider 2D Scriptable Event",
+                "Scriptable Event/Collider 2D Scriptable Event Listener",
                 200
             );
 
@@ -164,8 +164,8 @@ namespace ScriptableEvents.Editor.Tests
                 ColliderScriptableEventListener
             >(
                 "ColliderScriptableEvent",
-                "Scriptable Events/Collider Scriptable Event",
-                "Scriptable Events/Collider Scriptable Event Listener",
+                "Scriptable Event/Collider Scriptable Event",
+                "Scriptable Event/Collider Scriptable Event Listener",
                 201
             );
 
@@ -174,8 +174,8 @@ namespace ScriptableEvents.Editor.Tests
                 GameObjectScriptableEventListener
             >(
                 "GameObjectScriptableEvent",
-                "Scriptable Events/Game Object Scriptable Event",
-                "Scriptable Events/Game Object Scriptable Event Listener",
+                "Scriptable Event/Game Object Scriptable Event",
+                "Scriptable Event/Game Object Scriptable Event Listener",
                 202
             );
 
@@ -184,8 +184,8 @@ namespace ScriptableEvents.Editor.Tests
                 TransformScriptableEventListener
             >(
                 "TransformScriptableEvent",
-                "Scriptable Events/Transform Scriptable Event",
-                "Scriptable Events/Transform Scriptable Event Listener",
+                "Scriptable Event/Transform Scriptable Event",
+                "Scriptable Event/Transform Scriptable Event Listener",
                 203
             );
 
