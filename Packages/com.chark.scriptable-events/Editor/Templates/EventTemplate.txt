@@ -1,0 +1,13 @@
+﻿using UnityEngine;
+
+namespace ${EVENT_NAMESPACE}
+{
+    [CreateAssetMenu(
+        fileName = "${EVENT_MENU_FILE_NAME}",
+        menuName = ScriptableEventConstants.MenuNamePrefix + "/${EVENT_MENU_NAME}",
+        order = ScriptableEventConstants.MenuOrderCustomEvent + ${EVENT_MENU_ORDER}
+    )]
+    public class ${EVENT_NAME} : BaseScriptableEvent<${EVENT_ARG_NAME}>
+    {
+    }
+}
