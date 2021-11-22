@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Vector2 Scriptable Event Listener",
-        ScriptableEventConstants.UnityPrimitiveScriptableEventOrder + 0
+        ScriptableEventConstants.MenuNamePrefix + "/Vector2 Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
     )]
     public class Vector2ScriptableEventListener : BaseScriptableEventListener<Vector2>
     {

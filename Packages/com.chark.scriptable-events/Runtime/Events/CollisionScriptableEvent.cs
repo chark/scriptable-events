@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "CollisionScriptableEvent",
-        menuName = "Scriptable Events/Collision Scriptable Event",
-        order = ScriptableEventConstants.UnityPrimitiveScriptableEventOrder + 3
+        menuName = ScriptableEventConstants.MenuNamePrefix + "/Collision Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
     )]
     public class CollisionScriptableEvent : BaseScriptableEvent<Collision>
     {

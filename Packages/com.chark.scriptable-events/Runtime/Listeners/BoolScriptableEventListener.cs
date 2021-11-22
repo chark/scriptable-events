@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Bool Scriptable Event Listener",
-        ScriptableEventConstants.PrimitiveScriptableEventOrder + 0
+        ScriptableEventConstants.MenuNamePrefix + "/Bool Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
     )]
     public class BoolScriptableEventListener : BaseScriptableEventListener<bool>
     {

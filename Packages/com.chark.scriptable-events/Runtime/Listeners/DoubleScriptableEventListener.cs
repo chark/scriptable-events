@@ -3,8 +3,8 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        "Scriptable Events/Double Scriptable Event Listener",
-        ScriptableEventConstants.PrimitiveScriptableEventOrder + 4
+        ScriptableEventConstants.MenuNamePrefix + "/Double Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
     )]
     public class DoubleScriptableEventListener : BaseScriptableEventListener<double>
     {

@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "QuaternionScriptableEvent",
-        menuName = "Scriptable Events/Quaternion Scriptable Event",
-        order = ScriptableEventConstants.UnityPrimitiveScriptableEventOrder + 4
+        menuName = ScriptableEventConstants.MenuNamePrefix + "/Quaternion Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
     )]
     public class QuaternionScriptableEvent : BaseScriptableEvent<Quaternion>
     {
