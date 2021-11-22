@@ -8,7 +8,7 @@ namespace ScriptableEvents.Editor
     /// <summary>
     /// Extensions to create custom C# scripts.
     /// </summary>
-    internal static class CustomScriptExtensions
+    internal static class TemplateExtensions
     {
         #region Internal Methods
 
