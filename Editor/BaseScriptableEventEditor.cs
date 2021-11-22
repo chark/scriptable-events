@@ -22,7 +22,6 @@ namespace ScriptableEvents.Editor
 
         // Cached properties.
         private SerializedProperty descriptionProperty;
-        private SerializedProperty lockDescriptionProperty;
         private SerializedProperty suppressExceptionsProperty;
         private SerializedProperty traceProperty;
 
@@ -32,6 +31,7 @@ namespace ScriptableEvents.Editor
         private GUIStyle listenerSubLabelStyle;
 
         private float descriptionWidth;
+        private bool isLockDescription = true;
 
         #endregion
 
@@ -99,7 +99,6 @@ namespace ScriptableEvents.Editor
         private void SetupSerializedProperties()
         {
             descriptionProperty = serializedObject.FindProperty("description");
-            lockDescriptionProperty = serializedObject.FindProperty("lockDescription");
             suppressExceptionsProperty = serializedObject.FindProperty("suppressExceptions");
             traceProperty = serializedObject.FindProperty("trace");
         }
@@ -181,17 +180,17 @@ namespace ScriptableEvents.Editor
             position.width = descriptionLockStyle.fixedWidth;
             position.x = position.xMin + descriptionWidth;
 
-            lockDescriptionProperty.boolValue = EditorGUI.Toggle(
+            isLockDescription = EditorGUI.Toggle(
                 position,
                 GUIContent.none,
-                lockDescriptionProperty.boolValue,
+                isLockDescription,
                 descriptionLockStyle
             );
         }
 
         private void DrawDescriptionTextArea()
         {
-            GUI.enabled = !lockDescriptionProperty.boolValue;
+            GUI.enabled = !isLockDescription;
             descriptionProperty.stringValue = EditorGUILayout.TextArea(
                 descriptionProperty.stringValue,
                 descriptionStyle

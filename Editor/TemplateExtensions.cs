@@ -6,14 +6,14 @@ using UnityEngine;
 namespace ScriptableEvents.Editor
 {
     /// <summary>
-    /// Extensions to create custom C# scripts.
+    /// Extensions to create custom C# scripts by using script templates.
     /// </summary>
     internal static class TemplateExtensions
     {
         #region Internal Methods
 
         /// <summary>
-        /// Save script to file.
+        /// Save script to a file.
         /// </summary>
         internal static void SaveScript(
             this string scriptContent,
@@ -37,9 +37,9 @@ namespace ScriptableEvents.Editor
             File.WriteAllText(scriptPath, scriptContent);
         }
 
-        /// <summary>
-        /// Create script from a template.
-        /// </summary>
+        /// <returns>
+        /// Script content created using a file with given name.
+        /// </returns>
         internal static string CreateScript(
             this string templateName,
             IDictionary<string, object> substitutes,

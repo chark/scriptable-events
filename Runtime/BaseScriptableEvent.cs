@@ -13,14 +13,6 @@ namespace ScriptableEvents
         [Tooltip("Custom description to provide more additional information")]
         private string description;
 
-#pragma warning disable CS0414
-
-        // ReSharper disable once NotAccessedField.Local
-        [SerializeField, HideInInspector]
-        private bool lockDescription = true;
-
-#pragma warning restore CS0414
-
         [SerializeField]
         [Tooltip("Should exceptions not break the listener chain")]
         private bool suppressExceptions;
