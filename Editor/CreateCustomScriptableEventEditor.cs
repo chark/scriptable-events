@@ -314,7 +314,6 @@ namespace ScriptableEvents.Editor
                 {
                     ["LISTENER_NAMESPACE"] = listenerNamespace,
                     ["LISTENER_NAME"] = listenerName,
-                    ["EVENT_ARG_NAMESPACE"] = eventArgNamespace,
                     ["EVENT_ARG_NAME"] = eventArgName,
                     ["LISTENER_MENU_ORDER"] = listenerMenuOrder,
                     ["LISTENER_MENU_NAME"] = listenerMenuName
