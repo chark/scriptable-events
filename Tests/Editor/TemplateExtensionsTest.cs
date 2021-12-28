@@ -22,8 +22,8 @@ namespace ScriptableEvents.Editor.Tests
                 {
                     [CreateAssetMenu(
                         fileName = ""TestEventMenuFileName"",
-                        menuName = ScriptableEventConstants.MenuNamePrefix + ""/TestEventMenuName"",
-                        order = ScriptableEventConstants.MenuOrderCustomEvent + 123
+                        menuName = ScriptableEventConstants.MenuNameCustom + ""/TestEventMenuName"",
+                        order = ScriptableEventConstants.MenuOrderCustom + 123
                     )]
                     public class TestEventName : BaseScriptableEvent<TestEventArgName>
                     {
@@ -78,8 +78,8 @@ namespace ScriptableEvents.Editor.Tests
                 namespace TestListener.Namespace
                 {
                     [AddComponentMenu(
-                        ScriptableEventConstants.MenuNamePrefix + ""/TestListenerMenuName"",
-                        ScriptableEventConstants.MenuOrderCustomEvent + 123
+                        ScriptableEventConstants.MenuNameCustom + ""/TestListenerMenuName"",
+                        ScriptableEventConstants.MenuOrderCustom + 123
                     )]
                     public class TestListenerName : BaseScriptableEventListener<TestEventArgName>
                     {

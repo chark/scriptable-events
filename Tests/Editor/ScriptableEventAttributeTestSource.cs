@@ -15,7 +15,7 @@ namespace ScriptableEvents.Editor.Tests
                 "SimpleScriptableEvent",
                 "Scriptable Event/Simple Scriptable Event",
                 "Scriptable Event/Simple Scriptable Event Listener",
-                -100
+                ScriptableEventConstants.MenuOrderSimpleEvent
             );
 
             #region Primitives
@@ -27,7 +27,7 @@ namespace ScriptableEvents.Editor.Tests
                 "BoolScriptableEvent",
                 "Scriptable Event/Bool Scriptable Event",
                 "Scriptable Event/Bool Scriptable Event Listener",
-                0
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
             );
 
             yield return CreateTestCase<
@@ -37,7 +37,7 @@ namespace ScriptableEvents.Editor.Tests
                 "IntScriptableEvent",
                 "Scriptable Event/Int Scriptable Event",
                 "Scriptable Event/Int Scriptable Event Listener",
-                1
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
             );
 
             yield return CreateTestCase<
@@ -47,7 +47,7 @@ namespace ScriptableEvents.Editor.Tests
                 "LongScriptableEvent",
                 "Scriptable Event/Long Scriptable Event",
                 "Scriptable Event/Long Scriptable Event Listener",
-                2
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
             );
 
             yield return CreateTestCase<
@@ -57,7 +57,7 @@ namespace ScriptableEvents.Editor.Tests
                 "FloatScriptableEvent",
                 "Scriptable Event/Float Scriptable Event",
                 "Scriptable Event/Float Scriptable Event Listener",
-                3
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
             );
 
             yield return CreateTestCase<
@@ -67,7 +67,7 @@ namespace ScriptableEvents.Editor.Tests
                 "DoubleScriptableEvent",
                 "Scriptable Event/Double Scriptable Event",
                 "Scriptable Event/Double Scriptable Event Listener",
-                4
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
             );
 
             yield return CreateTestCase<
@@ -77,7 +77,7 @@ namespace ScriptableEvents.Editor.Tests
                 "StringScriptableEvent",
                 "Scriptable Event/String Scriptable Event",
                 "Scriptable Event/String Scriptable Event Listener",
-                5
+                ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
             );
 
             #endregion
@@ -91,7 +91,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector2ScriptableEvent",
                 "Scriptable Event/Vector2 Scriptable Event",
                 "Scriptable Event/Vector2 Scriptable Event Listener",
-                100
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
             );
 
             yield return CreateTestCase<
@@ -101,7 +101,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Vector3ScriptableEvent",
                 "Scriptable Event/Vector3 Scriptable Event",
                 "Scriptable Event/Vector3 Scriptable Event Listener",
-                101
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
             );
 
 
@@ -112,7 +112,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Collision2DScriptableEvent",
                 "Scriptable Event/Collision 2D Scriptable Event",
                 "Scriptable Event/Collision 2D Scriptable Event Listener",
-                102
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 2
             );
 
             yield return CreateTestCase<
@@ -122,7 +122,7 @@ namespace ScriptableEvents.Editor.Tests
                 "CollisionScriptableEvent",
                 "Scriptable Event/Collision Scriptable Event",
                 "Scriptable Event/Collision Scriptable Event Listener",
-                103
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
             );
 
             yield return CreateTestCase<
@@ -132,7 +132,7 @@ namespace ScriptableEvents.Editor.Tests
                 "QuaternionScriptableEvent",
                 "Scriptable Event/Quaternion Scriptable Event",
                 "Scriptable Event/Quaternion Scriptable Event Listener",
-                104
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
             );
 
             yield return CreateTestCase<
@@ -142,7 +142,7 @@ namespace ScriptableEvents.Editor.Tests
                 "ColorScriptableEvent",
                 "Scriptable Event/Color Scriptable Event",
                 "Scriptable Event/Color Scriptable Event Listener",
-                105
+                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
             );
 
             #endregion
@@ -156,7 +156,7 @@ namespace ScriptableEvents.Editor.Tests
                 "Collider2DScriptableEvent",
                 "Scriptable Event/Collider 2D Scriptable Event",
                 "Scriptable Event/Collider 2D Scriptable Event Listener",
-                200
+                ScriptableEventConstants.MenuOrderUnityObjectEvent + 0
             );
 
             yield return CreateTestCase<
@@ -166,7 +166,7 @@ namespace ScriptableEvents.Editor.Tests
                 "ColliderScriptableEvent",
                 "Scriptable Event/Collider Scriptable Event",
                 "Scriptable Event/Collider Scriptable Event Listener",
-                201
+                ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
             );
 
             yield return CreateTestCase<
@@ -176,7 +176,7 @@ namespace ScriptableEvents.Editor.Tests
                 "GameObjectScriptableEvent",
                 "Scriptable Event/Game Object Scriptable Event",
                 "Scriptable Event/Game Object Scriptable Event Listener",
-                202
+                ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
             );
 
             yield return CreateTestCase<
@@ -186,7 +186,7 @@ namespace ScriptableEvents.Editor.Tests
                 "TransformScriptableEvent",
                 "Scriptable Event/Transform Scriptable Event",
                 "Scriptable Event/Transform Scriptable Event Listener",
-                203
+                ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
             );
 
             #endregion

@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
-    internal class CustomEventCreatorEditor : EditorWindow
+    internal class CustomEventCreatorEditorWindow : EditorWindow
     {
         #region GUI Label Fields
 
         private static readonly GUIContent EventArgScriptLabel = new GUIContent
         {
             text = "Event Argument Script",
-            tooltip = "Script which will be used as an argument for ScriptableEvent"
+            tooltip = "Script which will be used as an argument for the custom event"
         };
 
         private static readonly GUIContent ScriptDirectoryLabel = new GUIContent
@@ -26,61 +26,61 @@ namespace ScriptableEvents.Editor
         private static readonly GUIContent EventNamespaceLabel = new GUIContent
         {
             text = "Event Namespace",
-            tooltip = "Namespace and directory used for the ScriptableEvent script"
+            tooltip = "Namespace and directory used for the custom event script"
         };
 
         private static readonly GUIContent EventNameLabel = new GUIContent
         {
             text = "Event Name",
-            tooltip = "Name of the ScriptableEvent script"
+            tooltip = "Name of the custom event script"
         };
 
         private static readonly GUIContent EventMenuOrderLabel = new GUIContent
         {
             text = "Event Menu Order",
-            tooltip = "Menu order of the ScriptableEvent asset"
+            tooltip = "Menu order of the custom event asset"
         };
 
         private static readonly GUIContent ListenerNamespaceLabel = new GUIContent
         {
             text = "Listener Namespace",
-            tooltip = "Namespace and directory used for the ScriptableEvent listener script"
+            tooltip = "Namespace and directory used for the custom event listener script"
         };
 
         private static readonly GUIContent ListenerNameLabel = new GUIContent
         {
             text = "Listener Name",
-            tooltip = "Name of the ScriptableEvent listener script"
+            tooltip = "Name of the custom event listener script"
         };
 
         private static readonly GUIContent ListenerMenuOrderLabel = new GUIContent
         {
-            text = "Listener Name",
-            tooltip = "Menu order of the ScriptableEventListener asset"
+            text = "Listener Menu Order",
+            tooltip = "Menu order of the custom event listener component"
         };
 
         private static readonly GUIContent EditorNamespaceLabel = new GUIContent
         {
             text = "Editor Namespace",
-            tooltip = "Namespace and directory used for the ScriptableEvent editor script"
+            tooltip = "Namespace and directory used for the custom event editor script"
         };
 
         private static readonly GUIContent EditorNameLabel = new GUIContent
         {
             text = "Editor Name",
-            tooltip = "Name of the ScriptableEvent editor script"
+            tooltip = "Name of the custom event editor script"
         };
 
         private static readonly GUIContent IsCreateListenerLabel = new GUIContent
         {
             text = "Is Create Listener",
-            tooltip = "Should a ScriptableEvent listener script be generated?"
+            tooltip = "Should a custom event listener script be generated?"
         };
 
         private static readonly GUIContent IsCreateEditorLabel = new GUIContent
         {
             text = "Is Create Editor",
-            tooltip = "Should a ScriptableEvent editor script be generated?"
+            tooltip = "Should a custom event editor script be generated?"
         };
 
         #endregion
@@ -104,7 +104,7 @@ namespace ScriptableEvents.Editor
         private string eventName;
         private int eventMenuOrder;
 
-        private bool isCreateListener;
+        private bool isCreateListener = true;
         private string listenerNamespace;
         private string listenerName;
         private int listenerMenuOrder;
@@ -147,15 +147,19 @@ namespace ScriptableEvents.Editor
         #region Unity Lifecycle
 
         [MenuItem(
-            "Assets/Create/" + ScriptableEventConstants.MenuNamePrefix + "/Custom Scriptable Event",
+            "Assets/Create/" + ScriptableEventConstants.MenuNameBase + "/Custom Scriptable Event",
             priority = ScriptableEventConstants.MenuOrderTools
         )]
         public static void ShowWindow()
         {
-            var window = GetWindow<CustomEventCreatorEditor>(true, "Create Custom ScriptableEvent");
+            var window = GetWindow<CustomEventCreatorEditorWindow>(
+                true,
+                "Create Custom ScriptableEvent"
+            );
+
             var minSize = window.minSize;
             minSize.x = 350f;
-            minSize.y = 400f;
+            minSize.y = 300f;
             window.minSize = minSize;
         }
 
@@ -287,7 +291,10 @@ namespace ScriptableEvents.Editor
         private void CreateEventScript()
         {
             var eventMenuName = ObjectNames.NicifyVariableName(eventName);
-            var scriptContent = "EventTemplate".CreateScript(new Dictionary<string, object>
+            var baseNamespace = typeof(BaseScriptableEvent<>).Namespace;
+
+            var scriptContent = "EventTemplate".CreateScript(
+                new Dictionary<string, object>
                 {
                     ["EVENT_NAMESPACE"] = eventNamespace,
                     ["EVENT_NAME"] = eventName,
@@ -300,7 +307,7 @@ namespace ScriptableEvents.Editor
                 {
                     eventArgNamespace,
                     eventNamespace,
-                    typeof(BaseScriptableEvent<>).Namespace
+                    baseNamespace
                 }
             );
 
@@ -310,7 +317,10 @@ namespace ScriptableEvents.Editor
         private void CreateListenerScript()
         {
             var listenerMenuName = ObjectNames.NicifyVariableName(listenerName);
-            var scriptContent = "ListenerTemplate".CreateScript(new Dictionary<string, object>
+            var baseNamespace = typeof(BaseScriptableEvent<>).Namespace;
+
+            var scriptContent = "ListenerTemplate".CreateScript(
+                new Dictionary<string, object>
                 {
                     ["LISTENER_NAMESPACE"] = listenerNamespace,
                     ["LISTENER_NAME"] = listenerName,
@@ -321,7 +331,7 @@ namespace ScriptableEvents.Editor
                 new[]
                 {
                     eventArgNamespace,
-                    typeof(BaseScriptableEvent<>).Namespace
+                    baseNamespace
                 }
             );
 
@@ -330,7 +340,10 @@ namespace ScriptableEvents.Editor
 
         private void CreateEditorScript()
         {
-            var scriptContent = "EditorTemplate".CreateScript(new Dictionary<string, object>
+            var baseNamespace = typeof(BaseScriptableEventEditor).Namespace;
+
+            var scriptContent = "EditorTemplate".CreateScript(
+                new Dictionary<string, object>
                 {
                     ["EDITOR_NAMESPACE"] = editorNamespace,
                     ["EDITOR_NAME"] = editorName,
@@ -341,7 +354,7 @@ namespace ScriptableEvents.Editor
                 {
                     eventArgNamespace,
                     eventNamespace,
-                    typeof(BaseScriptableEventEditor).Namespace
+                    baseNamespace
                 }
             );
 
