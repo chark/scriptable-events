@@ -6,38 +6,48 @@
     public static class ScriptableEventConstants
     {
         /// <summary>
-        /// Menu order of event tools.
+        /// Prefix of 'Create' event menus.
         /// </summary>
-        public const int MenuOrderTools = -200;
+        public const string MenuNameBase = "Scriptable Event";
+
+        /// <summary>
+        /// Base menu name of all custom scriptable event sub menus.
+        /// </summary>
+        public const string MenuNameCustom = MenuNameBase + " (Custom)";
 
         /// <summary>
         /// Menu order of event assets which use simple arguments.
         /// </summary>
-        public const int MenuOrderSimpleEvent = -100;
+        public const int MenuOrderSimpleEvent = MenuOrderBase - 400;
 
         /// <summary>
         /// Menu order of event assets which use primitives as arguments.
         /// </summary>
-        public const int MenuOrderPrimitiveEvent = 0;
+        public const int MenuOrderPrimitiveEvent = MenuOrderBase - 300;
 
         /// <summary>
         /// Menu order of event assets which use Unity primitives as arguments.
         /// </summary>
-        public const int MenuOrderUnityPrimitiveEvent = 100;
+        public const int MenuOrderUnityPrimitiveEvent = MenuOrderBase - 200;
 
         /// <summary>
         /// Menu order of event assets which use Unity objects as arguments.
         /// </summary>
-        public const int MenuOrderUnityObjectEvent = 200;
+        public const int MenuOrderUnityObjectEvent = MenuOrderBase - 100;
 
         /// <summary>
-        /// Menu order of custom event assets.
+        /// Menu order of event tools.
         /// </summary>
-        public const int MenuOrderCustomEvent = 300;
+        public const int MenuOrderTools = MenuOrderBase;
 
         /// <summary>
-        /// Prefix of 'Create' event menus.
+        /// Base menu order of all scriptable event sub menus.
         /// </summary>
-        public const string MenuNamePrefix = "Scriptable Event";
+        public const int MenuOrderBase = -100;
+
+        /// <summary>
+        /// Base menu order of all custom scriptable event sub menus.
+        /// </summary>
+        public const int MenuOrderCustom = MenuOrderBase;
     }
 }

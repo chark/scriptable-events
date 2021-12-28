@@ -4,7 +4,7 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "SimpleScriptableEvent",
-        menuName = ScriptableEventConstants.MenuNamePrefix + "/Simple Scriptable Event",
+        menuName = ScriptableEventConstants.MenuNameBase + "/Simple Scriptable Event",
         order = ScriptableEventConstants.MenuOrderSimpleEvent + 0
     )]
     public class SimpleScriptableEvent : BaseScriptableEvent<SimpleArg>

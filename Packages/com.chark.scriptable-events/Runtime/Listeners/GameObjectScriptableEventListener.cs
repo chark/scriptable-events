@@ -3,7 +3,7 @@
 namespace ScriptableEvents.Listeners
 {
     [AddComponentMenu(
-        ScriptableEventConstants.MenuNamePrefix + "/Game Object Scriptable Event Listener",
+        ScriptableEventConstants.MenuNameBase + "/Game Object Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
     )]
     public class GameObjectScriptableEventListener
