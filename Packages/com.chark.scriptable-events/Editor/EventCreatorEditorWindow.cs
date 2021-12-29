@@ -110,9 +110,9 @@ namespace ScriptableEvents.Editor
 
         #region Regex Fields
 
-        private static readonly Regex NamespaceRegex = new Regex("[^a-zA-Z0-9\\. -]");
-        private static readonly Regex TypeNameRegex = new Regex("[^a-zA-Z0-9-]");
-        private static readonly Regex MenuNameRegex = new Regex("[^a-zA-Z0-9 -]");
+        private static readonly Regex NamespaceRegex = new Regex("[^a-zA-Z0-9\\.]");
+        private static readonly Regex TypeNameRegex = new Regex("[^a-zA-Z0-9]");
+        private static readonly Regex MenuNameRegex = new Regex("[^a-zA-Z0-9 ]");
 
         #endregion
 
@@ -564,7 +564,9 @@ namespace ScriptableEvents.Editor
 
             if (newValue != null)
             {
-                newValue = regex.Replace(newValue, string.Empty);
+                newValue = regex
+                    .Replace(newValue, string.Empty)
+                    .Trim();
             }
 
             value = newValue;
