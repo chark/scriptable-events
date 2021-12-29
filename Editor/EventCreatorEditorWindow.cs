@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -12,157 +13,130 @@ namespace ScriptableEvents.Editor
     {
         #region GUI Label Fields
 
-        private static readonly GUIContent EventArgScriptLabel = new GUIContent
-        {
-            text = "Event Argument Script",
-            tooltip = "Script which will be used as an argument for the custom event"
-        };
+        private static readonly GUIContent IsUseMonoScriptLabel = new GUIContent(
+            "Is Use Mono Script",
+            "Should a MonoScript be used for gathering event argument type information?"
+        );
 
-        private static readonly GUIContent ScriptDirectoryLabel = new GUIContent
-        {
-            text = "Output Directory",
-            tooltip = "Directory where to generate the scripts"
-        };
+        private static readonly GUIContent EventArgScriptLabel = new GUIContent(
+            "Event Argument Script",
+            "Script which will be used as an argument for the custom event"
+        );
 
-        private static readonly GUIContent IsUseMonoScriptLabel = new GUIContent
-        {
-            text = "Is Use Mono Script",
-            tooltip = "Should a MonoScript be used for gathering event argument type information?"
-        };
+        private static readonly GUIContent EventArgNamespaceLabel = new GUIContent(
+            "Event Argument Namespace",
+            "Namespace of the event argument type"
+        );
 
-        private static readonly GUIContent IsCreateListenerLabel = new GUIContent
-        {
-            text = "Is Create Listener",
-            tooltip = "Should a custom event listener script be generated?"
-        };
+        private static readonly GUIContent EventArgNameLabel = new GUIContent(
+            "Event Argument Name",
+            "Name of the event argument type"
+        );
 
-        private static readonly GUIContent IsCreateEditorLabel = new GUIContent
-        {
-            text = "Is Create Editor",
-            tooltip = "Should a custom event editor script be generated?"
-        };
+        private static readonly GUIContent EventNamespaceLabel = new GUIContent(
+            "Event Namespace",
+            "Namespace used for the custom event script. Note that this namespace will also be " +
+            "used to generate directories for the event asset script (e.g., namespace " +
+            "MyScriptableEvents.Events will result in MyScriptableEvents/Events directory)"
+        );
+
+        private static readonly GUIContent EventNameLabel = new GUIContent(
+            "Event Name",
+            "Name of the custom event script"
+        );
+
+        private static readonly GUIContent EventMenuNameLabel = new GUIContent(
+            "Event Menu Name",
+            "Menu name of the custom event asset"
+        );
+
+        private static readonly GUIContent EventMenuOrderLabel = new GUIContent(
+            "Event Menu Order",
+            "Menu order of the custom event asset"
+        );
+
+        private static readonly GUIContent IsCreateListenerLabel = new GUIContent(
+            "Is Create Listener",
+            "Should a custom event listener script be generated?"
+        );
+
+        private static readonly GUIContent ListenerNamespaceLabel = new GUIContent(
+            "Listener Namespace",
+            "Namespace used for the custom event listener script. Note that this namespace will " +
+            "also be used to generate directories for the event listener script (e.g., namespace " +
+            "MyScriptableEvents.Listeners will result in MyScriptableEvents/Listeners " +
+            "directory)"
+        );
+
+        private static readonly GUIContent ListenerNameLabel = new GUIContent(
+            "Listener Name",
+            "Name of the custom event listener script"
+        );
+
+        private static readonly GUIContent ListenerMenuNameLabel = new GUIContent(
+            "Listener Menu Name",
+            "Menu name of the custom event listener component"
+        );
+
+        private static readonly GUIContent ListenerMenuOrderLabel = new GUIContent(
+            "Listener Menu Order",
+            "Menu order of the custom event listener component"
+        );
+
+        private static readonly GUIContent IsCreateEditorLabel = new GUIContent(
+            "Is Create Editor",
+            "Should a custom event editor script be generated?"
+        );
+
+        private static readonly GUIContent EditorNamespaceLabel = new GUIContent(
+            "Editor Namespace",
+            "Namespace used for the custom event editor script. Note that this namespace will " +
+            "also be used to generate directories for the event editor script (e.g., " +
+            "namespace MyScriptableEvents.Editor will result in MyScriptableEvents/Editor " +
+            "directory)"
+        );
+
+        private static readonly GUIContent EditorNameLabel = new GUIContent(
+            "Editor Name",
+            "Name of the custom event editor script"
+        );
+
+        private static readonly GUIContent ScriptDirectoryLabel = new GUIContent(
+            "Output Directory",
+            "Directory where to generate the scripts"
+        );
 
         #endregion
 
         #region Regex Fields
 
-        // Numbers, letters & dots - namespaces are restrictive, but not as restrictive as type
-        // names.
         private static readonly Regex NamespaceRegex = new Regex("[^a-zA-Z0-9\\. -]");
-
-        // Numbers & letters only - type names are rather restrictive.
         private static readonly Regex TypeNameRegex = new Regex("[^a-zA-Z0-9-]");
-
-        // Numbers, letters & spaces can be used in menu names.
         private static readonly Regex MenuNameRegex = new Regex("[^a-zA-Z0-9 -]");
 
         #endregion
 
-        #region Event Arg Fields
+        #region Fields
 
         private bool isUseMonoScript = true;
-
         private MonoScript eventArgScript;
+        private string eventArgNamespace;
+        private string eventArgName;
 
-        private readonly ValidatedStringField eventArgNamespace = new ValidatedStringField(
-            "Event Argument Namespace",
-            "Namespace of the event argument type",
-            NamespaceRegex
-        );
-
-        private readonly ValidatedStringField eventArgName = new ValidatedStringField(
-            "Event Argument Name",
-            "Name of the event argument type",
-            TypeNameRegex
-        );
-
-        #endregion
-
-        #region Event Fields
-
-        private readonly ValidatedStringField eventNamespace = new ValidatedStringField(
-            "Event Namespace",
-            "Namespace used for the custom event script. Note that this namespace will also be " +
-            "used to generate directories for the event asset script (e.g., namespace " +
-            "MyScriptableEvents.Events will result in MyScriptableEvents/Events directory)",
-            NamespaceRegex
-        );
-
-        private readonly ValidatedStringField eventName = new ValidatedStringField(
-            "Event Name",
-            "Name of the custom event script",
-            TypeNameRegex
-        );
-
-        private readonly ValidatedStringField eventMenuName = new ValidatedStringField(
-            "Event Menu Name",
-            "Menu name of the custom event asset",
-            MenuNameRegex
-        );
-
-        private readonly ValidatedIntField eventMenuOrder = new ValidatedIntField(
-            "Event Menu Order",
-            "Menu order of the custom event asset",
-            0
-        );
-
-        #endregion
-
-        #region Listener Fields
+        private string eventNamespace;
+        private string eventName;
+        private string eventMenuName;
+        private int eventMenuOrder;
 
         private bool isCreateListener = true;
-
-        private readonly ValidatedStringField listenerNamespace = new ValidatedStringField(
-            "Listener Namespace",
-            "Namespace used for the custom event listener script. Note that this namespace will " +
-            "also be used to generate directories for the event listener script (e.g., namespace " +
-            "MyScriptableEvents.Listeners will result in MyScriptableEvents/Listeners " +
-            "directory)",
-            NamespaceRegex
-        );
-
-        private readonly ValidatedStringField listenerName = new ValidatedStringField(
-            "Listener Name",
-            "Name of the custom event listener script",
-            TypeNameRegex
-        );
-
-        private readonly ValidatedStringField listenerMenuName = new ValidatedStringField(
-            "Listener Menu Name",
-            "Menu name of the custom event listener component",
-            MenuNameRegex
-        );
-
-        private readonly ValidatedIntField listenerMenuOrder = new ValidatedIntField(
-            "Listener Menu Order",
-            "Menu order of the custom event listener component",
-            0
-        );
-
-        #endregion
-
-        #region Editor Fields
+        private string listenerNamespace;
+        private string listenerName;
+        private string listenerMenuName;
+        private int listenerMenuOrder;
 
         private bool isCreateEditor;
-
-        private readonly ValidatedStringField editorNamespace = new ValidatedStringField(
-            "Editor Namespace",
-            "Namespace used for the custom event editor script. Note that this namespace will " +
-            "also be used to generate directories for the event editor script (e.g., " +
-            "namespace MyScriptableEvents.Editor will result in MyScriptableEvents/Editor " +
-            "directory)",
-            NamespaceRegex
-        );
-
-        private readonly ValidatedStringField editorName = new ValidatedStringField(
-            "Editor Name",
-            "Name of the custom event editor script",
-            TypeNameRegex
-        );
-
-        #endregion
-
-        #region Other Fields
+        private string editorNamespace;
+        private string editorName;
 
         private string scriptDirectory = "Assets/Scripts";
 
@@ -176,7 +150,7 @@ namespace ScriptableEvents.Editor
             {
                 // Event argument type info is always required, regardless if mono script is used
                 // or not.
-                if (isUseMonoScript && eventArgScript == null)
+                if (isUseMonoScript && IsArgScriptInvalid)
                 {
                     return false;
                 }
@@ -186,7 +160,7 @@ namespace ScriptableEvents.Editor
                     return false;
                 }
 
-                // Event must always have all fields entered as its the base.
+                // Event must always have all fields entered as its the base for further scripts.
                 if (IsAnyEventFieldsBlank)
                 {
                     return false;
@@ -199,12 +173,13 @@ namespace ScriptableEvents.Editor
                 }
 
                 // Editor is always optional.
-                if (isCreateEditor && IsAnyEditorFieldsBlanks)
+                if (isCreateEditor && IsAnyEditorFieldsBlank)
                 {
                     return false;
                 }
 
-                if (IsAnyBlank(scriptDirectory))
+                // Need to always know where to output.
+                if (IsScriptDirectoryBlank)
                 {
                     return false;
                 }
@@ -213,6 +188,9 @@ namespace ScriptableEvents.Editor
             }
         }
 
+        private bool IsArgScriptInvalid =>
+            eventArgScript == null || eventArgScript.GetClass() == null;
+
         private bool IsAnyEventArgFieldsBlank => IsAnyBlank(eventArgNamespace, eventArgName);
 
         private bool IsAnyEventFieldsBlank => IsAnyBlank(eventNamespace, eventName, eventMenuName);
@@ -220,7 +198,9 @@ namespace ScriptableEvents.Editor
         private bool IsAnyListenerFieldsBlank =>
             IsAnyBlank(listenerNamespace, listenerName, listenerMenuName);
 
-        private bool IsAnyEditorFieldsBlanks => IsAnyBlank(editorNamespace, editorName);
+        private bool IsAnyEditorFieldsBlank => IsAnyBlank(editorNamespace, editorName);
+
+        private bool IsScriptDirectoryBlank => IsAnyBlank(scriptDirectory);
 
         #endregion
 
@@ -299,31 +279,28 @@ namespace ScriptableEvents.Editor
 
         private void DrawArgMonoScriptFields()
         {
-            var oldScript = eventArgScript;
-            var newScript = (MonoScript) EditorGUILayout.ObjectField(
+            eventArgScript = (MonoScript) EditorGUILayout.ObjectField(
                 EventArgScriptLabel,
                 eventArgScript,
                 typeof(MonoScript),
                 false
             );
 
-            eventArgScript = newScript;
-
             // New script is removed, cannot proceed as we can't get Name or Namespace of the args
             // script.
-            if (newScript == null)
+            if (eventArgScript == null)
             {
                 return;
             }
 
             // At the moment, args script type name must match the file name, otherwise Unity can't
             // find the type info inside the file.
-            var newScriptType = newScript.GetClass();
-            if (newScriptType == null)
+            var eventArgScriptType = eventArgScript.GetClass();
+            if (eventArgScriptType == null)
             {
                 EditorGUILayout.HelpBox(
                     $"Provided script is invalid, make sure that a class exists in " +
-                    $"{newScript.name} file with a matching name. Alternatively, uncheck " +
+                    $"{eventArgScript.name} file with a matching name. Alternatively, uncheck " +
                     $"{ObjectNames.NicifyVariableName(nameof(isUseMonoScript))} and enter " +
                     $"details manually",
                     MessageType.Error
@@ -332,58 +309,62 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
-            if (oldScript == newScript)
+            var oldEventArgName = eventArgName;
+            var newEventArgName = eventArgScriptType.Name;
+
+            if (oldEventArgName == newEventArgName)
             {
                 return;
             }
 
-            var newScriptName = newScriptType.Name;
-            var newScriptNamespace = newScriptType.Namespace;
+            SetupFields(oldEventArgName, newEventArgName);
 
-            SetFieldDefaults(newScriptName);
-            SetEventArgFields(newScriptName, newScriptNamespace);
+            eventArgNamespace = eventArgScriptType.Namespace;
+            eventArgName = newEventArgName;
         }
 
         private void DrawArgScriptFields()
         {
-            eventArgNamespace.Draw();
+            Draw(EventArgNamespaceLabel, NamespaceRegex, ref eventArgNamespace);
 
-            string oldEventArgName = eventArgName;
-            eventArgName.Draw();
-            string newEventArgName = eventArgName;
+            var oldEventArgName = eventArgName;
+            Draw(EventArgNameLabel, TypeNameRegex, ref eventArgName);
+            var newEventArgName = eventArgName;
 
-            if (oldEventArgName != newEventArgName)
+            if (oldEventArgName == newEventArgName)
             {
-                SetFieldDefaults(eventArgName);
+                return;
             }
+
+            SetupFields(oldEventArgName, newEventArgName);
         }
 
         private void DrawEventFields()
         {
-            eventNamespace.Draw();
-            eventName.Draw();
+            Draw(EventNamespaceLabel, NamespaceRegex, ref eventNamespace);
+            Draw(EventNameLabel, TypeNameRegex, ref eventName);
 
             EditorGUILayout.Space();
 
-            eventMenuName.Draw();
-            eventMenuOrder.Draw();
+            Draw(EventMenuNameLabel, MenuNameRegex, ref eventMenuName);
+            Draw(EventMenuOrderLabel, ref eventMenuOrder);
         }
 
         private void DrawListenerFields()
         {
-            listenerNamespace.Draw();
-            listenerName.Draw();
+            Draw(ListenerNamespaceLabel, NamespaceRegex, ref listenerNamespace);
+            Draw(ListenerNameLabel, TypeNameRegex, ref listenerName);
 
             EditorGUILayout.Space();
 
-            listenerMenuName.Draw();
-            listenerMenuOrder.Draw();
+            Draw(ListenerMenuNameLabel, MenuNameRegex, ref listenerMenuName);
+            Draw(ListenerMenuOrderLabel, ref listenerMenuOrder);
         }
 
         private void DrawEditorFields()
         {
-            editorNamespace.Draw();
-            editorName.Draw();
+            Draw(EditorNamespaceLabel, NamespaceRegex, ref editorNamespace);
+            Draw(EditorNameLabel, TypeNameRegex, ref editorName);
         }
 
         private void DrawDirectoryFields()
@@ -489,31 +470,112 @@ namespace ScriptableEvents.Editor
 
         #region Private Utility Methods
 
+        private void SetupFields(string oldArgName, string newArgName)
+        {
+            SetIfUnmodified(ref eventNamespace, oldArgName, newArgName, GetEventNamespace);
+            SetIfUnmodified(ref eventName, oldArgName, newArgName, GetEventName);
+            SetIfUnmodified(ref eventMenuName, oldArgName, newArgName, GetEventMenuName);
+
+            SetIfUnmodified(ref listenerNamespace, oldArgName, newArgName, GetListenerNamespace);
+            SetIfUnmodified(ref listenerName, oldArgName, newArgName, GetListenerName);
+            SetIfUnmodified(ref listenerMenuName, oldArgName, newArgName, GetListenerMenuName);
+
+            SetIfUnmodified(ref editorNamespace, oldArgName, newArgName, GetEditorNamespace);
+            SetIfUnmodified(ref editorName, oldArgName, newArgName, GetEditorName);
+        }
+
+        private static string GetEventNamespace(string eventArgName)
+        {
+            return "ScriptableEvents.Events";
+        }
+
+        private static string GetEventMenuName(string eventArgName)
+        {
+            var eventName = GetEventName(eventArgName);
+            return ObjectNames.NicifyVariableName(eventName);
+        }
+
+        private static string GetEventName(string eventArgName)
+        {
+            return $"{eventArgName}ScriptableEvent";
+        }
+
+        private static string GetListenerNamespace(string eventArgName)
+        {
+            return "ScriptableEvents.Listeners";
+        }
+
+        private static string GetListenerMenuName(string eventArgName)
+        {
+            var listenerName = GetListenerName(eventArgName);
+            return ObjectNames.NicifyVariableName(listenerName);
+        }
+
+        private static string GetListenerName(string eventArgName)
+        {
+            return $"{eventArgName}ScriptableEventListener";
+        }
+
+        private static string GetEditorNamespace(string eventArgName)
+        {
+            return "ScriptableEvents.Editor.Events";
+        }
+
+        private static string GetEditorName(string eventArgName)
+        {
+            return $"{eventArgName}ScriptableEventEditor";
+        }
+
+        private static void SetIfUnmodified(
+            ref string value,
+            string oldEventArgName,
+            string newEventArgName,
+            Func<string, string> mapper
+        )
+        {
+            // Value was not modified when a argument script change was made - results in way better
+            // UX as you can swap around scripts quickly.
+            if (IsBlank(value) || value == mapper(oldEventArgName))
+            {
+                value = mapper(newEventArgName);
+            }
+        }
+
         private static bool IsAnyBlank(params string[] values)
         {
             return values.Any(string.IsNullOrWhiteSpace);
         }
 
-        private void SetFieldDefaults(string scriptName)
+        private static bool IsBlank(string value)
         {
-            var prettyEventName = ObjectNames.NicifyVariableName($"{scriptName}ScriptableEvent");
-
-            eventNamespace.DefaultValue = "ScriptableEvents.Events";
-            eventName.DefaultValue = $"{scriptName}ScriptableEvent";
-            eventMenuName.DefaultValue = prettyEventName;
-
-            listenerNamespace.DefaultValue = "ScriptableEvents.Listeners";
-            listenerName.DefaultValue = $"{scriptName}ScriptableEventListener";
-            listenerMenuName.DefaultValue = prettyEventName;
-
-            editorNamespace.DefaultValue = "ScriptableEvents.Editor.Events";
-            editorName.DefaultValue = $"{scriptName}ScriptableEventEditor";
+            return string.IsNullOrWhiteSpace(value);
         }
 
-        private void SetEventArgFields(string scriptName, string scriptNamespace)
+        private static void Draw(GUIContent label, Regex regex, ref string value)
         {
-            eventArgName.CurrentValue = scriptName;
-            eventArgNamespace.CurrentValue = scriptNamespace;
+            var originalColor = GUI.color;
+            if (GUI.enabled && string.IsNullOrWhiteSpace(value))
+            {
+                GUI.color = Color.red;
+            }
+
+            var newValue = EditorGUILayout.TextField(label, value);
+            GUI.color = originalColor;
+
+            if (newValue != null)
+            {
+                newValue = regex.Replace(newValue, string.Empty);
+            }
+
+            value = newValue;
+        }
+
+        private static void Draw(GUIContent label, ref int value)
+        {
+            var newValue = EditorGUILayout.IntField(label, value);
+            newValue = Mathf.Max(0, newValue);
+
+            value = newValue;
         }
 
         #endregion
