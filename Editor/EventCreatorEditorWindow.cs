@@ -11,7 +11,7 @@ namespace ScriptableEvents.Editor
     /// </summary>
     internal class EventCreatorEditorWindow : EditorWindow
     {
-        #region GUI Label Fields
+        #region GUI Constants
 
         private static readonly GUIContent IsUseMonoScriptLabel = new GUIContent(
             "Is Use Mono Script",
@@ -108,11 +108,21 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Regex Fields
+        #region Regex Constants
 
         private static readonly Regex NamespaceRegex = new Regex("[^a-zA-Z0-9\\.]");
         private static readonly Regex TypeNameRegex = new Regex("[^a-zA-Z0-9]");
         private static readonly Regex MenuNameRegex = new Regex("[^a-zA-Z0-9 ]");
+
+        #endregion
+
+        #region Window Constants
+
+        private const string WindowTitle = "Create Custom Scriptable Event";
+        private const string MenuTitle = "Custom Scriptable Event";
+
+        private static readonly Vector2 MinWindowSize = new Vector2(350f, 500f);
+        private static readonly Vector2 MaxWindowSize = new Vector2(600f, 600f);
 
         #endregion
 
@@ -207,20 +217,14 @@ namespace ScriptableEvents.Editor
         #region Unity Lifecycle
 
         [MenuItem(
-            "Assets/Create/" + ScriptableEventConstants.MenuNameBase + "/Custom Scriptable Event",
+            "Assets/Create/" + ScriptableEventConstants.MenuNameBase + "/" + MenuTitle,
             priority = ScriptableEventConstants.MenuOrderTools
         )]
         public static void ShowWindow()
         {
-            var window = GetWindow<EventCreatorEditorWindow>(
-                true,
-                "Create Custom Scriptable Event"
-            );
-
-            var minSize = window.minSize;
-            minSize.x = 350f;
-            minSize.y = 500f;
-            window.minSize = minSize;
+            var window = GetWindow<EventCreatorEditorWindow>(true, WindowTitle);
+            window.minSize = MinWindowSize;
+            window.maxSize = MaxWindowSize;
         }
 
         private void OnGUI()
