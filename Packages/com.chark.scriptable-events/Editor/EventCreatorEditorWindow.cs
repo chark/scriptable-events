@@ -247,9 +247,6 @@ namespace ScriptableEvents.Editor
         {
             DrawFields();
 
-            GUILayout.FlexibleSpace();
-            DrawDirectoryFields();
-
             GUI.enabled = IsRequiredFieldsSet;
             if (GUILayout.Button("Create"))
             {
@@ -265,7 +262,7 @@ namespace ScriptableEvents.Editor
 
         private void DrawFields()
         {
-            EditorGUILayout.LabelField("Event Argument Script", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Event Argument", EditorStyles.boldLabel);
             isUseMonoScript = EditorGUILayout.Toggle(IsUseMonoScriptLabel, isUseMonoScript);
             if (isUseMonoScript)
             {
@@ -295,6 +292,9 @@ namespace ScriptableEvents.Editor
             GUI.enabled = isCreateEditor;
             DrawEditorFields();
             GUI.enabled = true;
+
+            GUILayout.FlexibleSpace();
+            DrawDirectoryFields();
         }
 
         private void DrawArgMonoScriptFields()
