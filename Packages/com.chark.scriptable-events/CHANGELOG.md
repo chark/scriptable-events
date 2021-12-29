@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2022-xx-xx
+Quality of life improvements.
+
+### Added
+- Utility window to help in creation of scriptable events. It can be found under _Right Click > Create > Scriptable Event > Custom Scriptable Event_ (at the very bottom).
+- `ScriptableEventConstants` class which can be used to order custom events more neatly.
+
+### Changed
+- Renamed scriptable event creation menu root from _Scriptable **Events**_ to _Scriptable **Event**_.
+- All existing events now use `ScriptableEventConstants` to define their menu order.
+- `lockDescription` is no longer serialized as its only useful during edit mode.
+
 ## [2.0.0] - 2021-07-07
 This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) in order to utilise generics.
 
