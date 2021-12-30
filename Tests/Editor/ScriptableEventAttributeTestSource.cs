@@ -2,7 +2,7 @@
 using ScriptableEvents.Events;
 using ScriptableEvents.Listeners;
 
-namespace ScriptableEvents.Editor.Tests
+namespace ScriptableEvents.Tests.Editor
 {
     internal class ScriptableEventAttributeTestSource : IEnumerable
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.TestTools;
 
-namespace ScriptableEvents.Tests
+namespace ScriptableEvents.Tests.Runtime
 {
     [TestFixtureSource(typeof(ScriptableEventTestSource))]
     public class ScriptableEventTest<

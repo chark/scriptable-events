@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ScriptableEvents.Tests
+namespace ScriptableEvents.Tests.Runtime
 {
     internal static class TestExtensions
     {

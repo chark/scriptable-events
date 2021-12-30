@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using NUnit.Framework;
+using ScriptableEvents.Editor;
 
-namespace ScriptableEvents.Editor.Tests
+namespace ScriptableEvents.Tests.Editor
 {
     [TestFixture]
     internal class ScriptExtensionsTest
