@@ -5,7 +5,7 @@ using ScriptableEvents.Events;
 using ScriptableEvents.Listeners;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests
+namespace ScriptableEvents.Tests.Runtime
 {
     internal class ScriptableEventTestSource : IEnumerable
     {

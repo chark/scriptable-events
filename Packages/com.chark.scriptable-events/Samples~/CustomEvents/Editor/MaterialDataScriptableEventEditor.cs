@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Samples.CustomEvents.Editor
+namespace ScriptableEvents.CustomEvents.Editor
 {
     [CustomEditor(typeof(MaterialDataScriptableEvent))]
     public class MaterialDataScriptableEventEditor : BaseScriptableEventEditor<MaterialData>
