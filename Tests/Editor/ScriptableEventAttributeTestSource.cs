@@ -13,8 +13,8 @@ namespace ScriptableEvents.Editor.Tests
                 SimpleScriptableEventListener
             >(
                 "SimpleScriptableEvent",
-                "Scriptable Event/Simple Scriptable Event",
-                "Scriptable Event/Simple Scriptable Event Listener",
+                "/Simple Scriptable Event",
+                "/Simple Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderSimpleEvent
             );
 
@@ -25,8 +25,8 @@ namespace ScriptableEvents.Editor.Tests
                 BoolScriptableEventListener
             >(
                 "BoolScriptableEvent",
-                "Scriptable Event/Bool Scriptable Event",
-                "Scriptable Event/Bool Scriptable Event Listener",
+                "/Bool Scriptable Event",
+                "/Bool Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
             );
 
@@ -35,8 +35,8 @@ namespace ScriptableEvents.Editor.Tests
                 IntScriptableEventListener
             >(
                 "IntScriptableEvent",
-                "Scriptable Event/Int Scriptable Event",
-                "Scriptable Event/Int Scriptable Event Listener",
+                "/Int Scriptable Event",
+                "/Int Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
             );
 
@@ -45,8 +45,8 @@ namespace ScriptableEvents.Editor.Tests
                 LongScriptableEventListener
             >(
                 "LongScriptableEvent",
-                "Scriptable Event/Long Scriptable Event",
-                "Scriptable Event/Long Scriptable Event Listener",
+                "/Long Scriptable Event",
+                "/Long Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
             );
 
@@ -55,8 +55,8 @@ namespace ScriptableEvents.Editor.Tests
                 FloatScriptableEventListener
             >(
                 "FloatScriptableEvent",
-                "Scriptable Event/Float Scriptable Event",
-                "Scriptable Event/Float Scriptable Event Listener",
+                "/Float Scriptable Event",
+                "/Float Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
             );
 
@@ -65,8 +65,8 @@ namespace ScriptableEvents.Editor.Tests
                 DoubleScriptableEventListener
             >(
                 "DoubleScriptableEvent",
-                "Scriptable Event/Double Scriptable Event",
-                "Scriptable Event/Double Scriptable Event Listener",
+                "/Double Scriptable Event",
+                "/Double Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
             );
 
@@ -75,8 +75,8 @@ namespace ScriptableEvents.Editor.Tests
                 StringScriptableEventListener
             >(
                 "StringScriptableEvent",
-                "Scriptable Event/String Scriptable Event",
-                "Scriptable Event/String Scriptable Event Listener",
+                "/String Scriptable Event",
+                "/String Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
             );
 
@@ -89,8 +89,8 @@ namespace ScriptableEvents.Editor.Tests
                 Vector2ScriptableEventListener
             >(
                 "Vector2ScriptableEvent",
-                "Scriptable Event/Vector2 Scriptable Event",
-                "Scriptable Event/Vector2 Scriptable Event Listener",
+                "/Vector2 Scriptable Event",
+                "/Vector2 Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
             );
 
@@ -99,8 +99,8 @@ namespace ScriptableEvents.Editor.Tests
                 Vector3ScriptableEventListener
             >(
                 "Vector3ScriptableEvent",
-                "Scriptable Event/Vector3 Scriptable Event",
-                "Scriptable Event/Vector3 Scriptable Event Listener",
+                "/Vector3 Scriptable Event",
+                "/Vector3 Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
             );
 
@@ -110,8 +110,8 @@ namespace ScriptableEvents.Editor.Tests
                 Collision2DScriptableEventListener
             >(
                 "Collision2DScriptableEvent",
-                "Scriptable Event/Collision 2D Scriptable Event",
-                "Scriptable Event/Collision 2D Scriptable Event Listener",
+                "/Collision 2D Scriptable Event",
+                "/Collision 2D Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 2
             );
 
@@ -120,8 +120,8 @@ namespace ScriptableEvents.Editor.Tests
                 CollisionScriptableEventListener
             >(
                 "CollisionScriptableEvent",
-                "Scriptable Event/Collision Scriptable Event",
-                "Scriptable Event/Collision Scriptable Event Listener",
+                "/Collision Scriptable Event",
+                "/Collision Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
             );
 
@@ -130,8 +130,8 @@ namespace ScriptableEvents.Editor.Tests
                 QuaternionScriptableEventListener
             >(
                 "QuaternionScriptableEvent",
-                "Scriptable Event/Quaternion Scriptable Event",
-                "Scriptable Event/Quaternion Scriptable Event Listener",
+                "/Quaternion Scriptable Event",
+                "/Quaternion Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
             );
 
@@ -140,8 +140,8 @@ namespace ScriptableEvents.Editor.Tests
                 ColorScriptableEventListener
             >(
                 "ColorScriptableEvent",
-                "Scriptable Event/Color Scriptable Event",
-                "Scriptable Event/Color Scriptable Event Listener",
+                "/Color Scriptable Event",
+                "/Color Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
             );
 
@@ -154,8 +154,8 @@ namespace ScriptableEvents.Editor.Tests
                 Collider2DScriptableEventListener
             >(
                 "Collider2DScriptableEvent",
-                "Scriptable Event/Collider 2D Scriptable Event",
-                "Scriptable Event/Collider 2D Scriptable Event Listener",
+                "/Collider 2D Scriptable Event",
+                "/Collider 2D Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityObjectEvent + 0
             );
 
@@ -164,8 +164,8 @@ namespace ScriptableEvents.Editor.Tests
                 ColliderScriptableEventListener
             >(
                 "ColliderScriptableEvent",
-                "Scriptable Event/Collider Scriptable Event",
-                "Scriptable Event/Collider Scriptable Event Listener",
+                "/Collider Scriptable Event",
+                "/Collider Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
             );
 
@@ -174,8 +174,8 @@ namespace ScriptableEvents.Editor.Tests
                 GameObjectScriptableEventListener
             >(
                 "GameObjectScriptableEvent",
-                "Scriptable Event/Game Object Scriptable Event",
-                "Scriptable Event/Game Object Scriptable Event Listener",
+                "/Game Object Scriptable Event",
+                "/Game Object Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
             );
 
@@ -184,8 +184,8 @@ namespace ScriptableEvents.Editor.Tests
                 TransformScriptableEventListener
             >(
                 "TransformScriptableEvent",
-                "Scriptable Event/Transform Scriptable Event",
-                "Scriptable Event/Transform Scriptable Event Listener",
+                "/Transform Scriptable Event",
+                "/Transform Scriptable Event Listener",
                 ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
             );
 
@@ -207,8 +207,8 @@ namespace ScriptableEvents.Editor.Tests
                 typeof(TScriptableEvent),
                 typeof(TScriptableEventListener),
                 eventFileName,
-                eventMenuName,
-                listenerMenuName,
+                ScriptableEventConstants.MenuNameBase + eventMenuName,
+                ScriptableEventConstants.MenuNameBase + listenerMenuName,
                 order
             };
         }
