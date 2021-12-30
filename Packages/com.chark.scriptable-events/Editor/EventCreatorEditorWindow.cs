@@ -290,7 +290,7 @@ namespace ScriptableEvents.Editor
                 false
             );
 
-            // New script is removed, cannot proceed as we can't get Name or Namespace of the args
+            // Script is set to none, cannot proceed as we can't get Name or Namespace of the args
             // script.
             if (eventArgScript == null)
             {
@@ -488,60 +488,60 @@ namespace ScriptableEvents.Editor
             SetIfUnmodified(ref editorName, oldArgName, newArgName, GetEditorName);
         }
 
-        private static string GetEventNamespace(string eventArgName)
+        private static string GetEventNamespace(string argName)
         {
             return "ScriptableEvents.Events";
         }
 
-        private static string GetEventMenuName(string eventArgName)
+        private static string GetEventMenuName(string argName)
         {
-            var eventName = GetEventName(eventArgName);
+            var eventName = GetEventName(argName);
             return ObjectNames.NicifyVariableName(eventName);
         }
 
-        private static string GetEventName(string eventArgName)
+        private static string GetEventName(string argName)
         {
-            return $"{eventArgName}ScriptableEvent";
+            return $"{argName}ScriptableEvent";
         }
 
-        private static string GetListenerNamespace(string eventArgName)
+        private static string GetListenerNamespace(string argName)
         {
             return "ScriptableEvents.Listeners";
         }
 
-        private static string GetListenerMenuName(string eventArgName)
+        private static string GetListenerMenuName(string argName)
         {
-            var listenerName = GetListenerName(eventArgName);
+            var listenerName = GetListenerName(argName);
             return ObjectNames.NicifyVariableName(listenerName);
         }
 
-        private static string GetListenerName(string eventArgName)
+        private static string GetListenerName(string argName)
         {
-            return $"{eventArgName}ScriptableEventListener";
+            return $"{argName}ScriptableEventListener";
         }
 
-        private static string GetEditorNamespace(string eventArgName)
+        private static string GetEditorNamespace(string argName)
         {
             return "ScriptableEvents.Editor.Events";
         }
 
-        private static string GetEditorName(string eventArgName)
+        private static string GetEditorName(string argName)
         {
-            return $"{eventArgName}ScriptableEventEditor";
+            return $"{argName}ScriptableEventEditor";
         }
 
         private static void SetIfUnmodified(
             ref string value,
-            string oldEventArgName,
-            string newEventArgName,
-            Func<string, string> mapper
+            string oldArgName,
+            string newArgName,
+            Func<string, string> valueMapper
         )
         {
             // Value was not modified when a argument script change was made - results in way better
             // UX as you can swap around scripts quickly.
-            if (IsBlank(value) || value == mapper(oldEventArgName))
+            if (IsBlank(value) || value == valueMapper(oldArgName))
             {
-                value = mapper(newEventArgName);
+                value = valueMapper(newArgName);
             }
         }
 
@@ -568,9 +568,7 @@ namespace ScriptableEvents.Editor
 
             if (newValue != null)
             {
-                newValue = regex
-                    .Replace(newValue, string.Empty)
-                    .Trim();
+                newValue = regex.Replace(newValue, string.Empty).Trim();
             }
 
             value = newValue;
