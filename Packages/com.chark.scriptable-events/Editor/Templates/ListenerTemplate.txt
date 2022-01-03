@@ -1,0 +1,12 @@
+﻿using UnityEngine;
+
+namespace ${LISTENER_NAMESPACE}
+{
+    [AddComponentMenu(
+        ScriptableEventConstants.MenuNameCustom + "/${LISTENER_MENU_NAME}",
+        ScriptableEventConstants.MenuOrderCustom + ${LISTENER_MENU_ORDER}
+    )]
+    public class ${LISTENER_NAME} : BaseScriptableEventListener<${EVENT_ARG_NAME}>
+    {
+    }
+}

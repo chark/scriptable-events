@@ -4,7 +4,7 @@ using NUnit.Framework;
 using ScriptableEvents.Events;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests
+namespace ScriptableEvents.Tests.Runtime
 {
     [TestFixture]
     internal class SimpleScriptableEventTest

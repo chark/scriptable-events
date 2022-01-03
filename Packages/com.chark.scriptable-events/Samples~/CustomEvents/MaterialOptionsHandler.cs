@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace ScriptableEvents.Samples.CustomEvents
+namespace ScriptableEvents.CustomEvents
 {
     public class MaterialOptionsHandler : MonoBehaviour
     {

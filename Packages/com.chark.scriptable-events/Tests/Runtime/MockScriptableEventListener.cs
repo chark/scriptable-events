@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptableEvents.Tests
+namespace ScriptableEvents.Tests.Runtime
 {
     internal class MockScriptableEventListener<TArg> : IScriptableEventListener<TArg>
     {

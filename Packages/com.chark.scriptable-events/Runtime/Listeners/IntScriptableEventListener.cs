@@ -2,7 +2,10 @@
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Int Scriptable Event Listener", 1)]
+    [AddComponentMenu(
+        ScriptableEventConstants.MenuNameBase + "/Int Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
+    )]
     public class IntScriptableEventListener : BaseScriptableEventListener<int>
     {
     }

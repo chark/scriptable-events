@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         unityVersion:
-          - 2020.3.13f1
+          - 2020.3.25f1
 
     steps:
 

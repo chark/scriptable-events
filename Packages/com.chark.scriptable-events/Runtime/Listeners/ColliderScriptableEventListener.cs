@@ -2,7 +2,10 @@
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Collider Scriptable Event Listener", 201)]
+    [AddComponentMenu(
+        ScriptableEventConstants.MenuNameBase + "/Collider Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
+    )]
     public class ColliderScriptableEventListener : BaseScriptableEventListener<Collider>
     {
     }

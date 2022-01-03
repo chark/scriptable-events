@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "GameObjectScriptableEvent",
-        menuName = "Scriptable Events/Game Object Scriptable Event",
-        order = 202
+        menuName = ScriptableEventConstants.MenuNameBase + "/Game Object Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
     )]
     public class GameObjectScriptableEvent : BaseScriptableEvent<GameObject>
     {

@@ -2,7 +2,10 @@
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Collision Scriptable Event Listener", 103)]
+    [AddComponentMenu(
+        ScriptableEventConstants.MenuNameBase + "/Collision Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
+    )]
     public class CollisionScriptableEventListener : BaseScriptableEventListener<Collision>
     {
     }

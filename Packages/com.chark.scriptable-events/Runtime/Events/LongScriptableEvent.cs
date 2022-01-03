@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "LongScriptableEvent",
-        menuName = "Scriptable Events/Long Scriptable Event",
-        order = 2
+        menuName = ScriptableEventConstants.MenuNameBase + "/Long Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
     )]
     public class LongScriptableEvent : BaseScriptableEvent<long>
     {

@@ -4,8 +4,8 @@ namespace ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "TransformScriptableEvent",
-        menuName = "Scriptable Events/Transform Scriptable Event",
-        order = 203
+        menuName = ScriptableEventConstants.MenuNameBase + "/Transform Scriptable Event",
+        order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
     )]
     public class TransformScriptableEvent : BaseScriptableEvent<Transform>
     {

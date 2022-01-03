@@ -53,3 +53,7 @@ crashlytics-build.properties
 # Other Unity3D.
 UserSettings/EditorUserSettings.asset
 npm-debug.log
+
+# Package specific.
+Assets/Samples
+Assets/Samples.meta

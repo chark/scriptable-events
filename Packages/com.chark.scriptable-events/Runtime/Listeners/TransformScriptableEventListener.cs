@@ -2,7 +2,10 @@
 
 namespace ScriptableEvents.Listeners
 {
-    [AddComponentMenu("Scriptable Events/Transform Scriptable Event Listener", 203)]
+    [AddComponentMenu(
+        ScriptableEventConstants.MenuNameBase + "/Transform Scriptable Event Listener",
+        ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
+    )]
     public class TransformScriptableEventListener : BaseScriptableEventListener<Transform>
     {
     }
