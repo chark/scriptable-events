@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -7,7 +6,8 @@ using Object = UnityEngine.Object;
 namespace ScriptableEvents.Editor
 {
     [CanEditMultipleObjects]
-    public abstract class BaseScriptableEventEditor : UnityEditor.Editor
+    [CustomEditor(typeof(BaseScriptableEvent), true)]
+    public class BaseScriptableEventEditor : UnityEditor.Editor
     {
         #region Fields
 
@@ -18,6 +18,7 @@ namespace ScriptableEvents.Editor
         private GUIContent listenerLabelContent;
 
         // Target properties.
+        private BaseScriptableEvent scriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -40,6 +41,7 @@ namespace ScriptableEvents.Editor
         internal virtual void OnEnable()
         {
             SetupLabelContent();
+            SetupScriptableEvent();
             SetupMonoScript();
             SetupSerializedProperties();
         }
@@ -90,10 +92,14 @@ namespace ScriptableEvents.Editor
             );
         }
 
+        private void SetupScriptableEvent()
+        {
+            scriptableEvent = target as BaseScriptableEvent;
+        }
+
         private void SetupMonoScript()
         {
-            var scriptableObject = target as ScriptableObject;
-            monoScript = MonoScript.FromScriptableObject(scriptableObject);
+            monoScript = MonoScript.FromScriptableObject(scriptableEvent);
         }
 
         private void SetupSerializedProperties()
@@ -292,7 +298,7 @@ namespace ScriptableEvents.Editor
             objectListeners = new List<Object>();
             namedListeners = new List<string>();
 
-            foreach (var listener in target.GetFieldValue<IEnumerable>("listeners"))
+            foreach (var listener in scriptableEvent.Listeners)
             {
                 if (listener is Object listenerObject)
                 {
