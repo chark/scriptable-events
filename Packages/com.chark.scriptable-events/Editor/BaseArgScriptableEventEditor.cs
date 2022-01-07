@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor
 {
     /// <summary>
-    /// Base editor for scriptable events with an argument. This is used when explicitly defining
+    /// Base editor for Scriptable Events with an argument. This is used when explicitly defining
     /// an editor for an event.
     /// </summary>
     /// <typeparam name="TArg"></typeparam>
@@ -56,7 +56,7 @@ namespace ScriptableEvents.Editor
         private void DrawRaise()
         {
             EditorGUILayout.LabelField(raiseLabelContent);
-            GUI.enabled = scriptableEvent.Listeners.Count > 0;
+            GUI.enabled = scriptableEvent.ListenerCount > 0;
 
             GUILayout.BeginHorizontal();
 

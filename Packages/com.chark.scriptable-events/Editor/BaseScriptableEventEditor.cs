@@ -6,8 +6,7 @@ using Object = UnityEngine.Object;
 namespace ScriptableEvents.Editor
 {
     /// <summary>
-    /// Base editor for all scriptable events. This is used as a default editor if no custom editor
-    /// is defined.
+    /// Base editor for all Scriptable Events.
     /// </summary>
     [CanEditMultipleObjects]
     public abstract class BaseScriptableEventEditor : UnityEditor.Editor
@@ -252,7 +251,7 @@ namespace ScriptableEvents.Editor
         {
             EditorGUILayout.LabelField(listenerLabelContent);
 
-            if (baseScriptableEvent.Listeners.Count == 0)
+            if (baseScriptableEvent.ListenerCount == 0)
             {
                 EditorGUILayout.HelpBox(
                     "There are no listeners added to this event",
