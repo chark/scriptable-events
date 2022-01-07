@@ -10,8 +10,7 @@ namespace ScriptableEvents.Editor
     /// is defined.
     /// </summary>
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(BaseScriptableEvent), true)]
-    public class BaseScriptableEventEditor : UnityEditor.Editor
+    public abstract class BaseScriptableEventEditor : UnityEditor.Editor
     {
         #region Fields
 
@@ -22,7 +21,7 @@ namespace ScriptableEvents.Editor
         private GUIContent listenerLabelContent;
 
         // Target properties.
-        private BaseScriptableEvent scriptableEvent;
+        private BaseScriptableEvent baseScriptableEvent;
         private MonoScript monoScript;
 
         // Cached properties.
@@ -32,11 +31,13 @@ namespace ScriptableEvents.Editor
 
         // Cached styles.
         private GUIStyle descriptionLockStyle;
+        private GUIStyle descriptionHelpBoxStyle;
         private GUIStyle descriptionStyle;
         private GUIStyle listenerSubLabelStyle;
 
         private float descriptionWidth;
         private bool isLockDescription = true;
+        private bool isSetupStyles = true;
 
         #endregion
 
@@ -52,7 +53,11 @@ namespace ScriptableEvents.Editor
 
         public override void OnInspectorGUI()
         {
-            SetupStyles();
+            if (isSetupStyles)
+            {
+                SetupStyles();
+                isSetupStyles = false;
+            }
 
             DrawMonoScript();
 
@@ -95,18 +100,18 @@ namespace ScriptableEvents.Editor
             isDebugLabelContent = CreateLabelContent("isDebug");
             listenerLabelContent = new GUIContent(
                 "Added Listeners",
-                "Added listeners to this event (play mode only)"
+                "Listeners added to this event"
             );
         }
 
         private void SetupScriptableEvent()
         {
-            scriptableEvent = target as BaseScriptableEvent;
+            baseScriptableEvent = target as BaseScriptableEvent;
         }
 
         private void SetupMonoScript()
         {
-            monoScript = MonoScript.FromScriptableObject(scriptableEvent);
+            monoScript = MonoScript.FromScriptableObject(baseScriptableEvent);
         }
 
         private void SetupSerializedProperties()
@@ -118,30 +123,25 @@ namespace ScriptableEvents.Editor
 
         private void SetupStyles()
         {
-            if (descriptionLockStyle == null)
-            {
-                SetupDescriptionLockStyle();
-            }
-
-            if (descriptionStyle == null)
-            {
-                SetupDescriptionStyle();
-            }
-
-            if (descriptionWidth <= 0)
-            {
-                SetupDescriptionWidth();
-            }
-
-            if (listenerSubLabelStyle == null)
-            {
-                SetupListenerSubLabelStyle();
-            }
+            SetupDescriptionLockStyle();
+            SetupDescriptionHelpBoxStyle();
+            SetupDescriptionStyle();
+            SetupDescriptionWidth();
+            SetupListenerSubLabelStyle();
         }
 
         private void SetupDescriptionLockStyle()
         {
             descriptionLockStyle = GUI.skin.GetStyle("IN LockButton");
+        }
+
+        private void SetupDescriptionHelpBoxStyle()
+        {
+            descriptionHelpBoxStyle = new GUIStyle(EditorStyles.helpBox)
+            {
+                fontSize = EditorStyles.textField.fontSize,
+                richText = true
+            };
         }
 
         private void SetupDescriptionStyle()
@@ -184,7 +184,15 @@ namespace ScriptableEvents.Editor
         {
             EditorGUILayout.LabelField(descriptionLabelContent);
             DrawDescriptionLockButton();
-            DrawDescriptionTextArea();
+
+            if (isLockDescription)
+            {
+                DrawDescriptionHelpBox();
+            }
+            else
+            {
+                DrawDescriptionTextArea();
+            }
         }
 
         private void DrawDescriptionLockButton()
@@ -201,15 +209,27 @@ namespace ScriptableEvents.Editor
             );
         }
 
+        private void DrawDescriptionHelpBox()
+        {
+            var description = descriptionProperty.stringValue;
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                EditorGUILayout.LabelField(
+                    "Click the <b>lock</b> icon to add a description to this event asset",
+                    descriptionHelpBoxStyle
+                );
+                return;
+            }
+
+            EditorGUILayout.LabelField(description, descriptionHelpBoxStyle);
+        }
+
         private void DrawDescriptionTextArea()
         {
-            GUI.enabled = !isLockDescription;
             descriptionProperty.stringValue = EditorGUILayout.TextArea(
                 descriptionProperty.stringValue,
                 descriptionStyle
             );
-
-            GUI.enabled = true;
         }
 
         private void DrawIsSuppressExceptions()
@@ -232,33 +252,17 @@ namespace ScriptableEvents.Editor
         {
             EditorGUILayout.LabelField(listenerLabelContent);
 
-            if (Application.isPlaying)
-            {
-                DrawPlayModeListeners();
-            }
-            else
-            {
-                EditorGUILayout.HelpBox(
-                    "Added listeners will be displayed here during playmode",
-                    MessageType.Info
-                );
-            }
-        }
-
-        private void DrawPlayModeListeners()
-        {
-            GetListeners(out var objectListeners, out var otherListeners);
-
-            var listenerCount = objectListeners.Count + otherListeners.Count;
-            if (listenerCount == 0)
+            if (baseScriptableEvent.Listeners.Count == 0)
             {
                 EditorGUILayout.HelpBox(
                     "There are no listeners added to this event",
-                    MessageType.Warning
+                    MessageType.Info
                 );
 
                 return;
             }
+
+            GetListeners(out var objectListeners, out var otherListeners);
 
             EditorGUILayout.LabelField(
                 $"Event contains {objectListeners.Count} UnityEngine.Object listeners and " +
@@ -305,7 +309,7 @@ namespace ScriptableEvents.Editor
             objectListeners = new List<Object>();
             namedListeners = new List<string>();
 
-            foreach (var listener in scriptableEvent.Listeners)
+            foreach (var listener in baseScriptableEvent.Listeners)
             {
                 if (listener is Object listenerObject)
                 {

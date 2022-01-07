@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -44,7 +43,7 @@ namespace ScriptableEvents
 
         #region Internal Properties
 
-        internal override IEnumerable Listeners => listeners;
+        internal override IReadOnlyCollection<object> Listeners => listeners;
 
         #endregion
 

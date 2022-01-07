@@ -27,7 +27,7 @@ namespace ScriptableEvents.Editor
 
             raiseLabelContent = new GUIContent(
                 "Raise Event",
-                "Raise event and trigger added listeners (play mode only)"
+                "Raise event and trigger added listeners"
             );
 
             scriptableEvent = target as BaseScriptableEvent<TArg>;
@@ -56,7 +56,7 @@ namespace ScriptableEvents.Editor
         private void DrawRaise()
         {
             EditorGUILayout.LabelField(raiseLabelContent);
-            GUI.enabled = Application.isPlaying;
+            GUI.enabled = scriptableEvent.Listeners.Count > 0;
 
             GUILayout.BeginHorizontal();
 
