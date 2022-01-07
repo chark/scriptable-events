@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents
 {
@@ -36,14 +38,16 @@ namespace ScriptableEvents
 
         #region Fields
 
-        private readonly List<IScriptableEventListener<TArg>> listeners =
-            new List<IScriptableEventListener<TArg>>();
+        private readonly List<Action<TArg>> listeners =
+            new List<Action<TArg>>();
 
         #endregion
 
         #region Internal Properties
 
-        internal override IReadOnlyCollection<object> Listeners => listeners;
+        internal override IReadOnlyCollection<object> Listeners => listeners
+            .Select(invocation => invocation.Target)
+            .ToList();
 
         #endregion
 
@@ -88,6 +92,14 @@ namespace ScriptableEvents
         /// </summary>
         public void AddListener(IScriptableEventListener<TArg> listener)
         {
+            AddListener(listener.OnRaised);
+        }
+
+        /// <summary>
+        /// Add a listener action to this event.
+        /// </summary>
+        public void AddListener(Action<TArg> listener)
+        {
             if (isDebug)
             {
                 LogAdd(listener);
@@ -100,6 +112,14 @@ namespace ScriptableEvents
         /// Remove a listener from this event.
         /// </summary>
         public void RemoveListener(IScriptableEventListener<TArg> listener)
+        {
+            RemoveListener(listener.OnRaised);
+        }
+
+        /// <summary>
+        /// Remove a listener action from this event.
+        /// </summary>
+        public void RemoveListener(Action<TArg> listener)
         {
             if (isDebug)
             {
@@ -126,45 +146,60 @@ namespace ScriptableEvents
 
         #region Private Methods
 
-        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg value)
+        private void OnRaiseSuppressed(Action<TArg> listener, TArg value)
         {
             try
             {
-                listener.OnRaised(value);
+                listener.Invoke(value);
             }
             catch (Exception exception)
             {
-                Debug.LogException(exception, this);
+                var context = GetLogContext(listener);
+                Debug.LogException(exception, context);
             }
         }
 
-        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg value)
+        private static void OnRaise(Action<TArg> listener, TArg value)
         {
-            listener.OnRaised(value);
+            listener.Invoke(value);
         }
 
         #endregion
 
         #region Private Logging Methods
 
-        private void LogRaise(IScriptableEventListener<TArg> listener, TArg value)
+        private void LogRaise(Action<TArg> listener, TArg value)
         {
-            Debug.Log($"Raise listener: {listener}, value: {value}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: raise listener {listener.Target} with value {value}", context);
         }
 
-        private void LogAdd(IScriptableEventListener<TArg> listener)
+        private void LogAdd(Action<TArg> listener)
         {
-            Debug.Log($"Adding listener: {listener}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: adding listener {listener.Target}", context);
         }
 
-        private void LogRemove(IScriptableEventListener<TArg> listener)
+        private void LogRemove(Action<TArg> listener)
         {
-            Debug.Log($"Removing listener: {listener}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: removing listener {listener.Target}", context);
         }
 
         private void LogRemove()
         {
-            Debug.Log("Removing listeners", this);
+            Debug.Log($"{name}: removing listeners", this);
+        }
+
+        private Object GetLogContext(Action<TArg> listener)
+        {
+            var target = listener.Target;
+            if (target is Object targetObject)
+            {
+                return targetObject;
+            }
+
+            return this;
         }
 
         #endregion

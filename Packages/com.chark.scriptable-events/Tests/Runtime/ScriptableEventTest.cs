@@ -58,7 +58,7 @@ namespace ScriptableEvents.Tests.Runtime
         {
             LogAssert.ignoreFailingMessages = true;
 
-            scriptableEvent.SetField("suppressExceptions", true);
+            scriptableEvent.SetField("isSuppressExceptions", true);
             scriptableEvent.AddListener(new MockScriptableEventListener<TArg>
             {
                 Action = capturedArg => throw new Exception()
