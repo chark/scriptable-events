@@ -5,6 +5,10 @@ using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
+    /// <summary>
+    /// Base editor for all scriptable events. This is used as a default editor if no custom editor
+    /// is defined.
+    /// </summary>
     [CanEditMultipleObjects]
     [CustomEditor(typeof(BaseScriptableEvent), true)]
     public class BaseScriptableEventEditor : UnityEditor.Editor

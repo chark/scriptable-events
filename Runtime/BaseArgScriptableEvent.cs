@@ -6,6 +6,12 @@ using UnityEngine.Serialization;
 
 namespace ScriptableEvents
 {
+    /// <summary>
+    /// Base scriptable event class. Used to define all events.
+    /// </summary>
+    /// <typeparam name="TArg">
+    /// Type of data which is passed as an argument to this event
+    /// </typeparam>
     public abstract class BaseScriptableEvent<TArg> : BaseScriptableEvent
     {
         #region Editor
