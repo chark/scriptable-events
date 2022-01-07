@@ -32,7 +32,7 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Internal Listeners
+        #region Internal Properties
 
         internal override IEnumerable<object> Listeners => listeners;
 
