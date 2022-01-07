@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 namespace ScriptableEvents
 {
     /// <summary>
-    /// Base scriptable event class. Used to define all events.
+    /// Base scriptable event, used to define internal and custom events.
     /// </summary>
     /// <typeparam name="TArg">
     /// Type of data which is passed as an argument to this event
@@ -45,9 +45,11 @@ namespace ScriptableEvents
 
         #region Internal Properties
 
-        internal override IReadOnlyCollection<object> Listeners => listeners
+        internal override IEnumerable<object> Listeners => listeners
             .Select(invocation => invocation.Target)
             .ToList();
+
+        internal override int ListenerCount => listeners.Count;
 
         #endregion
 

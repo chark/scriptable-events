@@ -4,17 +4,21 @@ using UnityEngine;
 namespace ScriptableEvents
 {
     /// <summary>
-    /// Base "marker" scriptable event class. Necessary to show inspector GUIs for events which
-    /// have no explicitly defined editor scripts.
+    /// Base Scriptable Event class. Used in internal editor scripts.
     /// </summary>
     public abstract class BaseScriptableEvent : ScriptableObject
     {
         #region Internal Properties
 
         /// <summary>
-        /// Listeners added to this scriptable object. Used in inspector GUIs.
+        /// Listeners added to this event. Used in inspector GUIs.
         /// </summary>
-        internal abstract IReadOnlyCollection<object> Listeners { get; }
+        internal abstract IEnumerable<object> Listeners { get; }
+
+        /// <summary>
+        /// Count of listeners added to this event. Used in inspector GUIs.
+        /// </summary>
+        internal abstract int ListenerCount { get; }
 
         #endregion
     }
