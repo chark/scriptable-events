@@ -63,7 +63,7 @@
         /// <summary>
         /// Base menu order of all scriptable event sub menus.
         /// </summary>
-        private const int MenuOrderBase = -100;
+        private const int MenuOrderBase = 150;
 
         #endregion
     }
