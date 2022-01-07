@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace ScriptableEvents
@@ -7,7 +7,10 @@ namespace ScriptableEvents
     {
         #region Internal Properties
 
-        internal abstract IEnumerable<object> Listeners { get; }
+        /// <summary>
+        /// Listeners added to this scriptable object. Used in inspector GUIs.
+        /// </summary>
+        internal abstract IEnumerable Listeners { get; }
 
         #endregion
     }

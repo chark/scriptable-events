@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScriptableEvents
 {
@@ -13,15 +15,17 @@ namespace ScriptableEvents
         [Tooltip("Custom description to provide more additional information")]
         private string description;
 
+        [FormerlySerializedAs("suppressExceptions")]
         [SerializeField]
         [Tooltip("Should exceptions not break the listener chain")]
-        private bool suppressExceptions;
+        private bool isSuppressExceptions;
 
+        [FormerlySerializedAs("trace")]
         [SerializeField]
         [Tooltip(
-            "Should additional trace information be logged. Enabling this will degrade performance!"
+            "Should additional debug information be logged. Enabling this will degrade performance!"
         )]
-        private bool trace;
+        private bool isDebug;
 
         #endregion
 
@@ -34,7 +38,7 @@ namespace ScriptableEvents
 
         #region Internal Properties
 
-        internal override IEnumerable<object> Listeners => listeners;
+        internal override IEnumerable Listeners => listeners;
 
         #endregion
 
@@ -58,12 +62,12 @@ namespace ScriptableEvents
             {
                 var listener = listeners[index];
 
-                if (trace)
+                if (isDebug)
                 {
                     LogRaise(listener, value);
                 }
 
-                if (suppressExceptions)
+                if (isSuppressExceptions)
                 {
                     OnRaiseSuppressed(listener, value);
                 }
@@ -79,7 +83,7 @@ namespace ScriptableEvents
         /// </summary>
         public void AddListener(IScriptableEventListener<TArg> listener)
         {
-            if (trace)
+            if (isDebug)
             {
                 LogAdd(listener);
             }
@@ -92,7 +96,7 @@ namespace ScriptableEvents
         /// </summary>
         public void RemoveListener(IScriptableEventListener<TArg> listener)
         {
-            if (trace)
+            if (isDebug)
             {
                 LogRemove(listener);
             }
@@ -105,7 +109,7 @@ namespace ScriptableEvents
         /// </summary>
         public void RemoveListeners()
         {
-            if (trace)
+            if (isDebug)
             {
                 LogRemove();
             }

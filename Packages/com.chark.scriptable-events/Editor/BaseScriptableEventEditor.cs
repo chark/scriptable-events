@@ -13,8 +13,8 @@ namespace ScriptableEvents.Editor
 
         // Labels.
         private GUIContent descriptionLabelContent;
-        private GUIContent suppressExceptionsLabelContent;
-        private GUIContent traceLabelContent;
+        private GUIContent isSuppressExceptionsLabelContent;
+        private GUIContent isDebugLabelContent;
         private GUIContent listenerLabelContent;
 
         // Target properties.
@@ -23,8 +23,8 @@ namespace ScriptableEvents.Editor
 
         // Cached properties.
         private SerializedProperty descriptionProperty;
-        private SerializedProperty suppressExceptionsProperty;
-        private SerializedProperty traceProperty;
+        private SerializedProperty isSuppressExceptionsProperty;
+        private SerializedProperty isDebugProperty;
 
         // Cached styles.
         private GUIStyle descriptionLockStyle;
@@ -56,8 +56,8 @@ namespace ScriptableEvents.Editor
             DrawDescription();
 
             EditorGUILayout.Space();
-            DrawSuppressExceptions();
-            DrawTrace();
+            DrawIsSuppressExceptions();
+            DrawIsDebug();
             DrawAdditionalProperties();
 
             if (EditorGUI.EndChangeCheck())
@@ -73,6 +73,9 @@ namespace ScriptableEvents.Editor
 
         #region Internal Methods
 
+        /// <summary>
+        /// Can be used to draw properties right under other essential scriptable event properties.
+        /// </summary>
         internal virtual void DrawAdditionalProperties()
         {
         }
@@ -84,8 +87,8 @@ namespace ScriptableEvents.Editor
         private void SetupLabelContent()
         {
             descriptionLabelContent = CreateLabelContent("description");
-            suppressExceptionsLabelContent = CreateLabelContent("suppressExceptions");
-            traceLabelContent = CreateLabelContent("trace");
+            isSuppressExceptionsLabelContent = CreateLabelContent("isSuppressExceptions");
+            isDebugLabelContent = CreateLabelContent("isDebug");
             listenerLabelContent = new GUIContent(
                 "Added Listeners",
                 "Added listeners to this event (play mode only)"
@@ -105,8 +108,8 @@ namespace ScriptableEvents.Editor
         private void SetupSerializedProperties()
         {
             descriptionProperty = serializedObject.FindProperty("description");
-            suppressExceptionsProperty = serializedObject.FindProperty("suppressExceptions");
-            traceProperty = serializedObject.FindProperty("trace");
+            isSuppressExceptionsProperty = serializedObject.FindProperty("isSuppressExceptions");
+            isDebugProperty = serializedObject.FindProperty("isDebug");
         }
 
         private void SetupStyles()
@@ -205,19 +208,19 @@ namespace ScriptableEvents.Editor
             GUI.enabled = true;
         }
 
-        private void DrawSuppressExceptions()
+        private void DrawIsSuppressExceptions()
         {
-            suppressExceptionsProperty.boolValue = EditorGUILayout.Toggle(
-                suppressExceptionsLabelContent,
-                suppressExceptionsProperty.boolValue
+            isSuppressExceptionsProperty.boolValue = EditorGUILayout.Toggle(
+                isSuppressExceptionsLabelContent,
+                isSuppressExceptionsProperty.boolValue
             );
         }
 
-        private void DrawTrace()
+        private void DrawIsDebug()
         {
-            traceProperty.boolValue = EditorGUILayout.Toggle(
-                traceLabelContent,
-                traceProperty.boolValue
+            isDebugProperty.boolValue = EditorGUILayout.Toggle(
+                isDebugLabelContent,
+                isDebugProperty.boolValue
             );
         }
 
