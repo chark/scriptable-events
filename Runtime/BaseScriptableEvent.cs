@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScriptableEvents
@@ -14,7 +14,7 @@ namespace ScriptableEvents
         /// <summary>
         /// Listeners added to this scriptable object. Used in inspector GUIs.
         /// </summary>
-        internal abstract IEnumerable Listeners { get; }
+        internal abstract IReadOnlyCollection<object> Listeners { get; }
 
         #endregion
     }
