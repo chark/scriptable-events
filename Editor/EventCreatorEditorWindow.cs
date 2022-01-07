@@ -223,6 +223,13 @@ namespace ScriptableEvents.Editor
         public static void ShowWindow()
         {
             var window = GetWindow<EventCreatorEditorWindow>(true, WindowTitle);
+
+            var selectedMonoScript = Selection.activeObject as MonoScript;
+            if (selectedMonoScript != null)
+            {
+                window.eventArgScript = selectedMonoScript;
+            }
+
             window.minSize = MinWindowSize;
             window.maxSize = MaxWindowSize;
         }
