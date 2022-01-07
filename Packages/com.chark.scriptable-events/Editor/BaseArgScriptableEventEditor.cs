@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
+    /// <summary>
+    /// Base editor for scriptable events with an argument. This is used when explicitly defining
+    /// an editor for an event.
+    /// </summary>
+    /// <typeparam name="TArg"></typeparam>
     public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
     {
         #region Fields
