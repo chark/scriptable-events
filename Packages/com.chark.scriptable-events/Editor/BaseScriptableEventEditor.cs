@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -33,6 +32,8 @@ namespace ScriptableEvents.Editor
         private GUIStyle descriptionHelpBoxStyle;
         private GUIStyle descriptionStyle;
         private GUIStyle listenerSubLabelStyle;
+
+        private GUILayoutOption listenerNameOption;
 
         private float descriptionWidth;
         private bool isLockDescription = true;
@@ -74,6 +75,8 @@ namespace ScriptableEvents.Editor
             }
 
             EditorGUILayout.Space();
+            DrawListenerLabel();
+            DrawListenerStats();
             DrawListeners();
         }
 
@@ -86,6 +89,22 @@ namespace ScriptableEvents.Editor
         /// </summary>
         internal virtual void DrawAdditionalProperties()
         {
+        }
+
+        /// <summary>
+        /// Draws a single listener field.
+        /// </summary>
+        internal virtual void DrawListener(object listener, int listenerIndex)
+        {
+            if (listener is Object listenerObject)
+            {
+                DrawListenerObject(listenerObject);
+            }
+            else
+            {
+                var listenerName = listener.ToString();
+                DrawListenerName(listenerName);
+            }
         }
 
         #endregion
@@ -127,6 +146,7 @@ namespace ScriptableEvents.Editor
             SetupDescriptionStyle();
             SetupDescriptionWidth();
             SetupListenerSubLabelStyle();
+            SetupListenerNameOption();
         }
 
         private void SetupDescriptionLockStyle()
@@ -166,6 +186,11 @@ namespace ScriptableEvents.Editor
                 fontSize = (int) (labelSkin.fontSize * 0.9f),
                 wordWrap = true
             };
+        }
+
+        private void SetupListenerNameOption()
+        {
+            listenerNameOption = GUILayout.Height(EditorGUIUtility.singleLineHeight);
         }
 
         #endregion
@@ -247,10 +272,13 @@ namespace ScriptableEvents.Editor
             );
         }
 
-        private void DrawListeners()
+        private void DrawListenerLabel()
         {
             EditorGUILayout.LabelField(listenerLabelContent);
+        }
 
+        private void DrawListenerStats()
+        {
             if (baseScriptableEvent.ListenerCount == 0)
             {
                 EditorGUILayout.HelpBox(
@@ -261,34 +289,40 @@ namespace ScriptableEvents.Editor
                 return;
             }
 
-            GetListeners(out var objectListeners, out var otherListeners);
+            GetListenerCounts(out var objectListenerCount, out var otherListenerCount);
 
             EditorGUILayout.LabelField(
-                $"Event contains {objectListeners.Count} UnityEngine.Object listeners and " +
-                $"{otherListeners.Count} other listeners",
+                $"Event contains {objectListenerCount} UnityEngine.Object listeners and " +
+                $"{otherListenerCount} other listeners",
                 listenerSubLabelStyle
             );
-
-            DrawListenerFields(objectListeners);
-            EditorGUILayout.Space();
-            DrawListenerFields(otherListeners);
         }
 
-        private static void DrawListenerFields(IEnumerable<Object> listenerObjects)
+        private void DrawListeners()
         {
-            foreach (var listenerObject in listenerObjects)
+            var listenerIndex = 0;
+            foreach (var listener in baseScriptableEvent.Listeners)
             {
-                EditorGUILayout.ObjectField(listenerObject, null, false);
+                EditorGUILayout.BeginHorizontal();
+                DrawListener(listener, listenerIndex);
+                EditorGUILayout.EndHorizontal();
+
+                listenerIndex++;
             }
         }
 
-        private static void DrawListenerFields(IEnumerable<string> listenerNames)
+        private static void DrawListenerObject(Object listenerObject)
         {
-            var height = GUILayout.Height(EditorGUIUtility.singleLineHeight);
-            foreach (var listenerName in listenerNames)
-            {
-                EditorGUILayout.SelectableLabel(listenerName, EditorStyles.textField, height);
-            }
+            EditorGUILayout.ObjectField(listenerObject, null, false);
+        }
+
+        private void DrawListenerName(string listenerName)
+        {
+            EditorGUILayout.SelectableLabel(
+                listenerName,
+                EditorStyles.textField,
+                listenerNameOption
+            );
         }
 
         #endregion
@@ -303,21 +337,20 @@ namespace ScriptableEvents.Editor
             return new GUIContent(text, tooltip);
         }
 
-        private void GetListeners(out List<Object> objectListeners, out List<string> namedListeners)
+        private void GetListenerCounts(out int objectListenerCount, out int otherListenerCount)
         {
-            objectListeners = new List<Object>();
-            namedListeners = new List<string>();
+            objectListenerCount = 0;
+            otherListenerCount = 0;
 
             foreach (var listener in baseScriptableEvent.Listeners)
             {
-                if (listener is Object listenerObject)
+                if (listener is Object)
                 {
-                    objectListeners.Add(listenerObject);
+                    objectListenerCount++;
                 }
                 else
                 {
-                    var listenerName = listener.ToString();
-                    namedListeners.Add(listenerName);
+                    otherListenerCount++;
                 }
             }
         }
