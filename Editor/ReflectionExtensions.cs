@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
@@ -52,6 +54,44 @@ namespace ScriptableEvents.Editor
             }
 
             return (T) info.GetValue(obj);
+        }
+
+        /// <returns>
+        /// Scriptable Event icon attribute, can be null.
+        /// </returns>
+        internal static ScriptableEventIcon GetIconAttribute(this MonoScript monoScript)
+        {
+            var scriptType = monoScript.GetClass();
+            if (scriptType == null)
+            {
+                return null;
+            }
+
+            var attribute = scriptType.GetCustomAttribute<ScriptableEventIcon>(true);
+
+            return attribute;
+        }
+
+        /// <summary>
+        /// Set editor icon for provided Object.
+        /// </summary>
+        internal static void SetIcon(this Object obj, Texture2D icon)
+        {
+            var editorUtilityType = typeof(EditorGUIUtility);
+            var setIconMethod = editorUtilityType.GetMethod(
+                "SetIconForObject",
+                BindingFlags.InvokeMethod | BindingFlags.Static | BindingFlags.NonPublic,
+                null,
+                new[] {typeof(Object), typeof(Texture2D)},
+                null
+            );
+
+            if (setIconMethod == null)
+            {
+                return;
+            }
+
+            setIconMethod.Invoke(null, new object[] {obj, icon});
         }
     }
 }

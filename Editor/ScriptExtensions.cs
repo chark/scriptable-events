@@ -12,7 +12,7 @@ namespace ScriptableEvents.Editor
         /// <summary>
         /// Save script to a file.
         /// </summary>
-        internal static void SaveScript(
+        internal static string SaveScript(
             this string scriptContent,
             string scriptDirectory,
             string scriptName,
@@ -32,6 +32,8 @@ namespace ScriptableEvents.Editor
             }
 
             File.WriteAllText(scriptPath, scriptContent);
+
+            return scriptPath;
         }
 
         #endregion

@@ -409,6 +409,7 @@ namespace ScriptableEvents.Editor
                 CreateEditorScript();
             }
 
+            // AssetDatabase.ImportAsset();
             AssetDatabase.Refresh();
         }
 
@@ -428,11 +429,14 @@ namespace ScriptableEvents.Editor
                 .AddImport(baseNamespace)
                 .Build();
 
-            scriptContent.SaveScript(
+            var scriptPath = scriptContent.SaveScript(
                 scriptDirectory,
                 eventName,
                 eventNamespace
             );
+
+            // Importing to set an icon.
+            AssetDatabase.ImportAsset(scriptPath);
         }
 
         private void CreateListenerScript()
@@ -449,11 +453,14 @@ namespace ScriptableEvents.Editor
                 .AddImport(baseNamespace)
                 .Build();
 
-            scriptContent.SaveScript(
+            var scriptPath = scriptContent.SaveScript(
                 scriptDirectory,
                 listenerName,
                 listenerNamespace
             );
+
+            // Importing to set an icon.
+            AssetDatabase.ImportAsset(scriptPath);
         }
 
         private void CreateEditorScript()
