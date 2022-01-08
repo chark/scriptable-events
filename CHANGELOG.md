@@ -12,6 +12,7 @@ Quality of life improvements.
 - `ScriptableEventConstants` class which can be used to order custom events more neatly.
 - `BaseScriptableEvent` class which is used internally to draw inspector GUIs. Using this class also improves Odin integration.
 - Support for `Action<TArg>` listeners. This means that regular methods can now be used as listeners without the need of implementing `IScriptableEventListener<TArg>`.
+- Additional _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector.
 
 ### Changed
 - Renamed Scriptable Event creation menu from _Scriptable **Events**_ to _Scriptable **Event**_.

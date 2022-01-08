@@ -72,20 +72,7 @@ namespace ScriptableEvents
             for (var index = listeners.Count - 1; index >= 0; index--)
             {
                 var listener = listeners[index];
-
-                if (isDebug)
-                {
-                    LogRaise(listener, value);
-                }
-
-                if (isSuppressExceptions)
-                {
-                    OnRaiseSuppressed(listener, value);
-                }
-                else
-                {
-                    OnRaise(listener, value);
-                }
+                Raise(listener, value);
             }
         }
 
@@ -146,7 +133,38 @@ namespace ScriptableEvents
 
         #endregion
 
+        #region Internal Methods
+
+        /// <summary>
+        /// Raise this event with an argument by triggering only the specified listener. This is
+        /// used in internal inspector GUI scripts.
+        /// </summary>
+        internal void Raise(TArg value, int listenerIndex)
+        {
+            var listener = listeners[listenerIndex];
+            Raise(listener, value);
+        }
+
+        #endregion
+
         #region Private Methods
+
+        private void Raise(Action<TArg> listener, TArg value)
+        {
+            if (isDebug)
+            {
+                LogRaise(listener, value);
+            }
+
+            if (isSuppressExceptions)
+            {
+                OnRaiseSuppressed(listener, value);
+            }
+            else
+            {
+                OnRaise(listener, value);
+            }
+        }
 
         private void OnRaiseSuppressed(Action<TArg> listener, TArg value)
         {

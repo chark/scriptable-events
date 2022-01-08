@@ -45,8 +45,20 @@ namespace ScriptableEvents.Editor
 
         internal override void DrawAdditionalProperties()
         {
+            base.DrawAdditionalProperties();
+
             EditorGUILayout.Space();
             DrawRaise();
+        }
+
+        internal override void DrawListener(object listener, int listenerIndex)
+        {
+            base.DrawListener(listener, listenerIndex);
+
+            if (GUILayout.Button("Raise"))
+            {
+                scriptableEvent.Raise(argValue, listenerIndex);
+            }
         }
 
         #endregion
