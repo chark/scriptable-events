@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor
+namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Creates custom scriptable event scripts from template files.
@@ -13,7 +13,7 @@ namespace ScriptableEvents.Editor
         #region Fields
 
         private const string TemplatePath =
-            ScriptableEventConstants.PackagePath + "/Editor/Templates";
+            ScriptableEventConstants.PackagePath + "/Editor/ScriptCreation/Templates";
 
         private readonly string templateName;
 

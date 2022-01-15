@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ScriptableEvents.Editor
+namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Extensions to persist custom C# scripts.
@@ -12,7 +12,7 @@ namespace ScriptableEvents.Editor
         /// <summary>
         /// Save script to a file.
         /// </summary>
-        internal static string SaveScript(
+        internal static void SaveScript(
             this string scriptContent,
             string scriptDirectory,
             string scriptName,
@@ -32,8 +32,6 @@ namespace ScriptableEvents.Editor
             }
 
             File.WriteAllText(scriptPath, scriptContent);
-
-            return scriptPath;
         }
 
         #endregion
