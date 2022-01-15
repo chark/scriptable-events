@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ScriptableEvents.Editor.ScriptCreation;
 using UnityEditor;
 using UnityEngine;
 
@@ -409,7 +410,6 @@ namespace ScriptableEvents.Editor
                 CreateEditorScript();
             }
 
-            // AssetDatabase.ImportAsset();
             AssetDatabase.Refresh();
         }
 
@@ -429,14 +429,11 @@ namespace ScriptableEvents.Editor
                 .AddImport(baseNamespace)
                 .Build();
 
-            var scriptPath = scriptContent.SaveScript(
+            scriptContent.SaveScript(
                 scriptDirectory,
                 eventName,
                 eventNamespace
             );
-
-            // Importing to set an icon.
-            AssetDatabase.ImportAsset(scriptPath);
         }
 
         private void CreateListenerScript()
@@ -453,14 +450,12 @@ namespace ScriptableEvents.Editor
                 .AddImport(baseNamespace)
                 .Build();
 
-            var scriptPath = scriptContent.SaveScript(
+            scriptContent.SaveScript(
                 scriptDirectory,
                 listenerName,
                 listenerNamespace
             );
 
-            // Importing to set an icon.
-            AssetDatabase.ImportAsset(scriptPath);
         }
 
         private void CreateEditorScript()

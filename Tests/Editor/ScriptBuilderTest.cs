@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using ScriptableEvents.Editor;
+using ScriptableEvents.Editor.ScriptCreation;
 
 namespace ScriptableEvents.Tests.Editor
 {
