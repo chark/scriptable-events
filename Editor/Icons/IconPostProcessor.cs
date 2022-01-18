@@ -33,8 +33,6 @@ namespace ScriptableEvents.Editor.Icons
                         {
                             if (SetIcon(metaPath, scriptLines))
                             {
-                                // TODO, meta file modified, but icon does not reload
-                                // TODO, if reload loop then sets :(
                                 AssetDatabase.ImportAsset(importedAssetPath);
                             }
                         }
@@ -52,7 +50,7 @@ namespace ScriptableEvents.Editor.Icons
             return assetPath.EndsWith($".{ScriptFileType}");
         }
 
-        private static bool IsMonoScript(string scriptPath, string[] scriptLines)
+        private static bool IsMonoScript(string scriptPath, IEnumerable<string> scriptLines)
         {
             var scriptName = Path.GetFileNameWithoutExtension(scriptPath);
             foreach (var scriptLine in scriptLines)
