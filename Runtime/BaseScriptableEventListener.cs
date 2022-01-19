@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 namespace ScriptableEvents
 {
+    [ScriptableIcon(ScriptableIconType.Listener)]
     public abstract class BaseScriptableEventListener<TArg>
         : MonoBehaviour, IScriptableEventListener<TArg>
     {
