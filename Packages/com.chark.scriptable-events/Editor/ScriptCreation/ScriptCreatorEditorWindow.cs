@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ScriptableEvents.Editor.ScriptCreation;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor
+namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
-    /// Editor window for creating custom scriptable event scripts.
+    /// Editor window for creating custom Scriptable Event and Listener scripts.
     /// </summary>
-    internal class EventCreatorEditorWindow : EditorWindow
+    internal class ScriptCreatorEditorWindow : EditorWindow
     {
         #region GUI Constants
 
@@ -119,7 +118,7 @@ namespace ScriptableEvents.Editor
 
         #region Window Constants
 
-        private const string WindowTitle = "Create Custom Scriptable Event";
+        private const string WindowTitle = "Script Creator";
         private const string MenuTitle = "Custom Scriptable Event";
 
         private static readonly Vector2 MinWindowSize = new Vector2(350f, 500f);
@@ -223,7 +222,7 @@ namespace ScriptableEvents.Editor
         )]
         public static void ShowWindow()
         {
-            var window = GetWindow<EventCreatorEditorWindow>(true, WindowTitle);
+            var window = GetWindow<ScriptCreatorEditorWindow>(true, WindowTitle);
 
             var selectedMonoScript = Selection.activeObject as MonoScript;
             if (selectedMonoScript != null)

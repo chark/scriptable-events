@@ -6,6 +6,7 @@ namespace ScriptableEvents
     /// <summary>
     /// Base Scriptable Event class. Used in internal editor scripts.
     /// </summary>
+    [ScriptableIcon(ScriptableIconType.Event)]
     public abstract class BaseScriptableEvent : ScriptableObject
     {
         #region Internal Properties

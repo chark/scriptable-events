@@ -5,6 +5,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
     /// <summary>
     /// Extensions to persist custom C# scripts.
     /// </summary>
+    // TODO: this should not be extensions, doesn't make sense
     internal static class ScriptExtensions
     {
         #region Internal Methods

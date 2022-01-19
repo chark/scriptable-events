@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+using ScriptableEvents.Editor.States;
+using Sirenix.Utilities;
 using UnityEditor;
+using UnityEditor.Callbacks;
 
 namespace ScriptableEvents.Editor.Icons
 {
-    public class IconPostProcessor : AssetPostprocessor
+    /// <summary>
+    /// Applies icons to Scriptable Event and Listener assets.
+    /// </summary>
+    internal class IconPostProcessor : AssetPostprocessor
     {
-        #region Fields
+        #region Private Fields
 
         private const string ScriptFileType = "cs";
 
@@ -21,87 +26,81 @@ namespace ScriptableEvents.Editor.Icons
             string[] movedFromAssetPaths
         )
         {
-            foreach (var importedAssetPath in importedAssets)
-            {
-                if (IsScriptAsset(importedAssetPath))
-                {
-                    var metaPath = $"{importedAssetPath}.meta";
-                    if (File.Exists(metaPath))
-                    {
-                        var scriptLines = ReadAllLines(importedAssetPath);
-                        if (IsMonoScript(importedAssetPath, scriptLines))
-                        {
-                            if (SetIcon(metaPath, scriptLines))
-                            {
-                                AssetDatabase.ImportAsset(importedAssetPath);
-                            }
-                        }
-                    }
-                }
-            }
+            AddPendingAssetPathsToIconState(importedAssets);
+        }
+
+        [DidReloadScripts]
+        private static void OnScriptsReloaded()
+        {
+            ApplyPendingAssetPathsFromIconState();
         }
 
         #endregion
 
         #region Private Methods
 
+        private static void AddPendingAssetPathsToIconState(IEnumerable<string> importedAssets)
+        {
+            var pendingAssetPaths = new List<string>();
+            foreach (var importedAssetPath in importedAssets)
+            {
+                if (IsScriptAsset(importedAssetPath) && IsMetaFileExits(importedAssetPath))
+                {
+                    // These assets MIGHT be valid for icon processing. But that is unclear at this
+                    // phase as the scripts might not be compiled.
+                    pendingAssetPaths.Add(importedAssetPath);
+                }
+            }
+
+            UpdatePendingAssetPaths(pendingAssetPaths);
+        }
+
+        private static void ApplyPendingAssetPathsFromIconState()
+        {
+            var iconState = ScriptableEventEditorState.IconState;
+            foreach (var assetPath in iconState.PendingAssetPaths)
+            {
+                var monoScript = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+                if (monoScript == null)
+                {
+                    continue;
+                }
+
+                var scriptableIcon = monoScript
+                    .GetClass()
+                    ?.GetCustomAttribute<ScriptableIcon>(true);
+
+                if (scriptableIcon == null)
+                {
+                    continue;
+                }
+
+                if (IconUtils.TrySetIcon(monoScript, scriptableIcon))
+                {
+                    AssetDatabase.ImportAsset(assetPath);
+                }
+            }
+
+            iconState.ClearPendingAssetPaths();
+            ScriptableEventEditorState.IconState = iconState;
+        }
+
         private static bool IsScriptAsset(string assetPath)
         {
             return assetPath.EndsWith($".{ScriptFileType}");
         }
 
-        private static bool IsMonoScript(string scriptPath, IEnumerable<string> scriptLines)
+        private static bool IsMetaFileExits(string assetPath)
         {
-            var scriptName = Path.GetFileNameWithoutExtension(scriptPath);
-            foreach (var scriptLine in scriptLines)
-            {
-                if (IsMonoScript(scriptLine, scriptName))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            var metaPath = AssetDatabase.GetTextMetaFilePathFromAssetPath(assetPath);
+            return !string.IsNullOrWhiteSpace(metaPath);
         }
 
-        private static bool IsMonoScript(string scriptLine, string scriptName)
+        private static void UpdatePendingAssetPaths(IEnumerable<string> assetPaths)
         {
-            return scriptLine.Contains($"class {scriptName}");
-        }
-
-        private static string[] ReadAllLines(string assetPath)
-        {
-            return File.ReadAllLines(assetPath);
-        }
-
-        private static bool SetIcon(string metaPath, IEnumerable<string> scriptLines)
-        {
-            foreach (var scriptLine in scriptLines)
-            {
-                if (IsEvent(scriptLine))
-                {
-                    return IconExtensions.SetEventIcon(metaPath);
-                }
-
-                if (IsListener(scriptLine))
-                {
-                    return IconExtensions.SetListenerIcon(metaPath);
-                }
-            }
-
-            return false;
-        }
-
-        private static bool IsEvent(string scriptLine)
-        {
-            return scriptLine.Contains(":BaseScriptableEvent<") ||
-                   scriptLine.Contains(": BaseScriptableEvent<");
-        }
-
-        private static bool IsListener(string scriptLine)
-        {
-            return scriptLine.Contains(":BaseScriptableEventListener<") ||
-                   scriptLine.Contains(": BaseScriptableEventListener<");
+            var iconState = ScriptableEventEditorState.IconState;
+            iconState.AddPendingAssetPaths(assetPaths);
+            ScriptableEventEditorState.IconState = iconState;
         }
 
         #endregion

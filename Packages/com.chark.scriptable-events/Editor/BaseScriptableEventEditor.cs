@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -332,9 +333,32 @@ namespace ScriptableEvents.Editor
         private static GUIContent CreateLabelContent(string fieldName)
         {
             var text = ObjectNames.NicifyVariableName(fieldName);
-            var tooltip = typeof(BaseScriptableEvent<>).GetTooltip(fieldName);
+            var tooltip = GetScriptableEventTooltip(fieldName);
 
             return new GUIContent(text, tooltip);
+        }
+
+        private static string GetScriptableEventTooltip(string fieldName)
+        {
+            const BindingFlags bindingFlags = BindingFlags.Instance
+                                              | BindingFlags.NonPublic
+                                              | BindingFlags.DeclaredOnly;
+
+            var eventType = typeof(BaseScriptableEvent<>);
+            var field = eventType.GetField(fieldName, bindingFlags);
+
+            if (field == null)
+            {
+                return "";
+            }
+
+            var attribute = field.GetCustomAttribute<TooltipAttribute>();
+            if (attribute == null)
+            {
+                return "";
+            }
+
+            return attribute.tooltip;
         }
 
         private void GetListenerCounts(out int objectListenerCount, out int otherListenerCount)
