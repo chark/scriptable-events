@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using ScriptableEvents.Editor.States;
-using Sirenix.Utilities;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
