@@ -11,7 +11,7 @@ namespace ScriptableEvents.Editor
     [CanEditMultipleObjects]
     public abstract class BaseScriptableEventEditor : UnityEditor.Editor
     {
-        #region Fields
+        #region Private Fields
 
         // Labels.
         private GUIContent descriptionLabelContent;

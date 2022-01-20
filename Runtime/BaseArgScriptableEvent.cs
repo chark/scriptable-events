@@ -36,7 +36,7 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Fields
+        #region Private Fields
 
         private readonly List<Action<TArg>> listeners =
             new List<Action<TArg>>();

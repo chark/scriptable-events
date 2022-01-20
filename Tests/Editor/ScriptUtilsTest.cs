@@ -5,9 +5,15 @@ using ScriptableEvents.Editor.ScriptCreation;
 namespace ScriptableEvents.Tests.Editor
 {
     [TestFixture]
-    internal class ScriptExtensionsTest
+    internal class ScriptUtilsTest
     {
+        #region Private Fields
+
         private const string ScriptDirectory = "Assets/TestScripts";
+
+        #endregion
+
+        #region Public Methods
 
         [TearDown]
         public void DeleteScriptDirectory()
@@ -22,7 +28,8 @@ namespace ScriptableEvents.Tests.Editor
             const string expectedDirectory = ScriptDirectory + "/TestScript";
             const string expectedPath = expectedDirectory + "/Namespace/TestScript.cs";
 
-            expectedContent.SaveScript(
+            ScriptUtils.SaveScript(
+                expectedContent,
                 ScriptDirectory,
                 "TestScript",
                 "TestScript.Namespace"
@@ -31,5 +38,7 @@ namespace ScriptableEvents.Tests.Editor
             var fileContent = File.ReadAllText(expectedPath);
             Assert.AreEqual(expectedContent, fileContent);
         }
+
+        #endregion
     }
 }

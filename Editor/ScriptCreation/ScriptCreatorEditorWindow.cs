@@ -126,7 +126,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #endregion
 
-        #region Fields
+        #region Private Fields
 
         private bool isUseMonoScript = true;
         private MonoScript eventArgScript;
@@ -428,7 +428,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            scriptContent.SaveScript(
+            ScriptUtils.SaveScript(
+                scriptContent,
                 scriptDirectory,
                 eventName,
                 eventNamespace
@@ -449,7 +450,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            scriptContent.SaveScript(
+            ScriptUtils.SaveScript(
+                scriptContent,
                 scriptDirectory,
                 listenerName,
                 listenerNamespace
@@ -471,7 +473,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            scriptContent.SaveScript(
+            ScriptUtils.SaveScript(
+                scriptContent,
                 scriptDirectory,
                 editorName,
                 editorNamespace

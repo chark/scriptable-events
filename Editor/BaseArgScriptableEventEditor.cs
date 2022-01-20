@@ -10,7 +10,7 @@ namespace ScriptableEvents.Editor
     /// <typeparam name="TArg"></typeparam>
     public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
     {
-        #region Fields
+        #region Private Fields
 
         private GUIContent raiseLabelContent;
 

@@ -59,7 +59,10 @@ namespace ScriptableEvents.Editor.Icons
                 }
             }
 
-            return false;
+            // icon: line did not exist in the .meta file.
+            File.AppendAllText(metaFilePath, iconMeta);
+
+            return true;
         }
 
         #endregion
