@@ -17,7 +17,7 @@ namespace ScriptableEvents.Tests.Runtime
         where TScriptableEvent : BaseScriptableEvent<TArg>
         where TScriptableEventListener : BaseScriptableEventListener<TArg>
     {
-        #region Fields
+        #region Private Fields
 
         private readonly TArg arg;
 
@@ -28,7 +28,7 @@ namespace ScriptableEvents.Tests.Runtime
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public ScriptableEventTest(TArg arg)
         {
@@ -47,6 +47,18 @@ namespace ScriptableEvents.Tests.Runtime
         [Test]
         public void ShouldRaiseEvent()
         {
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(1, capturedArgs.Count);
+            Assert.AreEqual(arg, capturedArgs.First());
+        }
+
+        [Test]
+        public void ShouldAddActionListenerAndRaiseEvent()
+        {
+            var capturedActionArgs = new List<TArg>();
+            scriptableEvent.AddListener(capturedActionArgs.Add);
+
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(1, capturedArgs.Count);
@@ -79,13 +91,29 @@ namespace ScriptableEvents.Tests.Runtime
         }
 
         [Test]
-        public void ShouldClearAndRaiseEvent()
+        public void ShouldAddAndRemoveActionListenerAndRaiseEvent()
+        {
+            var capturedActionArgs = new List<TArg>();
+            scriptableEvent.AddListener(capturedActionArgs.Add);
+            scriptableEvent.RemoveListener(capturedActionArgs.Add);
+
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(0, capturedActionArgs.Count);
+        }
+
+        [Test]
+        public void ShouldRemoveListenersAndRaiseEvent()
         {
             scriptableEvent.RemoveListeners();
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void SetupRaisedArgs()
         {

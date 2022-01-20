@@ -10,7 +10,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
     /// </summary>
     internal class ScriptBuilder
     {
-        #region Fields
+        #region Private Fields
 
         private const string TemplatePath =
             ScriptableEventConstants.PackagePath + "/Editor/ScriptCreation/Templates";

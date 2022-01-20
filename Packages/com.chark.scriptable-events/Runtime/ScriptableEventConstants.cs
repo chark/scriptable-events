@@ -5,7 +5,7 @@
     /// </summary>
     public static class ScriptableEventConstants
     {
-        #region Public Constants
+        #region Public Fields
 
         /// <summary>
         /// Base menu name of all custom scriptable event sub menus.
@@ -19,7 +19,7 @@
 
         #endregion
 
-        #region Internal Constants
+        #region Internal Fields
 
         /// <summary>
         /// Prefix of 'Create' event menus.
@@ -58,7 +58,7 @@
 
         #endregion
 
-        #region Private Constants
+        #region Private Fields
 
         /// <summary>
         /// Base menu order of all scriptable event sub menus.

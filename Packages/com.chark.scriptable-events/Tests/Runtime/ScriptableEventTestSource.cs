@@ -11,56 +11,122 @@ namespace ScriptableEvents.Tests.Runtime
     {
         public IEnumerator GetEnumerator()
         {
-            yield return CreateTestCase<
-                BoolScriptableEvent,
-                BoolScriptableEventListener
-            >(true);
-
-            yield return CreateTestCase<
-                FloatScriptableEvent,
-                FloatScriptableEventListener
-            >(1.0f);
-
-            yield return CreateTestCase<
-                GameObjectScriptableEvent,
-                GameObjectScriptableEventListener
-            >(new GameObject());
-
-            yield return CreateTestCase<
-                IntScriptableEvent,
-                IntScriptableEventListener
-            >(1);
+            #region Primitives
 
             yield return CreateTestCase<
                 SimpleScriptableEvent,
-                SimpleScriptableEventListener
+                SimpleScriptableEventListener,
+                SimpleArg
             >(SimpleArg.Instance);
 
             yield return CreateTestCase<
-                StringScriptableEvent,
-                StringScriptableEventListener
-            >("hello");
+                BoolScriptableEvent,
+                BoolScriptableEventListener,
+                bool
+            >(true);
 
             yield return CreateTestCase<
-                TransformScriptableEvent,
-                TransformScriptableEventListener
-            >(new GameObject().transform);
+                IntScriptableEvent,
+                IntScriptableEventListener,
+                int
+            >(1);
+
+            yield return CreateTestCase<
+                LongScriptableEvent,
+                LongScriptableEventListener,
+                long
+            >(1L);
+
+            yield return CreateTestCase<
+                FloatScriptableEvent,
+                FloatScriptableEventListener,
+                float
+            >(1.0f);
+
+            yield return CreateTestCase<
+                DoubleScriptableEvent,
+                DoubleScriptableEventListener,
+                double
+            >(1.0d);
+
+            yield return CreateTestCase<
+                StringScriptableEvent,
+                StringScriptableEventListener,
+                string
+            >("hello");
+
+            #endregion
+
+            #region Structs
 
             yield return CreateTestCase<
                 Vector2ScriptableEvent,
-                Vector2ScriptableEventListener
+                Vector2ScriptableEventListener,
+                Vector2
             >(Vector2.one);
 
             yield return CreateTestCase<
                 Vector3ScriptableEvent,
-                Vector3ScriptableEventListener
+                Vector3ScriptableEventListener,
+                Vector3
             >(Vector3.one);
+
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener,
+                Collision
+            >(new Collision());
+
+            yield return CreateTestCase<
+                QuaternionScriptableEvent,
+                QuaternionScriptableEventListener,
+                Quaternion
+            >(Quaternion.Euler(1f, 1f, 1f));
+
+            yield return CreateTestCase<
+                ColorScriptableEvent,
+                ColorScriptableEventListener,
+                Color
+            >(Color.red);
+
+            #endregion
+
+            #region Objects
+
+            yield return CreateTestCase<
+                Collider2DScriptableEvent,
+                Collider2DScriptableEventListener,
+                Collider2D
+            >(new Collider2D());
+
+            yield return CreateTestCase<
+                ColliderScriptableEvent,
+                ColliderScriptableEventListener,
+                Collider
+            >(new Collider());
+
+            yield return CreateTestCase<
+                GameObjectScriptableEvent,
+                GameObjectScriptableEventListener,
+                GameObject
+            >(new GameObject());
+
+            yield return CreateTestCase<
+                TransformScriptableEvent,
+                TransformScriptableEventListener,
+                Transform
+            >(new GameObject().transform);
+
+            #endregion
         }
 
         private static TestFixtureParameters CreateTestCase<
             TScriptableEvent,
-            TScriptableEventListener
-        >(object arg)
+            TScriptableEventListener,
+            TArg
+        >(TArg arg)
+            where TScriptableEvent : BaseScriptableEvent<TArg>
+            where TScriptableEventListener : BaseScriptableEventListener<TArg>
         {
             var attribute = new TestFixtureAttribute(arg)
             {
