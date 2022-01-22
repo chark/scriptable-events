@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/chark/scriptable-events/workflows/CI/badge.svg)](https://github.com/chark/scriptable-events/actions)
 [![openupm](https://img.shields.io/npm/v/com.chark.scriptable-events?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.chark.scriptable-events/)
 
-Simple and extensible event system implemented via `ScriptableObject`, based on [Unite2017](https://github.com/roboryantron/Unite2017).
+Minimalistic and extensible event system implemented via `ScriptableObject`, based on [Unite2017](https://github.com/roboryantron/Unite2017).
 
 <p align="center">
   <img hspace="2%" src="event.png"/>
@@ -11,10 +11,12 @@ Simple and extensible event system implemented via `ScriptableObject`, based on 
 </p>
 
 ## Features
-- Can be used with minimal or no code at all
-- Default event and listener implementations for commonly used types
+- Designer friendly
+- Default event and listener implementations for common use-cases
+- Code generation tools which can be used to create custom event and inspector scripts
 - Strongly typed
-- Ability to easily add custom events and inspector GUIs
+- Asset and script icons
+- Odin Inspector support
 
 ## Installation
 This package can be installed via [OpenUPM](https://openupm.com/packages/com.chark.scriptable-events/):
