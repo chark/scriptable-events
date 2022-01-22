@@ -62,7 +62,7 @@ namespace ScriptableEvents
 
         /// <summary>
         /// Raise this event with an argument and trigger all listeners. The order of listener
-        /// execution is last to first listener.
+        /// execution is undefined as it can change in the future.
         /// </summary>
         public void Raise(TArg value)
         {
@@ -261,7 +261,7 @@ namespace ScriptableEvents
         internal abstract IEnumerable<object> Listeners { get; }
 
         /// <summary>
-        /// Count of listeners added to this event. Used in inspector GUIs.
+        /// Count of listeners added to this event. Used in inspector GUIs and tests.
         /// </summary>
         internal abstract int ListenerCount { get; }
 

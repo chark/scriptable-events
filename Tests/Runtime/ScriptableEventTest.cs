@@ -84,22 +84,28 @@ namespace ScriptableEvents.Tests.Runtime
         [Test]
         public void ShouldRemoveListenerAndRaiseEvent()
         {
+            scriptableEvent.RemoveListeners();
+
+            scriptableEvent.AddListener(scriptableEventListener);
             scriptableEvent.RemoveListener(scriptableEventListener);
             scriptableEvent.Raise(arg);
 
+            Assert.AreEqual(0, scriptableEvent.ListenerCount);
             Assert.AreEqual(0, capturedArgs.Count);
         }
 
         [Test]
         public void ShouldAddAndRemoveActionListenerAndRaiseEvent()
         {
-            var capturedActionArgs = new List<TArg>();
-            scriptableEvent.AddListener(capturedActionArgs.Add);
-            scriptableEvent.RemoveListener(capturedActionArgs.Add);
+            scriptableEvent.RemoveListeners();
+
+            scriptableEvent.AddListener(capturedArgs.Add);
+            scriptableEvent.RemoveListener(capturedArgs.Add);
 
             scriptableEvent.Raise(arg);
 
-            Assert.AreEqual(0, capturedActionArgs.Count);
+            Assert.AreEqual(0, scriptableEvent.ListenerCount);
+            Assert.AreEqual(0, capturedArgs.Count);
         }
 
         [Test]
