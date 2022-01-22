@@ -1,84 +1,168 @@
-﻿using System.Reflection;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace ScriptableEvents.Editor
 {
     /// <summary>
-    /// Base editor for all Scriptable Events.
+    /// Base editor for Scriptable Events with an argument. This is used when explicitly defining
+    /// an editor for an event.
     /// </summary>
-    [CanEditMultipleObjects]
-    public abstract class BaseScriptableEventEditor : UnityEditor.Editor
+    /// <typeparam name="TArg"></typeparam>
+    public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
     {
         #region Private Fields
 
-        // Labels.
-        private GUIContent descriptionLabelContent;
-        private GUIContent isSuppressExceptionsLabelContent;
-        private GUIContent isDebugLabelContent;
-        private GUIContent listenerLabelContent;
-
-        // Target properties.
-        private BaseScriptableEvent baseScriptableEvent;
-        private MonoScript monoScript;
-
-        // Cached properties.
-        private SerializedProperty descriptionProperty;
-        private SerializedProperty isSuppressExceptionsProperty;
-        private SerializedProperty isDebugProperty;
-
-        // Cached styles.
-        private GUIStyle descriptionLockStyle;
-        private GUIStyle descriptionHelpBoxStyle;
-        private GUIStyle descriptionStyle;
-        private GUIStyle listenerSubLabelStyle;
-
-        private GUILayoutOption listenerNameOption;
-
-        private float descriptionWidth;
-        private bool isLockDescription = true;
-        private bool isSetupStyles = true;
+        private BaseScriptableEvent<TArg> scriptableEvent;
+        private TArg argValue;
 
         #endregion
 
         #region Unity Lifecycle
 
-        internal virtual void OnEnable()
+        internal override void SetupEditor()
         {
-            SetupLabelContent();
-            SetupScriptableEvent();
-            SetupMonoScript();
-            SetupSerializedProperties();
+            base.SetupEditor();
+
+            scriptableEvent = target as BaseScriptableEvent<TArg>;
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected abstract TArg DrawArgField(TArg value);
+
+        #endregion
+
+        #region Internal Methods
+
+        internal override void OnDrawProperties()
+        {
+            base.OnDrawProperties();
+
+            EditorGUILayout.Space();
+            DrawEventRaise();
+        }
+
+        internal override void OnDrawListeners()
+        {
+            EditorGUILayout.BeginHorizontal();
+            base.OnDrawListeners();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        internal override void OnDrawListener(object listener, int listenerIndex)
+        {
+            base.OnDrawListener(listener, listenerIndex);
+            DrawListenerRaise(listenerIndex);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void DrawListenerRaise(int listenerIndex)
+        {
+            if (GUILayout.Button("Raise"))
+            {
+                scriptableEvent.Raise(argValue, listenerIndex);
+            }
+        }
+
+        private void DrawEventRaise()
+        {
+            EditorGUILayout.LabelField(ScriptableEventGUI.RaiseEventLabel);
+            GUI.enabled = scriptableEvent.ListenerCount > 0;
+
+            GUILayout.BeginHorizontal();
+
+            argValue = DrawArgField(argValue);
+            if (GUILayout.Button("Raise"))
+            {
+                scriptableEvent.Raise(argValue);
+            }
+
+            GUILayout.EndHorizontal();
+            GUI.enabled = true;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Base editor for all Scriptable Events.
+    /// </summary>
+    [CanEditMultipleObjects]
+    public abstract class BaseScriptableEventEditor
+#if ODIN_INSPECTOR
+        : Sirenix.OdinInspector.Editor.OdinEditor
+#else
+        : UnityEditor.Editor
+#endif
+    {
+        #region Private Fields
+
+        // Target scriptable event fields.
+        private BaseScriptableEvent baseScriptableEvent;
+        private MonoScript monoScript;
+
+        // Serialized properties.
+#if ODIN_INSPECTOR
+        private Sirenix.OdinInspector.Editor.InspectorProperty descriptionProperty;
+        private Sirenix.OdinInspector.Editor.InspectorProperty isSuppressExceptionsProperty;
+        private Sirenix.OdinInspector.Editor.InspectorProperty isDebugProperty;
+#else
+        private SerializedProperty descriptionProperty;
+        private SerializedProperty isSuppressExceptionsProperty;
+        private SerializedProperty isDebugProperty;
+#endif
+
+        private bool isLockDescription = true;
+
+        #endregion
+
+        #region Unity Lifecycle
+
+#if ODIN_INSPECTOR
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+#else
+        protected void OnEnable()
+        {
+#endif
+            SetupEditor();
         }
 
         public override void OnInspectorGUI()
         {
-            if (isSetupStyles)
-            {
-                SetupStyles();
-                isSetupStyles = false;
-            }
-
             DrawMonoScript();
 
+#if ODIN_INSPECTOR
+            Tree.BeginDraw(true);
+#else
+            serializedObject.Update();
             EditorGUI.BeginChangeCheck();
-            DrawDescription();
+#endif
 
-            EditorGUILayout.Space();
-            DrawIsSuppressExceptions();
-            DrawIsDebug();
-            DrawAdditionalProperties();
+            OnDrawProperties();
 
+#if !ODIN_INSPECTOR
             if (EditorGUI.EndChangeCheck())
             {
                 serializedObject.ApplyModifiedProperties();
             }
+#endif
 
             EditorGUILayout.Space();
             DrawListenerLabel();
             DrawListenerStats();
-            DrawListeners();
+            OnDrawListeners();
+
+#if ODIN_INSPECTOR
+            Tree.EndDraw();
+#endif
         }
 
         #endregion
@@ -86,16 +170,54 @@ namespace ScriptableEvents.Editor
         #region Internal Methods
 
         /// <summary>
-        /// Can be used to draw properties right under other essential scriptable event properties.
+        /// Setup GUI content for the custom editor before drawing.
         /// </summary>
-        internal virtual void DrawAdditionalProperties()
+        internal virtual void SetupEditor()
         {
+            SetupBaseScriptableEvent();
+            SetupMonoScript();
+            SetupSerializedProperties();
+        }
+
+        /// <summary>
+        /// Draws serialized properties of the Scriptable Event.
+        /// </summary>
+        internal virtual void OnDrawProperties()
+        {
+            EditorGUILayout.LabelField(ScriptableEventGUI.DescriptionLabelContent);
+            DrawDescriptionLockButton();
+
+            if (isLockDescription)
+            {
+                DrawDescriptionHelpBox();
+            }
+            else
+            {
+                DrawDescriptionTextArea();
+            }
+
+            EditorGUILayout.Space();
+            DrawIsSuppressExceptions();
+            DrawIsDebug();
+        }
+
+        /// <summary>
+        /// Draws all added to the inspected event.
+        /// </summary>
+        internal virtual void OnDrawListeners()
+        {
+            var listenerIndex = 0;
+            foreach (var listener in baseScriptableEvent.Listeners)
+            {
+                OnDrawListener(listener, listenerIndex);
+                listenerIndex++;
+            }
         }
 
         /// <summary>
         /// Draws a single listener field.
         /// </summary>
-        internal virtual void DrawListener(object listener, int listenerIndex)
+        internal virtual void OnDrawListener(object listener, int listenerIndex)
         {
             if (listener is Object listenerObject)
             {
@@ -112,18 +234,7 @@ namespace ScriptableEvents.Editor
 
         #region Private Setup Methods
 
-        private void SetupLabelContent()
-        {
-            descriptionLabelContent = CreateLabelContent("description");
-            isSuppressExceptionsLabelContent = CreateLabelContent("isSuppressExceptions");
-            isDebugLabelContent = CreateLabelContent("isDebug");
-            listenerLabelContent = new GUIContent(
-                "Added Listeners",
-                "Listeners added to this event"
-            );
-        }
-
-        private void SetupScriptableEvent()
+        private void SetupBaseScriptableEvent()
         {
             baseScriptableEvent = target as BaseScriptableEvent;
         }
@@ -135,63 +246,15 @@ namespace ScriptableEvents.Editor
 
         private void SetupSerializedProperties()
         {
+#if ODIN_INSPECTOR
+            descriptionProperty = Tree.GetPropertyAtPath("description");
+            isSuppressExceptionsProperty = Tree.GetPropertyAtPath("isSuppressExceptions");
+            isDebugProperty = Tree.GetPropertyAtPath("isDebug");
+#else
             descriptionProperty = serializedObject.FindProperty("description");
             isSuppressExceptionsProperty = serializedObject.FindProperty("isSuppressExceptions");
             isDebugProperty = serializedObject.FindProperty("isDebug");
-        }
-
-        private void SetupStyles()
-        {
-            SetupDescriptionLockStyle();
-            SetupDescriptionHelpBoxStyle();
-            SetupDescriptionStyle();
-            SetupDescriptionWidth();
-            SetupListenerSubLabelStyle();
-            SetupListenerNameOption();
-        }
-
-        private void SetupDescriptionLockStyle()
-        {
-            descriptionLockStyle = GUI.skin.GetStyle("IN LockButton");
-        }
-
-        private void SetupDescriptionHelpBoxStyle()
-        {
-            descriptionHelpBoxStyle = new GUIStyle(EditorStyles.helpBox)
-            {
-                fontSize = EditorStyles.textField.fontSize,
-                richText = true
-            };
-        }
-
-        private void SetupDescriptionStyle()
-        {
-            descriptionStyle = new GUIStyle(EditorStyles.textArea)
-            {
-                richText = true,
-                wordWrap = true
-            };
-        }
-
-        private void SetupDescriptionWidth()
-        {
-            var descriptionLabelSize = EditorStyles.label.CalcSize(descriptionLabelContent);
-            descriptionWidth = descriptionLabelSize.x;
-        }
-
-        private void SetupListenerSubLabelStyle()
-        {
-            var labelSkin = GUI.skin.label;
-            listenerSubLabelStyle = new GUIStyle(labelSkin)
-            {
-                fontSize = (int) (labelSkin.fontSize * 0.9f),
-                wordWrap = true
-            };
-        }
-
-        private void SetupListenerNameOption()
-        {
-            listenerNameOption = GUILayout.Height(EditorGUIUtility.singleLineHeight);
+#endif
         }
 
         #endregion
@@ -200,82 +263,82 @@ namespace ScriptableEvents.Editor
 
         private void DrawMonoScript()
         {
-            GUI.enabled = false;
-            EditorGUILayout.ObjectField("Script", monoScript, target.GetType(), false);
-            GUI.enabled = true;
-        }
-
-        private void DrawDescription()
-        {
-            EditorGUILayout.LabelField(descriptionLabelContent);
-            DrawDescriptionLockButton();
-
-            if (isLockDescription)
-            {
-                DrawDescriptionHelpBox();
-            }
-            else
-            {
-                DrawDescriptionTextArea();
-            }
+            ScriptableEventGUI.MonoScriptField(monoScript);
         }
 
         private void DrawDescriptionLockButton()
         {
+            var descriptionWidth = EditorStyles.label
+                .CalcSize(ScriptableEventGUI.DescriptionLabelContent).x;
+
             var position = GUILayoutUtility.GetLastRect();
-            position.width = descriptionLockStyle.fixedWidth;
+            position.width = ScriptableEventGUI.DescriptionLockStyle.fixedWidth;
             position.x = position.xMin + descriptionWidth;
 
             isLockDescription = EditorGUI.Toggle(
                 position,
                 GUIContent.none,
                 isLockDescription,
-                descriptionLockStyle
+                ScriptableEventGUI.DescriptionLockStyle
             );
         }
 
         private void DrawDescriptionHelpBox()
         {
+#if ODIN_INSPECTOR
+            var description = descriptionProperty.ValueEntry.WeakSmartValue as string;
+#else
             var description = descriptionProperty.stringValue;
+#endif
             if (string.IsNullOrWhiteSpace(description))
             {
                 EditorGUILayout.LabelField(
                     "Click the <b>lock</b> icon to add a description to this event asset",
-                    descriptionHelpBoxStyle
+                    ScriptableEventGUI.DescriptionHelpBoxStyle
                 );
                 return;
             }
 
-            EditorGUILayout.LabelField(description, descriptionHelpBoxStyle);
+            EditorGUILayout.LabelField(description, ScriptableEventGUI.DescriptionHelpBoxStyle);
         }
 
         private void DrawDescriptionTextArea()
         {
-            descriptionProperty.stringValue = EditorGUILayout.TextArea(
+#if ODIN_INSPECTOR
+            descriptionProperty.ValueEntry.WeakSmartValue =
+                ScriptableEventGUI.TextArea(
+                    descriptionProperty.ValueEntry.WeakSmartValue as string,
+                    ScriptableEventGUI.DescriptionStyle
+                );
+#else
+            descriptionProperty.stringValue = ScriptableEventGUI.TextArea(
                 descriptionProperty.stringValue,
                 descriptionStyle
             );
+#endif
         }
 
         private void DrawIsSuppressExceptions()
         {
-            isSuppressExceptionsProperty.boolValue = EditorGUILayout.Toggle(
-                isSuppressExceptionsLabelContent,
-                isSuppressExceptionsProperty.boolValue
-            );
+#if ODIN_INSPECTOR
+            isSuppressExceptionsProperty.Draw();
+#else
+            EditorGUILayout.PropertyField(isSuppressExceptionsProperty);
+#endif
         }
 
         private void DrawIsDebug()
         {
-            isDebugProperty.boolValue = EditorGUILayout.Toggle(
-                isDebugLabelContent,
-                isDebugProperty.boolValue
-            );
+#if ODIN_INSPECTOR
+            isDebugProperty.Draw();
+#else
+            EditorGUILayout.PropertyField(isDebugProperty);
+#endif
         }
 
-        private void DrawListenerLabel()
+        private static void DrawListenerLabel()
         {
-            EditorGUILayout.LabelField(listenerLabelContent);
+            EditorGUILayout.LabelField(ScriptableEventGUI.ListenerLabelContent);
         }
 
         private void DrawListenerStats()
@@ -295,71 +358,28 @@ namespace ScriptableEvents.Editor
             EditorGUILayout.LabelField(
                 $"Event contains {objectListenerCount} UnityEngine.Object listeners and " +
                 $"{otherListenerCount} other listeners",
-                listenerSubLabelStyle
+                ScriptableEventGUI.ListenerSubLabelStyle
             );
-        }
-
-        private void DrawListeners()
-        {
-            var listenerIndex = 0;
-            foreach (var listener in baseScriptableEvent.Listeners)
-            {
-                EditorGUILayout.BeginHorizontal();
-                DrawListener(listener, listenerIndex);
-                EditorGUILayout.EndHorizontal();
-
-                listenerIndex++;
-            }
         }
 
         private static void DrawListenerObject(Object listenerObject)
         {
-            EditorGUILayout.ObjectField(listenerObject, null, false);
+            ScriptableEventGUI.ObjectField(listenerObject);
         }
 
-        private void DrawListenerName(string listenerName)
+        private static void DrawListenerName(string listenerName)
         {
+            var height = GUILayout.Height(EditorGUIUtility.singleLineHeight);
             EditorGUILayout.SelectableLabel(
                 listenerName,
                 EditorStyles.textField,
-                listenerNameOption
+                height
             );
         }
 
         #endregion
 
         #region Private Utility Methods
-
-        private static GUIContent CreateLabelContent(string fieldName)
-        {
-            var text = ObjectNames.NicifyVariableName(fieldName);
-            var tooltip = GetScriptableEventTooltip(fieldName);
-
-            return new GUIContent(text, tooltip);
-        }
-
-        private static string GetScriptableEventTooltip(string fieldName)
-        {
-            const BindingFlags bindingFlags = BindingFlags.Instance
-                                              | BindingFlags.NonPublic
-                                              | BindingFlags.DeclaredOnly;
-
-            var eventType = typeof(BaseScriptableEvent<>);
-            var field = eventType.GetField(fieldName, bindingFlags);
-
-            if (field == null)
-            {
-                return "";
-            }
-
-            var attribute = field.GetCustomAttribute<TooltipAttribute>();
-            if (attribute == null)
-            {
-                return "";
-            }
-
-            return attribute.tooltip;
-        }
 
         private void GetListenerCounts(out int objectListenerCount, out int otherListenerCount)
         {

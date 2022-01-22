@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
@@ -41,9 +42,15 @@ namespace ScriptableEvents.Editor.Icons
             var iconGuidString = iconGuid.ToString();
             var iconMeta = GetIconMetaString(iconGuidString);
 
+            var isContainsMonoImporter = false;
             for (var index = 0; index < metaFileLines.Length; index++)
             {
                 var metaFileLine = metaFileLines[index];
+                if (!isContainsMonoImporter && metaFileLine.Contains("MonoImporter:"))
+                {
+                    isContainsMonoImporter = true;
+                }
+
                 if (IsIconMetaString(metaFileLine))
                 {
                     if (metaFileLine.Contains(iconGuidString))
@@ -55,13 +62,23 @@ namespace ScriptableEvents.Editor.Icons
                     metaFileLines[index] = iconMeta;
                     File.WriteAllLines(metaFilePath, metaFileLines);
 
+                    // Icon successfully set.
                     return true;
                 }
             }
 
             // icon: line did not exist in the .meta file.
-            File.AppendAllText(metaFilePath, iconMeta);
 
+            if (isContainsMonoImporter)
+            {
+                // Unsupported .meta file format.
+                return false;
+            }
+
+            var customMonoImporter = GetMonoImporterString(iconGuidString);
+            File.AppendAllText(metaFilePath, Environment.NewLine + customMonoImporter);
+
+            // Meta file successfully updated with the new icon.
             return true;
         }
 
@@ -95,14 +112,28 @@ namespace ScriptableEvents.Editor.Icons
             return AssetDatabase.GUIDFromAssetPath(iconPath);
         }
 
-        private static string GetIconMetaString(string guid)
+        private static string GetIconMetaString(string iconGuid)
         {
-            return $"  icon: {{fileID: 2800000, guid: {guid}, type: 3}}";
+            return $"  icon: {{fileID: 2800000, guid: {iconGuid}, type: 3}}";
         }
 
         private static bool IsIconMetaString(string str)
         {
             return str.Contains("icon:");
+        }
+
+        private static string GetMonoImporterString(string iconGuid)
+        {
+            return $@"MonoImporter:
+  externalObjects: {{}}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {{fileID: 2800000, guid: {iconGuid}, type: 3}}
+  userData:
+  assetBundleName:
+  assetBundleVariant:
+";
         }
 
         #endregion

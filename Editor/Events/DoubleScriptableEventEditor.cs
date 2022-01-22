@@ -8,7 +8,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override double DrawArgField(double value)
         {
-            return EditorGUILayout.DoubleField(value);
+            return ScriptableEventGUI.DoubleField(value);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override bool DrawArgField(bool value)
         {
-            return EditorGUILayout.Toggle(value);
+            return ScriptableEventGUI.Toggle(value);
         }
     }
 }

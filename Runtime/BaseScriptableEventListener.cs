@@ -3,9 +3,15 @@ using UnityEngine.Events;
 
 namespace ScriptableEvents
 {
-    [ScriptableIcon(ScriptableIconType.Listener)]
+    /// <summary>
+    /// Base Scriptable Event Listener which accepts an argument, used as a base by all internal
+    /// and custom listener components.
+    /// </summary>
+    /// <typeparam name="TArg">
+    /// Type of data which is passed as an argument to this listener
+    /// </typeparam>
     public abstract class BaseScriptableEventListener<TArg>
-        : MonoBehaviour, IScriptableEventListener<TArg>
+        : BaseScriptableEventListener, IScriptableEventListener<TArg>
     {
         #region Editor
 
@@ -53,5 +59,14 @@ namespace ScriptableEvents
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Base Scriptable Event Listener which is implemented by all listener components and is used
+    /// in internal editor scripts.
+    /// </summary>
+    [ScriptableIcon(ScriptableIconType.Listener)]
+    public abstract class BaseScriptableEventListener : MonoBehaviour
+    {
     }
 }

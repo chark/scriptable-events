@@ -9,7 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override GameObject DrawArgField(GameObject value)
         {
-            return EditorGUILayout.ObjectField(value, typeof(GameObject), true) as GameObject;
+            return ScriptableEventGUI.ObjectField(value, isAllowSceneObjects: true);
         }
     }
 }

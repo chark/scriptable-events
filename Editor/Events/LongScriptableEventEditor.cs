@@ -8,7 +8,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override long DrawArgField(long value)
         {
-            return EditorGUILayout.LongField(value);
+            return ScriptableEventGUI.LongField(value);
         }
     }
 }
