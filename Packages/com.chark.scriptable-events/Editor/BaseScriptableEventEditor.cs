@@ -313,7 +313,7 @@ namespace ScriptableEvents.Editor
 #else
             descriptionProperty.stringValue = ScriptableEventGUI.TextArea(
                 descriptionProperty.stringValue,
-                descriptionStyle
+                ScriptableEventGUI.DescriptionStyle
             );
 #endif
         }

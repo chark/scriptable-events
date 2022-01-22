@@ -180,13 +180,13 @@ namespace ScriptableEvents.Editor
 
         internal static bool Toggle(bool value, GUIContent label = null)
         {
-            var safeLabel = GetSafeLabel(label);
+            var safeLabel = label ?? GUIContent.none;
             return EditorGUILayout.Toggle(safeLabel, value);
         }
 
         internal static int IntField(int value, GUIContent label = null)
         {
-            var safeLabel = GetSafeLabel(label);
+            var safeLabel = label ?? GUIContent.none;
 
 #if ODIN_INSPECTOR
             return Sirenix.Utilities.Editor.SirenixEditorFields.IntField(safeLabel, value);
@@ -201,12 +201,14 @@ namespace ScriptableEvents.Editor
             GUIStyle style = null
         )
         {
-            var safeLabel = GetSafeLabel(label);
+            var safeLabel = label ?? GUIContent.none;
+            var safeStyle = style ?? EditorStyles.textField;
 
 #if ODIN_INSPECTOR
-            return Sirenix.Utilities.Editor.SirenixEditorFields.TextField(safeLabel, value, style);
+            return Sirenix.Utilities.Editor.SirenixEditorFields
+                .TextField(safeLabel, value, safeStyle);
 #else
-            return EditorGUILayout.TextField(safeLabel, value, style);
+            return EditorGUILayout.TextField(safeLabel, value, safeStyle);
 #endif
         }
 
@@ -215,7 +217,8 @@ namespace ScriptableEvents.Editor
         /// </summary>
         internal static string TextArea(string value, GUIStyle style = null)
         {
-            return EditorGUILayout.TextArea(value, style);
+            var safeStyle = style ?? EditorStyles.textArea;
+            return EditorGUILayout.TextArea(value, safeStyle);
         }
 
         internal static float FloatField(float value)
@@ -299,7 +302,7 @@ namespace ScriptableEvents.Editor
             bool isAllowSceneObjects = false
         ) where T : Object
         {
-            var safeLabel = GetSafeLabel(label);
+            var safeLabel = label ?? GUIContent.none;
 
 #if ODIN_INSPECTOR
             var result = Sirenix.Utilities.Editor.SirenixEditorFields
@@ -308,20 +311,6 @@ namespace ScriptableEvents.Editor
             var result = EditorGUILayout.ObjectField(safeLabel, @object, typeof(T), false);
 #endif
             return (T) result;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private static GUIContent GetSafeLabel(GUIContent label)
-        {
-            if (label == null)
-            {
-                return GUIContent.none;
-            }
-
-            return label;
         }
 
         #endregion
