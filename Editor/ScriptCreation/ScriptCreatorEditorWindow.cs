@@ -276,10 +276,13 @@ namespace ScriptableEvents.Editor.ScriptCreation
             );
 
             var oldEventArgName = eventArgName;
-            TextFieldWithUndo(ref eventArgName, ScriptableEventGUI.EventArgNameLabel,
-                TypeNameRegex);
-            var newEventArgName = eventArgName;
+            TextFieldWithUndo(
+                ref eventArgName,
+                ScriptableEventGUI.EventArgNameLabel,
+                TypeNameRegex
+            );
 
+            var newEventArgName = eventArgName;
             if (oldEventArgName == newEventArgName)
             {
                 return;
