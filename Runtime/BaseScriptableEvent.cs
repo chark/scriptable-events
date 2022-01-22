@@ -107,7 +107,7 @@ namespace ScriptableEvents
         }
 
         /// <summary>
-        /// Remove all occurrences of <see cref="IScriptableEventListener{TARg}"/> from this event.
+        /// Remove first occurrence of <see cref="IScriptableEventListener{TARg}"/> from this event.
         /// </summary>
         public void RemoveListener(IScriptableEventListener<TArg> removeListener)
         {
@@ -121,7 +121,7 @@ namespace ScriptableEvents
         }
 
         /// <summary>
-        /// Remove all occurrences of <see cref="Action{TArg}"/> from this event.
+        /// Remove first occurrence of <see cref="Action{TArg}"/> from this event.
         /// </summary>
         public void RemoveListener(Action<TArg> removeListener)
         {

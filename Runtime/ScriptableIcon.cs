@@ -9,7 +9,7 @@ namespace ScriptableEvents
     }
 
     /// <summary>
-    /// Applies an icon to given asset.
+    /// Used to tag assets (mono scripts) which must have an icon.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     internal class ScriptableIcon : Attribute
