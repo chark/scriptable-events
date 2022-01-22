@@ -8,12 +8,12 @@
         #region Public Fields
 
         /// <summary>
-        /// Base menu name of all custom scriptable event sub menus.
+        /// Base menu name of all custom Scriptable Event sub menus.
         /// </summary>
         public const string MenuNameCustom = MenuNameBase + " (Custom)";
 
         /// <summary>
-        /// Base menu order of all custom scriptable event sub menus.
+        /// Base menu order of all custom Scriptable Event sub menus.
         /// </summary>
         public const int MenuOrderCustom = MenuOrderBase;
 
@@ -61,7 +61,7 @@
         #region Private Fields
 
         /// <summary>
-        /// Base menu order of all scriptable event sub menus.
+        /// Base menu order of all Scriptable Event sub menus.
         /// </summary>
         private const int MenuOrderBase = 150;
 

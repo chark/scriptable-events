@@ -67,7 +67,7 @@ namespace ScriptableEvents.Editor.Icons
                 }
             }
 
-            // icon: line did not exist in the .meta file.
+            // "icon:" line did not exist in the .meta file.
 
             if (isContainsMonoImporter)
             {

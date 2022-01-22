@@ -3,7 +3,7 @@
 namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
-    /// Extensions to persist custom C# scripts.
+    /// Utilities to persist custom C# scripts.
     /// </summary>
     internal static class ScriptUtils
     {
