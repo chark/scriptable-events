@@ -9,7 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override Collider DrawArgField(Collider value)
         {
-            return EditorGUILayout.ObjectField(value, typeof(Collider), true) as Collider;
+            return ScriptableEventGUI.ObjectField(value, isAllowSceneObjects: true);
         }
     }
 }

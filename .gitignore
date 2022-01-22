@@ -58,3 +58,5 @@ npm-debug.log
 Assets/*
 !Assets/Scenes
 !Assets/Scenes.meta
+!Assets/ScriptableEvents
+!Assets/ScriptableEvents.meta

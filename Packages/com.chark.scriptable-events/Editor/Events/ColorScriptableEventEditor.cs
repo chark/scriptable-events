@@ -9,7 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override Color DrawArgField(Color value)
         {
-            return EditorGUILayout.ColorField(value);
+            return ScriptableEventGUI.ColorField(value);
         }
     }
 }

@@ -9,10 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override Quaternion DrawArgField(Quaternion value)
         {
-            var angles = value.eulerAngles;
-            var result = EditorGUILayout.Vector3Field(GUIContent.none, angles);
-
-            return Quaternion.Euler(result);
+            return ScriptableEventGUI.QuaternionField(value);
         }
     }
 }

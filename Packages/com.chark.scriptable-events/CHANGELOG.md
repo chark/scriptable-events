@@ -32,6 +32,7 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - `BaseScriptableEventEditor` by default applies to all `BaseScriptableEvent<T>` assets. `BaseScriptableEventEditor<T>` (with a generic type) should be used only if `Raise` button functionality is required.
 - Additional listener info including listener counts (see below "Added Listeners" label on `IScriptableEvent` assets).
 - Events, listeners and editors (except editors for `Collision*` types) for `long`, `double`, `Quaternion`, `Collider`, `Collider2D`, `Collision`, `Collision2D` types.
+- Better Odin Inspector integration via `#if ODIN_INSPECTOR`.
 
 ### Changed
 - All public `BaseScriptableEvent<T>` methods apart from `Raise` were renamed to have a `*Listener` suffix.
