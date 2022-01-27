@@ -25,14 +25,29 @@ namespace ScriptableEvents.Tests.Editor
         public void ShouldSaveScript()
         {
             const string expectedContent = "public class Test { }";
-            const string expectedDirectory = ScriptDirectory + "/TestScript";
-            const string expectedPath = expectedDirectory + "/Namespace/TestScript.cs";
+            const string expectedPath = ScriptDirectory + "/TestScript.cs";
+
+            ScriptUtils.SaveScript(
+                expectedContent,
+                ScriptDirectory,
+                "TestScript"
+            );
+
+            var fileContent = File.ReadAllText(expectedPath);
+            Assert.AreEqual(expectedContent, fileContent);
+        }
+
+        [Test]
+        public void ShouldSaveScriptWithNamespaceDirectories()
+        {
+            const string expectedContent = "public class Test { }";
+            const string expectedPath = ScriptDirectory + "/Project/Namespace/TestScript.cs";
 
             ScriptUtils.SaveScript(
                 expectedContent,
                 ScriptDirectory,
                 "TestScript",
-                "TestScript.Namespace"
+                "Project.Namespace"
             );
 
             var fileContent = File.ReadAllText(expectedPath);

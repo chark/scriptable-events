@@ -15,23 +15,42 @@ namespace ScriptableEvents.Editor.ScriptCreation
         internal static void SaveScript(
             string scriptContent,
             string scriptDirectory,
+            string scriptName
+        )
+        {
+            var scriptPath = Path.Combine(scriptDirectory, $"{scriptName}.cs");
+            SaveScript(scriptContent, scriptPath);
+        }
+
+        /// <summary>
+        /// Save script to a file and create directories for its namespace.
+        /// </summary>
+        internal static void SaveScript(
+            string scriptContent,
+            string scriptDirectory,
             string scriptName,
             string scriptNamespace
         )
         {
-            var scriptPath = Path.Combine(
-                scriptDirectory,
-                scriptNamespace.Replace(".", "/"),
-                $"{scriptName}.cs"
-            );
+            var namespacePath = scriptNamespace.Replace(".", "/");
+            var scriptPath = Path.Combine(scriptDirectory, namespacePath, $"{scriptName}.cs");
 
-            var scriptDir = Path.GetDirectoryName(scriptPath);
+            SaveScript(scriptContent, scriptPath);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static void SaveScript(string content, string path)
+        {
+            var scriptDir = Path.GetDirectoryName(path);
             if (scriptDir != null && !Directory.Exists(scriptDir))
             {
                 Directory.CreateDirectory(scriptDir);
             }
 
-            File.WriteAllText(scriptPath, scriptContent);
+            File.WriteAllText(path, content);
         }
 
         #endregion
