@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ScriptableEvents.Editor.States;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+// TODO: updated readme, there is some funky wording there
+// TODO: update icons
+// TODO: option to disable namespace folder creation (disabled by default)
+// TODO: perhaps event name should update components, not the arg type (arg type only initially)?
+// TODO: need to save defaults, this will get annoying otherwise
+// TODO: UX could be improved, and perhaps a dock window should be used
 namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
@@ -45,7 +52,11 @@ namespace ScriptableEvents.Editor.ScriptCreation
         [SerializeField]
         private string eventArgName;
 
+        // TODO: these values cannot be set from GUI
         // Event script fields
+        [SerializeField]
+        private bool isCreateEventNamespaceDirectories;
+
         [SerializeField]
         private string eventNamespace;
 
@@ -60,7 +71,10 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         // Listener script fields
         [SerializeField]
-        private bool isCreateListener = true;
+        private bool isCreateListener;
+
+        [SerializeField]
+        private bool isCreateListenerNamespaceDirectories;
 
         [SerializeField]
         private string listenerNamespace;
@@ -79,6 +93,9 @@ namespace ScriptableEvents.Editor.ScriptCreation
         private bool isCreateEditor;
 
         [SerializeField]
+        private bool isCreateEditorNamespaceDirectories;
+
+        [SerializeField]
         private string editorNamespace;
 
         [SerializeField]
@@ -86,7 +103,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         // Script output fields
         [SerializeField]
-        private string scriptDirectory = "Assets/Scripts";
+        private string scriptDirectory;
 
         #endregion
 
@@ -172,9 +189,27 @@ namespace ScriptableEvents.Editor.ScriptCreation
             window.maxSize = MaxWindowSize;
         }
 
+        private void OnEnable()
+        {
+            SetupDefaults();
+        }
+
         private void OnGUI()
         {
             DrawFields();
+
+            // TODO: clean this up a bit
+            EditorGUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Save Defaults"))
+            {
+                SaveDefaults();
+            }
+
+            if (GUILayout.Button("Reset Defaults"))
+            {
+                ResetDefaults();
+            }
 
             GUI.enabled = IsRequiredFieldsSet;
             if (GUILayout.Button("Create"))
@@ -183,6 +218,58 @@ namespace ScriptableEvents.Editor.ScriptCreation
             }
 
             GUI.enabled = true;
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+        #endregion
+
+        #region Private State Methods
+
+        private void SetupDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            isUseMonoScript = state.IsUseMonoScript;
+
+            isCreateEventNamespaceDirectories = state.IsCreateEventNamespaceDirectories;
+            eventNamespace = state.EventNamespace;
+
+            isCreateListener = state.IsCreateListener;
+            isCreateListenerNamespaceDirectories = state.IsCreateListenerNamespaceDirectories;
+            listenerNamespace = state.ListenerNamespace;
+
+            isCreateEditor = state.IsCreateEditor;
+            isCreateEditorNamespaceDirectories = state.IsCreateEditorNamespaceDirectories;
+            editorNamespace = state.EditorNamespace;
+
+            scriptDirectory = state.ScriptDirectory;
+        }
+
+        private void SaveDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            state.IsUseMonoScript = isUseMonoScript;
+
+            state.IsCreateEventNamespaceDirectories = isCreateEventNamespaceDirectories;
+            state.EventNamespace = eventNamespace;
+
+            state.IsCreateListener = isCreateListener;
+            state.IsCreateListenerNamespaceDirectories = isCreateListenerNamespaceDirectories;
+            state.ListenerNamespace = listenerNamespace;
+
+            state.IsCreateEditor = isCreateEditor;
+            state.IsCreateEditorNamespaceDirectories = isCreateEditorNamespaceDirectories;
+            state.EditorNamespace = editorNamespace;
+
+            state.ScriptDirectory = scriptDirectory;
+            ScriptableEventEditorState.ScriptCreatorState = state;
+        }
+
+        private static void ResetDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            state.ResetDefaults();
+            ScriptableEventEditorState.ScriptCreatorState = state;
         }
 
         #endregion
@@ -399,12 +486,19 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            ScriptUtils.SaveScript(
-                scriptContent,
-                scriptDirectory,
-                eventName,
-                eventNamespace
-            );
+            SaveEventScript(scriptContent);
+        }
+
+        private void SaveEventScript(string content)
+        {
+            if (isCreateEventNamespaceDirectories)
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, eventName, eventNamespace);
+            }
+            else
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, eventName);
+            }
         }
 
         private void CreateListenerScript()
@@ -421,12 +515,19 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            ScriptUtils.SaveScript(
-                scriptContent,
-                scriptDirectory,
-                listenerName,
-                listenerNamespace
-            );
+            SaveListenerScript(scriptContent);
+        }
+
+        private void SaveListenerScript(string content)
+        {
+            if (isCreateListenerNamespaceDirectories)
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, listenerName, listenerNamespace);
+            }
+            else
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, listenerName);
+            }
         }
 
         private void CreateEditorScript()
@@ -443,12 +544,19 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 .AddImport(baseNamespace)
                 .Build();
 
-            ScriptUtils.SaveScript(
-                scriptContent,
-                scriptDirectory,
-                editorName,
-                editorNamespace
-            );
+            SaveEditorScript(scriptContent);
+        }
+
+        private void SaveEditorScript(string content)
+        {
+            if (isCreateEditorNamespaceDirectories)
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, editorName, editorNamespace);
+            }
+            else
+            {
+                ScriptUtils.SaveScript(content, scriptDirectory, editorName);
+            }
         }
 
         #endregion
@@ -471,7 +579,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private static string GetEventNamespace(string argName)
         {
-            return "ScriptableEvents.Events";
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            return state.EventNamespace;
         }
 
         private static string GetEventMenuName(string argName)
@@ -487,7 +596,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private static string GetListenerNamespace(string argName)
         {
-            return "ScriptableEvents.Listeners";
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            return state.ListenerNamespace;
         }
 
         private static string GetListenerMenuName(string argName)
@@ -503,7 +613,8 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private static string GetEditorNamespace(string argName)
         {
-            return "ScriptableEvents.Editor.Events";
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            return state.EditorNamespace;
         }
 
         private static string GetEditorName(string argName)
