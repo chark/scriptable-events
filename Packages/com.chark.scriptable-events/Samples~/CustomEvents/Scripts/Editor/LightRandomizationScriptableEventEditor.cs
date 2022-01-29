@@ -5,9 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Samples.CustomEvents.Editor
 {
     [CustomEditor(typeof(LightRandomizationScriptableEvent))]
-    public class
-        LightRandomizationScriptableEventEditor
-        : BaseScriptableEventEditor<LightRandomizationEventArgs>
+    public class LightRandomizationScriptableEventEditor : BaseScriptableEventEditor<LightRandomizationEventArgs>
     {
         protected override LightRandomizationEventArgs DrawArgField(
             LightRandomizationEventArgs value
