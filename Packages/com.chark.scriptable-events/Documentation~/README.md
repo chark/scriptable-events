@@ -9,12 +9,12 @@
 # Documentation
 
 ## Samples
-The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, make sure to checkout the corresponding sample:
+The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, make sure to investigate the corresponding sample:
 <p align="center">
   <img width="70%" src="samples.png"/>
 </p>
 
-You can also access the samples directly if you don't feel like importing them in your project:
+The samples can also be accessed directly from:
 - [Simple Events]
 - [Events With Arguments]
 - [Custom Events]
@@ -24,8 +24,8 @@ The simplest use case of _Scriptable Events_ is when a system needs to be notifi
 - _Simple Scriptable Event_ asset which holds the listeners and is used to trigger the event
 - _Simple Scriptable Event Listener_ component which reacts to an event being triggered
 
-### Raising With Editor
-First, create a _Simple Scriptable Event_ asset by right-clicking in the _Project Window_ and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed placed anywhere in the project:
+### Raising Events In Unity Components
+First, create a _Simple Scriptable Event_ asset by right-clicking in the _Project Window_ and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed and placed anywhere in the project:
 <p align="center">
   <img width="70%" src="simple-scriptable-event-create.png"/>
 </p>
@@ -35,16 +35,16 @@ Next, create a new _GameObject_ in the scene and add a _Simple Scriptable Event 
   <img src="simple-scriptable-event-listener.png"/>
 </p>
 
-Once you've added a listener component, do the following:
-- Insert your event asset into the _Scriptable Event_ field
-- In the _On Raised_ [Unity Event] field, add the methods you'd like to be triggered by the event
+Once a listener component is added, do the following:
+- Insert event asset into the _Scriptable Event_ field
+- Add the methods to be triggered by the event into the _On Raised_ [Unity Event] field,
 
-For example, if you need to turn off a set of lights, your setup might look like the following (as seen in [Simple Events] sample):
+For example, if lights need to be turned off, the listener might be setup as follows (as seen in [Simple Events] sample):
 <p align="center">
   <img src="simple-scriptable-event-listener-sample.png"/>
 </p>
 
-Now that you have your listener ready, you need to trigger the event. This can be done in the following ways:
+Now that the listener is ready, the event needs to be triggered. This can be done in the following ways:
 - Using a [Unity Event] and selecting the `SimpleScriptableEvent.Raise()` method
 - Selecting the event asset and clicking the _Raise_ button (debug)
 - Selecting the event asset and clicking the _Raise_ button next to a specific listener (debug)
@@ -54,8 +54,8 @@ Now that you have your listener ready, you need to trigger the event. This can b
   <img hspace="2%" width="33%" src="simple-scriptable-event-raise.png"/>
 </p>
 
-### Raising With Code
-In most cases you'll need to raise events from your own components. The recommended way to do so is to define a [Unity Event] field and raise the event asset there as described previously. This approach will give the most flexibility, but will be harder to debug:
+### Raising Events In Custom Components
+In most cases events will be raised from custom components. The recommended way to do so is to define a [Unity Event] field and raise the event asset there as described previously. This approach will give the most flexibility but will be harder to debug:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
@@ -72,7 +72,7 @@ public class TriggerEvent : MonoBehaviour
 }
 ```
 
-Alternatively, you can directly reference the event asset in your code and call the `SimpleScriptableEvent.Raise` method. This provides better traceability but is as flexible as the [Unity Event] approach:
+Alternatively, the event asset can be directly referenced and the `SimpleScriptableEvent.Raise` method can be called to trigger it. This provides better traceability but is less flexible than the [Unity Event] approach:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
@@ -90,15 +90,15 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Passing Arguments
-Often your systems will require some context when they're being triggered. To solve this, this package provides a set of events with commonly used types which can be used to carry information to your systems.
+Often systems will require some context when they're being triggered. To solve this, this package provides a set of events with commonly used types which can be used to carry information.
 
-### Raising With Editor
+### Raising Events With Arguments In Unity Components
 To create an event asset which carries information, right-click in the _Project Window_ and select an event with a specific type from _Create/Scriptable Event/*_:
 <p align="center">
   <img width="70%" src="scriptable-event-arg-create.png"/>
 </p>
 
-Next, you'll need to add a listener for this specific event type. Each _Scriptable Event_ type contains a corresponding listener component. Typed event listeners work the same as _Simple Scriptable Event Listener_ components, the only caveat is that when selecting methods in the _On Raised_ [Unity Event] field, you need to make sure to select a **dynamic** method:
+Next, a listener for this specific event type must be added into the scene. Each _Scriptable Event_ type contains a corresponding listener component. Typed event listeners work the same way as _Simple Scriptable Event Listener_ components, the only caveat is that when selecting methods in the _On Raised_ [Unity Event] field, **dynamic** methods have to be selected:
 <p align="center">
   <img hspace="2%" width="26%" src="scriptable-event-arg-listener-components.png"/>
   <img hspace="2%" width="40%" src="scriptable-event-arg-listener-dynamic.png"/>
@@ -111,8 +111,8 @@ To trigger the event, follow the same steps as with _Simple Scriptable Event_. A
 
 A more concrete example of this can be seen in [Events With Arguments] sample.
 
-### Raising With Code
-When raising events with arguments with code, it is also recommended to use [Unity Event] fields. However, in this case you'll also need to specify the argument type:
+### Raising Events With Arguments In Custom Components
+When raising events with arguments in code, it is also recommended to use [Unity Event] fields. However, when defining the event field, type information needs to be specified as well:
 ```cs
 using UnityEngine;
 using UnityEngine.Events;
@@ -124,7 +124,7 @@ public class TriggerEvent : MonoBehaviour
 
     private void Start()
     {
-        // Your argument value.
+        // Argument value.
         var value = 1.0f;
 
         onTriggered.Invoke(value);
@@ -132,7 +132,7 @@ public class TriggerEvent : MonoBehaviour
 }
 ```
 
-Alternatively, you have can reference the event asset and then call the `SimpleScriptableEvent.Raise(TArg)` method:
+Alternatively, the event asset can be referenced and the `SimpleScriptableEvent.Raise(TArg)` method can be called to trigger the event:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
@@ -148,7 +148,7 @@ public class TriggerEvent : MonoBehaviour
 
     private void Start()
     {
-        // Your argument value.
+        // Argument value.
         var value = 1.0f;
 
         scriptableEvent.Raise(value);
@@ -157,15 +157,13 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Creating Custom Events
-In some cases using the built-in argument types is not sufficient. This can happen when you need to send a custom data type to your systems. To integrate your custom data type into the _Scriptable Events_ package you'll need to define the following scripts:
+In some cases using the built-in argument types is not sufficient. This can happen when a system needs to handle custom data types. To integrate a custom data type into the _Scriptable Events_ package, the following scripts are required:
 - The custom data type script
 - _Scriptable Event_ asset script
-- _Scriptable Event Listener_ script
-- _Scriptable Event Editor_ (optional)
+- _Scriptable Event Listener_ script (optional if subscribing manually)
+- _Scriptable Event Editor_ script (optional)
 
-To simplify script creation workflow, this package provides a _Script Creator_ tool which can be used to automate this process. However, you'll have to define the custom data type manually.
-
-As an example, lets assume that we need to integrate the data type which looks like the following and exists in a `LightRandomizationEventArgs.cs` script:
+To simplify script creation workflow, this package provides a _Script Creator_ tool which can be used to automate this process. As an example, lets assume that we need to integrate the data type which looks like the following and exists in a `LightRandomizationEventArgs.cs` script:
 ```cs
 public class LightRandomizationEventArgs
 {
@@ -188,8 +186,8 @@ This will open the _Script Creator_ window:
   <img hspace="2%" width="33%" src="scriptable-event-script-creator-window-2.png"/>
 </p>
 
-The _Script Creator_ provides the following options:
-- **Gear icon** - allows saving defaults for the _Script Creator_ window, this is useful when creating scripts in bulk or when a strict structure is in place
+The _Script Creator_ window provides the following options:
+- **Gear icon** - allows saving defaults for the _Script Creator_ window, this is useful when creating scripts in bulk or when a strict project structure is in place
 - **Event Argument** - allows customizing how the argument data type information is retrieved during script generation:
   - **Is Mono Script** - should a `MonoScript` be used to fetch the type information
   - **Script** - the script to be used as an argument type
@@ -261,7 +259,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override LightRandomizationEventArgs DrawArgField(LightRandomizationEventArgs value)
         {
-            // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on your
+            // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on the
             // LightRandomizationEventScriptableEvent asset.
             return value;
         }
@@ -269,7 +267,7 @@ namespace ScriptableEvents.Editor.Events
 }
 ```
 
-In order to fully utilize the editor script, you'll have to manually define input fields, for example (as seen in [Custom Events] sample):
+In order to fully utilize the editor script, the input fields have to be manually defined, for example (as seen in [Custom Events] sample):
 ```cs
 using ScriptableEvents.Editor;
 using UnityEditor;
@@ -306,10 +304,10 @@ Finally, in order to create the event asset for the newly generated script, sele
   <img width="70%" src="scriptable-event-script-creator-result.png"/>
 </p>
 
-Using the custom event is the same as working with scripts with arguments.
+Using the custom event asset is the same as working with scripts with arguments and simple events.
 
 ## Manually Subscribing To Events
-It is recommended to use listener components to subscribe to events as that is the most flexible approach. However, when traceability is important, you can subscribe to events manually via code as well.
+It is recommended to use pre-defined and custom listener components to subscribe to events. However, when traceability is important, subscribing to events manually via non-listener components is preferable.
 
 There are two approaches that can be used to subscribe to an event, the first one is implementing `IScriptableEventListener<TArg>` and calling `AddListener(this)` (don't forget to call `RemoveListener(this)` at some point to avoid memory leaks):
 ```cs
@@ -367,4 +365,4 @@ public class CustomEventListener : MonoBehaviour
 }
 ```
 
-Note that when using these approaches to subscribe to events you might lose some functionality in the custom inspectors that are included in this package. For example, you might lose references in the listener list on event assets.
+Note that when using these approaches to subscribe to events, some functionality in the custom inspectors that are included in this package might be lost. For example, the functionality to click on `UnityEngine.Object` references in _Scriptable Event_ assets.
