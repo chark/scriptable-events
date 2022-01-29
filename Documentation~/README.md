@@ -11,8 +11,13 @@
 ## Samples
 The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, check the corresponding sample:
 <p align="center">
-  <img src="samples.png"/>
+  <img width="70%" src="samples.png"/>
 </p>
+
+You can also access the samples directly:
+- [Simple Events]
+- [Events With Arguments]
+- [Custom Events]
 
 ## Getting Started
 The simplest use case of _Scriptable Events_ is when a system needs to be notified that something happened without providing any context. To do so, the following elements are needed:
@@ -22,7 +27,7 @@ The simplest use case of _Scriptable Events_ is when a system needs to be notifi
 ### Without Code
 First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed once created placed anywhere in the project:
 <p align="center">
-  <img src="simple-scriptable-event-create.png"/>
+  <img width="70%" src="simple-scriptable-event-create.png"/>
 </p>
 
 Next, select a _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
@@ -45,8 +50,8 @@ Now that you have your listener ready, you need to trigger the event. This can b
 - Selecting the event asset and clicking the _Raise_ button next to a specific listener
 
 <p align="center">
-  <img hspace="2%" width="40%" src="simple-scriptable-event-raise-unity-event.png"/>
-  <img hspace="2%" width="40%" src="simple-scriptable-event-raise.png"/>
+  <img hspace="2%" width="33%" src="simple-scriptable-event-raise-unity-event.png"/>
+  <img hspace="2%" width="33%" src="simple-scriptable-event-raise.png"/>
 </p>
 
 ### With Code
@@ -90,12 +95,12 @@ In most situations your systems will require some context when they're being tri
 ### Without Code
 To create an event asset which sends information, right-click in the project window and select an event with a specific type from _Create/Scriptable Event/*_:
 <p align="center">
-  <img src="scriptable-event-arg-create.png"/>
+  <img width="70%" src="scriptable-event-arg-create.png"/>
 </p>
 
 Next, you'll need to add a listener for this specific event type. Each _Scriptable Event_ type contains a corresponding listener component. Typed event listeners work the same as _Simple Scriptable Event Listener_ components, the only caveat is when selecting methods in the _On Raised_ [Unity Event] field make sure to select a **dynamic** method:
 <p align="center">
-  <img hspace="2%" width="40%" src="scriptable-event-arg-listener-components.png"/>
+  <img hspace="2%" width="26%" src="scriptable-event-arg-listener-components.png"/>
   <img hspace="2%" width="40%" src="scriptable-event-arg-listener-dynamic.png"/>
 </p>
 
@@ -169,14 +174,14 @@ public class LightRandomizationEventArgs
 Then, right-click the script which defines the data type and select _Create/Scriptable Event/Custom Scriptable Event_ (at the bottom):
 
 <p align="center">
-  <img src="scriptable-event-script-creator-open.png"/>
+  <img width="70%" src="scriptable-event-script-creator-open.png"/>
 </p>
 
 This will open the _Script Creator_ window:
 
 <p align="center">
-  <img hspace="2%" width="40%" src="scriptable-event-script-creator-window-1.png"/>
-  <img hspace="2%" width="40%" src="scriptable-event-script-creator-window-2.png"/>
+  <img hspace="2%" width="33%" src="scriptable-event-script-creator-window-1.png"/>
+  <img hspace="2%" width="33%" src="scriptable-event-script-creator-window-2.png"/>
 </p>
 
 The _Script Creator_ provides the following options:
@@ -253,7 +258,7 @@ namespace ScriptableEvents.Editor.Events
         protected override LightRandomizationEventArgs DrawArgField(LightRandomizationEventArgs value)
         {
             // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on your
-            // LightRandomizationEventArgsScriptableEvent asset.
+            // LightRandomizationEventScriptableEvent asset.
             return value;
         }
     }
@@ -294,7 +299,7 @@ namespace ScriptableEvents.Editor.Events
 Finally, in order to create the event asset for the newly generated script, select _Create/Scriptable Events (custom)/Custom Event Name_:
 
 <p align="center">
-  <img src="scriptable-event-script-creator-result.png"/>
+  <img width="70%" src="scriptable-event-script-creator-result.png"/>
 </p>
 
 ## Manually Subscribing
