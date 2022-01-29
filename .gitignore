@@ -60,5 +60,11 @@ Assets/*
 !Assets/Scenes.meta
 !Assets/ScriptableEvents
 !Assets/ScriptableEvents.meta
+
 !Assets/Scripts
 !Assets/Scripts.meta
+
+Assets/Scripts/*
+
+!Assets/Scripts/Editor
+!Assets/Scripts/Editor.meta
