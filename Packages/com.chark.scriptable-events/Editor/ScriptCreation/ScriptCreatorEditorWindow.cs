@@ -18,7 +18,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #endregion
 
-        #region Private Event Argument Fields
+        #region Private Event Argument Script Fields
 
         [SerializeField]
         private bool isUseMonoScript = true;
@@ -34,7 +34,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #endregion
 
-        #region Private Event Fields
+        #region Private Event Script Fields
 
         [SerializeField]
         private string eventName;
@@ -53,7 +53,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #endregion
 
-        #region Private Listener Fields
+        #region Private Listener Script Fields
 
         [SerializeField]
         private bool isCreateListener;
@@ -75,7 +75,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #endregion
 
-        #region Private Editor Fields
+        #region Private Editor Script Fields
 
         [SerializeField]
         private string editorName;
