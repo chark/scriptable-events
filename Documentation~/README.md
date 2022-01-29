@@ -19,12 +19,12 @@ The samples can also be accessed directly from:
 - [Events With Arguments]
 - [Custom Events]
 
-## Getting Started
+## Getting started
 The simplest use case of _Scriptable Events_ is when a system needs to be notified that something happened without providing any context. To do so, the following elements are needed:
 - _Simple Scriptable Event_ asset which holds the listeners and is used to trigger the event
 - _Simple Scriptable Event Listener_ component which reacts to an event being triggered
 
-### Raising Events In Unity Components
+### How to Trigger Events
 First, create a _Simple Scriptable Event_ asset by right-clicking in the _Project Window_ and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed and placed anywhere in the project:
 <p align="center">
   <img width="70%" src="simple-scriptable-event-create.png"/>
@@ -54,7 +54,7 @@ Now that the listener is ready, the event needs to be triggered. This can be don
   <img hspace="2%" width="33%" src="simple-scriptable-event-raise.png"/>
 </p>
 
-### Raising Events In Custom Components
+### How to Trigger Events in a Custom Components
 In most cases events will be raised from custom components. The recommended way to do so is to define a [Unity Event] field and raise the event asset there as described previously. This approach will give the most flexibility but will be harder to debug:
 ```cs
 using ScriptableEvents.Events;
@@ -92,7 +92,7 @@ public class TriggerEvent : MonoBehaviour
 ## Passing Arguments
 Often systems will require some context when they're being triggered. To solve this, this package provides a set of events with commonly used types which can be used to carry information.
 
-### Raising Events With Arguments In Unity Components
+### How to Trigger Events with Arguments
 To create an event asset which carries information, right-click in the _Project Window_ and select an event with a specific type from _Create/Scriptable Event/*_:
 <p align="center">
   <img width="70%" src="scriptable-event-arg-create.png"/>
@@ -111,7 +111,7 @@ To trigger the event, follow the same steps as with _Simple Scriptable Event_. A
 
 A more concrete example of this can be seen in [Events With Arguments] sample.
 
-### Raising Events With Arguments In Custom Components
+### How to Trigger Events with Arguments in Custom Components
 When raising events with arguments in code, it is also recommended to use [Unity Event] fields. However, when defining the event field, type information needs to be specified as well:
 ```cs
 using UnityEngine;
@@ -306,7 +306,7 @@ Finally, in order to create the event asset for the newly generated script, sele
 
 Using the custom event asset is the same as working with scripts with arguments and simple events.
 
-## Manually Subscribing To Events
+## Manually Subscribing to Events
 It is recommended to use pre-defined and custom listener components to subscribe to events. However, when traceability is important, subscribing to events manually via non-listener components is preferable.
 
 There are two approaches that can be used to subscribe to an event, the first one is implementing `IScriptableEventListener<TArg>` and calling `AddListener(this)` (don't forget to call `RemoveListener(this)` at some point to avoid memory leaks):
