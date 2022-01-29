@@ -10,10 +10,14 @@ Quality of life improvements.
 ### Added
 - Utility window to help in creation of Scriptable Events. It can be found under _Right Click > Create > Scriptable Event > Custom Scriptable Event_ (at the very bottom).
 - `ScriptableEventConstants` class which can be used to order custom events more neatly.
-- `BaseScriptableEvent` class which is used internally to draw inspector GUIs. Using this class also improves Odin integration.
+- `BaseScriptableEvent` class (without `TArg`) which is inherited by all events and is used internally to draw inspector GUIs.
+- `DefaultScriptableEventEditor` which targets `BaseScriptableEvent`. This addresses some issues when Odin Inspector is used in the project.
+- `BaseScriptableEventListener` (without `TArg`) which is now inherited by all listeners.
+- `BaseScriptableEventListenerEditor` which targets `BaseScriptableEventListener`. This addresses some issues when Odin Inspector is used in the project and will be used to add additional functionality to listener components in the future.
 - Support for `Action<TArg>` listeners. This means that regular methods can now be used as listeners without the need of implementing `IScriptableEventListener<TArg>`.
-- _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector.
-- Icons for events and listeners (this will require asset re-import).
+- _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector. This is useful for debugging purposes.
+- Icons for events and listeners - this will require asset re-import.
+- Odin Inspector support via the use of `#if ODIN_INSPECTOR`.
 
 ### Changed
 - Renamed Scriptable Event creation menu from _Scriptable **Events**_ to _Scriptable **Event**_.
@@ -21,9 +25,9 @@ Quality of life improvements.
 - All existing events now use `ScriptableEventConstants` to define their menu order.
 - `lockDescription` is no longer serialized as its only useful during edit mode.
 - All `bool` properties now have an `is` prefix.
-- Improved `isDebug` messages to be more consistent. Additionally, a listener `Object` will be picked as a context when possible to improve the _ping_ functionality when clicking on a log message.
-- Events can now be raised in Editor mode via the _Raise_ button in if any listeners are added.
-- Improved how `description` is drawn.
+- Improved `isDebug` messages to be more consistent. Additionally, a listener `Object` will be used as a context when possible to improve the _ping_ functionality when clicking on a debug message in the Editor.
+- Events can now be raised in Edit mode via the _Raise_ button in if any listeners are added.
+- Improved how event `description` is being drawn.
 
 ## [2.0.0] - 2021-07-07
 This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) in order to utilise generics.
@@ -32,7 +36,6 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - `BaseScriptableEventEditor` by default applies to all `BaseScriptableEvent<T>` assets. `BaseScriptableEventEditor<T>` (with a generic type) should be used only if `Raise` button functionality is required.
 - Additional listener info including listener counts (see below "Added Listeners" label on `IScriptableEvent` assets).
 - Events, listeners and editors (except editors for `Collision*` types) for `long`, `double`, `Quaternion`, `Collider`, `Collider2D`, `Collision`, `Collision2D` types.
-- Better Odin Inspector integration via `#if ODIN_INSPECTOR`.
 
 ### Changed
 - All public `BaseScriptableEvent<T>` methods apart from `Raise` were renamed to have a `*Listener` suffix.
