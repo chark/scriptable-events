@@ -181,7 +181,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
         /// </summary>
         internal static bool DrawMonoScriptToggle(this Object obj, bool isEnabled)
         {
-            return obj.ToggleWithUndo(isEnabled, EventArgumentIsMonoScriptLabel, true);
+            return obj.ToggleWithUndo(isEnabled, EventArgumentIsMonoScriptLabel);
         }
 
         /// <summary>
