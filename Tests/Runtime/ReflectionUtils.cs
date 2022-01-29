@@ -2,10 +2,16 @@
 
 namespace ScriptableEvents.Tests.Runtime
 {
-    internal static class TestExtensions
+    internal static class ReflectionUtils
     {
+        #region Private Fields
+
         private const BindingFlags PrivateFieldBindingFlags =
             BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+
+        #endregion
+
+        #region Internal Methods
 
         /// <summary>
         /// Set private field value with give name on this object.
@@ -16,10 +22,11 @@ namespace ScriptableEvents.Tests.Runtime
             field.SetValue(obj, value);
         }
 
-        /// <returns>
-        /// Private field from this this with given name.
-        /// </returns>
-        internal static FieldInfo GetField(this object obj, string name)
+        #endregion
+
+        #region Private Methods
+
+        private static FieldInfo GetField(this object obj, string name)
         {
             var type = obj.GetType();
 
@@ -31,5 +38,7 @@ namespace ScriptableEvents.Tests.Runtime
 
             return info;
         }
+
+        #endregion
     }
 }

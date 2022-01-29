@@ -22,10 +22,14 @@ namespace ScriptableEvents
         [SerializeField]
         private string description;
 
+        [Tooltip("Should exceptions not break the listener chain")]
         [FormerlySerializedAs("suppressExceptions")]
         [SerializeField]
         private bool isSuppressExceptions;
 
+        [Tooltip(
+            "Should this event log debug info? Enabling this will degrade performance!"
+        )]
         [FormerlySerializedAs("trace")]
         [SerializeField]
         private bool isDebug;
@@ -34,8 +38,7 @@ namespace ScriptableEvents
 
         #region Private Fields
 
-        private readonly List<Action<TArg>> listeners =
-            new List<Action<TArg>>();
+        private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
 
         #endregion
 

@@ -66,7 +66,7 @@ namespace ScriptableEvents.Tests.Editor
         public void ShouldGetScriptCreatorState()
         {
             var state = ScriptableEventEditorState.ScriptCreatorState;
-            AssetIsDefaultValues(state);
+            AssetIsBuiltInDefaults(state);
         }
 
         [Test]
@@ -81,18 +81,18 @@ namespace ScriptableEvents.Tests.Editor
         }
 
         [Test]
-        public void ShouldResetScriptCreatorState()
+        public void ShouldRevertScriptCreatorState()
         {
             var initialState = ScriptableEventEditorState.ScriptCreatorState;
             SetTestValues(initialState);
             ScriptableEventEditorState.ScriptCreatorState = initialState;
 
             var resetState = ScriptableEventEditorState.ScriptCreatorState;
-            resetState.ResetDefaults();
+            resetState.RevertDefaults();
             ScriptableEventEditorState.ScriptCreatorState = resetState;
 
             var finalState = ScriptableEventEditorState.ScriptCreatorState;
-            AssetIsDefaultValues(finalState);
+            AssetIsBuiltInDefaults(finalState);
         }
 
         #endregion
@@ -104,16 +104,16 @@ namespace ScriptableEvents.Tests.Editor
             // These values use inverted default values (booleans at least).
             state.IsUseMonoScript = false;
 
-            state.IsCreateEventNamespaceDirectories = false;
             state.EventNamespace = "ScriptableEvents.Events (test)";
+            state.IsCreateEventNamespaceDirs = false;
 
             state.IsCreateListener = false;
-            state.IsCreateListenerNamespaceDirectories = false;
             state.ListenerNamespace = "ScriptableEvents.Listeners (test)";
+            state.IsCreateListenerNamespaceDirs = false;
 
             state.IsCreateEditor = true;
-            state.IsCreateEditorNamespaceDirectories = false;
             state.EditorNamespace = "ScriptableEvents.Editor.Events (test)";
+            state.IsCreateEditorNamespaceDirs = false;
 
             state.ScriptDirectory = "Assets/Scripts (test)";
         }
@@ -122,36 +122,38 @@ namespace ScriptableEvents.Tests.Editor
         {
             Assert.IsFalse(state.IsUseMonoScript);
 
-            Assert.IsFalse(state.IsCreateEventNamespaceDirectories);
             Assert.AreEqual(state.EventNamespace, "ScriptableEvents.Events (test)");
+            Assert.IsFalse(state.IsCreateEventNamespaceDirs);
 
             Assert.IsFalse(state.IsCreateListener);
-            Assert.IsFalse(state.IsCreateListenerNamespaceDirectories);
             Assert.AreEqual(state.ListenerNamespace, "ScriptableEvents.Listeners (test)");
+            Assert.IsFalse(state.IsCreateListenerNamespaceDirs);
 
             Assert.IsTrue(state.IsCreateEditor);
-            Assert.IsFalse(state.IsCreateEditorNamespaceDirectories);
             Assert.AreEqual(state.EditorNamespace, "ScriptableEvents.Editor.Events (test)");
+            Assert.IsFalse(state.IsCreateEditorNamespaceDirs);
 
             Assert.AreEqual(state.ScriptDirectory, "Assets/Scripts (test)");
         }
 
-        private static void AssetIsDefaultValues(ScriptCreatorState state)
+        private static void AssetIsBuiltInDefaults(ScriptCreatorState state)
         {
             Assert.IsTrue(state.IsUseMonoScript);
 
-            Assert.IsTrue(state.IsCreateEventNamespaceDirectories);
             Assert.AreEqual(state.EventNamespace, "ScriptableEvents.Events");
+            Assert.IsTrue(state.IsCreateEventNamespaceDirs);
 
             Assert.IsTrue(state.IsCreateListener);
-            Assert.IsTrue(state.IsCreateListenerNamespaceDirectories);
             Assert.AreEqual(state.ListenerNamespace, "ScriptableEvents.Listeners");
+            Assert.IsTrue(state.IsCreateListenerNamespaceDirs);
 
             Assert.IsFalse(state.IsCreateEditor);
-            Assert.IsTrue(state.IsCreateEditorNamespaceDirectories);
             Assert.AreEqual(state.EditorNamespace, "ScriptableEvents.Editor.Events");
+            Assert.IsTrue(state.IsCreateEditorNamespaceDirs);
 
             Assert.AreEqual(state.ScriptDirectory, "Assets/Scripts");
+
+            Assert.IsTrue(state.IsBuiltInDefaults);
         }
 
         #endregion
