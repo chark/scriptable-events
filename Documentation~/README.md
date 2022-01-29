@@ -9,53 +9,53 @@
 # Documentation
 
 ## Samples
-The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, check the corresponding sample:
+The documented features can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, make sure to checkout the corresponding sample:
 <p align="center">
   <img width="70%" src="samples.png"/>
 </p>
 
-You can also access the samples directly:
+You can also access the samples directly if you don't feel like importing them in your project:
 - [Simple Events]
 - [Events With Arguments]
 - [Custom Events]
 
 ## Getting Started
 The simplest use case of _Scriptable Events_ is when a system needs to be notified that something happened without providing any context. To do so, the following elements are needed:
-- _Simple Scriptable Event_ asset
-- _Simple Scriptable Event Listener_ component
+- _Simple Scriptable Event_ asset which holds the listeners and is used to trigger the event
+- _Simple Scriptable Event Listener_ component which reacts to an event being triggered
 
-### Without Code
-First, create a _Simple Scriptable Event_ asset by right-clicking in the project window and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed once created placed anywhere in the project:
+### Raising With Editor
+First, create a _Simple Scriptable Event_ asset by right-clicking in the _Project Window_ and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed placed anywhere in the project:
 <p align="center">
   <img width="70%" src="simple-scriptable-event-create.png"/>
 </p>
 
-Next, select a _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
+Next, create a new _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
 <p align="center">
   <img src="simple-scriptable-event-listener.png"/>
 </p>
 
-Once you've added a listener, do the following:
-- Insert your event asset into the _Scriptable Event_ field.
-- In the _On Raised_ [Unity Event] field add the methods you'd like to be triggered by the event.
+Once you've added a listener component, do the following:
+- Insert your event asset into the _Scriptable Event_ field
+- In the _On Raised_ [Unity Event] field, add the methods you'd like to be triggered by the event
 
-For example, if you need to turn off a set of lights your setup might look like the following (as seen in [Simple Events] sample):
+For example, if you need to turn off a set of lights, your setup might look like the following (as seen in [Simple Events] sample):
 <p align="center">
   <img src="simple-scriptable-event-listener-sample.png"/>
 </p>
 
 Now that you have your listener ready, you need to trigger the event. This can be done in the following ways:
-- Using a [Unity Event] and selecting a `SimpleScriptableEvent.Raise` method
-- Selecting the event asset and clicking the _Raise_ button
-- Selecting the event asset and clicking the _Raise_ button next to a specific listener
+- Using a [Unity Event] and selecting the `SimpleScriptableEvent.Raise()` method
+- Selecting the event asset and clicking the _Raise_ button (debug)
+- Selecting the event asset and clicking the _Raise_ button next to a specific listener (debug)
 
 <p align="center">
   <img hspace="2%" width="33%" src="simple-scriptable-event-raise-unity-event.png"/>
   <img hspace="2%" width="33%" src="simple-scriptable-event-raise.png"/>
 </p>
 
-### With Code
-In most cases you'll need to raise events from your own code. The recommended way to do so is to define a [Unity Event] field and raise the event asset there. This will give the most flexibility:
+### Raising With Code
+In most cases you'll need to raise events from your own components. The recommended way to do so is to define a [Unity Event] field and raise the event asset there as described previously. This approach will give the most flexibility, but will be harder to debug:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
@@ -72,7 +72,7 @@ public class TriggerEvent : MonoBehaviour
 }
 ```
 
-Alternatively, you can directly reference the event asset in your code and call the `SimpleScriptableEvent.Raise` method. This will provide give the most traceability but won't be as flexible as the [Unity Event] approach:
+Alternatively, you can directly reference the event asset in your code and call the `SimpleScriptableEvent.Raise` method. This provides better traceability but is as flexible as the [Unity Event] approach:
 ```cs
 using ScriptableEvents.Events;
 using UnityEngine;
@@ -90,15 +90,15 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Passing Arguments
-In most situations your systems will require some context when they're being triggered. To solve this, this package provides a set of events with commonly used types which can be used to carry information to your systems.
+Often your systems will require some context when they're being triggered. To solve this, this package provides a set of events with commonly used types which can be used to carry information to your systems.
 
-### Without Code
-To create an event asset which sends information, right-click in the project window and select an event with a specific type from _Create/Scriptable Event/*_:
+### Raising With Editor
+To create an event asset which carries information, right-click in the _Project Window_ and select an event with a specific type from _Create/Scriptable Event/*_:
 <p align="center">
   <img width="70%" src="scriptable-event-arg-create.png"/>
 </p>
 
-Next, you'll need to add a listener for this specific event type. Each _Scriptable Event_ type contains a corresponding listener component. Typed event listeners work the same as _Simple Scriptable Event Listener_ components, the only caveat is when selecting methods in the _On Raised_ [Unity Event] field make sure to select a **dynamic** method:
+Next, you'll need to add a listener for this specific event type. Each _Scriptable Event_ type contains a corresponding listener component. Typed event listeners work the same as _Simple Scriptable Event Listener_ components, the only caveat is that when selecting methods in the _On Raised_ [Unity Event] field, you need to make sure to select a **dynamic** method:
 <p align="center">
   <img hspace="2%" width="26%" src="scriptable-event-arg-listener-components.png"/>
   <img hspace="2%" width="40%" src="scriptable-event-arg-listener-dynamic.png"/>
@@ -111,8 +111,8 @@ To trigger the event, follow the same steps as with _Simple Scriptable Event_. A
 
 A more concrete example of this can be seen in [Events With Arguments] sample.
 
-### With Code
-When raising events with arguments through code, it is also recommended to use [Unity Event] fields. However, in this case you'll also need to specify the argument type:
+### Raising With Code
+When raising events with arguments with code, it is also recommended to use [Unity Event] fields. However, in this case you'll also need to specify the argument type:
 ```cs
 using UnityEngine;
 using UnityEngine.Events;
@@ -142,6 +142,10 @@ public class TriggerEvent : MonoBehaviour
     [SerializeField]
     private FloatScriptableEvent scriptableEvent;
 
+    // Also works:
+    // [SerializeField]
+    // private BaseScriptableEvent<float> scriptableEvent;
+
     private void Start()
     {
         // Your argument value.
@@ -153,15 +157,15 @@ public class TriggerEvent : MonoBehaviour
 ```
 
 ## Creating Custom Events
-In some cases using the built-in argument types is not sufficient. This can happen when you need to send a custom data type to your systems. To integrate your custom data type into the event system you'll need to define the following scripts:
+In some cases using the built-in argument types is not sufficient. This can happen when you need to send a custom data type to your systems. To integrate your custom data type into the _Scriptable Events_ package you'll need to define the following scripts:
 - The custom data type script
-- Scriptable Event asset script
-- Scriptable Event Listener script
-- Scriptable Event (optional)
+- _Scriptable Event_ asset script
+- _Scriptable Event Listener_ script
+- _Scriptable Event Editor_ (optional)
 
-To simplify script creation workflow, this package provides a custom code generator tool which can be used to automate this process. However, you'll have to define the custom data type manually.
+To simplify script creation workflow, this package provides a _Script Creator_ tool which can be used to automate this process. However, you'll have to define the custom data type manually.
 
-As an example, lets assume that the data type looks like the following:
+As an example, lets assume that we need to integrate the data type which looks like the following and exists in a `LightRandomizationEventArgs.cs` script:
 ```cs
 public class LightRandomizationEventArgs
 {
@@ -171,7 +175,7 @@ public class LightRandomizationEventArgs
 }
 ```
 
-Then, right-click the script which defines the data type and select _Create/Scriptable Event/Custom Scriptable Event_ (at the bottom):
+First, right-click the script which defines the data type and select _Create/Scriptable Event/Custom Scriptable Event_ (at the bottom):
 
 <p align="center">
   <img width="70%" src="scriptable-event-script-creator-open.png"/>
@@ -185,6 +189,7 @@ This will open the _Script Creator_ window:
 </p>
 
 The _Script Creator_ provides the following options:
+- **Gear icon** - allows saving defaults for the _Script Creator_ window, this is useful when creating scripts in bulk or when a strict structure is in place
 - **Event Argument** - allows customizing how the argument data type information is retrieved during script generation:
   - **Is Mono Script** - should a `MonoScript` be used to fetch the type information
   - **Script** - the script to be used as an argument type
@@ -201,17 +206,16 @@ The _Script Creator_ provides the following options:
   - **Script Namespace** - listener type namespace
   - **Is Create Directories** - should listener namespace create directories
   - **Menu Name** - name of the listener in component context menu
-  - **Menu Order** - order of the listener in component context menu-
+  - **Menu Order** - order of the listener in component context menu
 - **Editor** - allows customizing how the listener component code wil be generated:
   - **Script Name** - editor type and script name
   - **Script Namespace** - editor type namespace
   - **Is Create Directories** - should editor namespace create directories
 - **Output Directory** - where to save generated code
-- **Tiny gear icon in top right** - allows saving defaults for the _Script Creator_ window, this is useful when creating scripts in bulk
 
-Making some adjustments to the naming and clicking **Create** in this specific example will result in the following scripts (as seen in [Custom Events] sample).
+Making some adjustments to the fields and clicking **Create** in this specific example will result in following scripts (as seen in [Custom Events] sample).
 
-First, the event script:
+First, the _Scriptable Event_ script:
 ```cs
 using UnityEngine;
 
@@ -228,7 +232,7 @@ namespace ScriptableEvents.Events
 }
 ```
 
-Event Listener script:
+_Scriptable Event Listener_ script:
 ```cs
 using UnityEngine;
 
@@ -244,7 +248,7 @@ namespace ScriptableEvents.Events
 }
 ```
 
-The optional editor script (note that the generated editor script is a placeholder):
+The optional _Scriptable Event Editor_ script (note that the generated editor script is a placeholder):
 ```cs
 using ScriptableEvents.Editor;
 using UnityEditor;
@@ -265,7 +269,7 @@ namespace ScriptableEvents.Editor.Events
 }
 ```
 
-In order to fully utilize the editor script, you'll have to manually define the input fields, for example (as seen in [Custom Events] sample):
+In order to fully utilize the editor script, you'll have to manually define input fields, for example (as seen in [Custom Events] sample):
 ```cs
 using ScriptableEvents.Editor;
 using UnityEditor;
@@ -296,30 +300,36 @@ namespace ScriptableEvents.Editor.Events
 }
 ```
 
-Finally, in order to create the event asset for the newly generated script, select _Create/Scriptable Events (custom)/Custom Event Name_:
+Finally, in order to create the event asset for the newly generated script, select _Create/Scriptable Events (custom)/Light Randomization Scriptable Event Listener_:
 
 <p align="center">
   <img width="70%" src="scriptable-event-script-creator-result.png"/>
 </p>
 
-## Manually Subscribing
-In most cases it is recommended to use listener components to subscribe to events as that is the most flexible approach. However, when traceability is important, you can subscribe to events manually via code as well.
+Using the custom event is the same as working with scripts with arguments.
+
+## Manually Subscribing To Events
+It is recommended to use listener components to subscribe to events as that is the most flexible approach. However, when traceability is important, you can subscribe to events manually via code as well.
 
 There are two approaches that can be used to subscribe to an event, the first one is implementing `IScriptableEventListener<TArg>` and calling `AddListener(this)` (don't forget to call `RemoveListener(this)` at some point to avoid memory leaks):
 ```cs
 public class CustomEventListener : MonoBehaviour, IScriptableEventListener<float>
 {
     [SerializeField]
-    private FloatScriptableEvent floatScriptableEvent;
+    private FloatScriptableEvent scriptableEvent;
+
+    // Also works:
+    // [SerializeField]
+    // private BaseScriptableEvent<float> scriptableEvent;
 
     private void OnEnable()
     {
-        floatScriptableEvent.AddListener(this);
+        scriptableEvent.AddListener(this);
     }
 
     private void OnDisable()
     {
-        floatScriptableEvent.RemoveListener(this);
+        scriptableEvent.RemoveListener(this);
     }
 
     public void OnRaised(float value)
@@ -329,21 +339,25 @@ public class CustomEventListener : MonoBehaviour, IScriptableEventListener<float
 }
 ```
 
-The second approach is more flexible and allows to specify any method that matches the event type via the `AddListener(Action<TArg>)` overload (again don't forget to call the `RemoveListener(Action<TArg>)`):
+The second approach is more flexible and allows to specify any method that matches the event type in `AddListener(Action<TArg>)` overload (again don't forget to call the `RemoveListener(Action<TArg>)`):
 ```cs
 public class CustomEventListener : MonoBehaviour
 {
     [SerializeField]
-    private FloatScriptableEvent floatScriptableEvent;
+    private FloatScriptableEvent scriptableEvent;
+
+    // Also works:
+    // [SerializeField]
+    // private BaseScriptableEvent<float> scriptableEvent;
 
     private void OnEnable()
     {
-        floatScriptableEvent.AddListener(OnRaised);
+        scriptableEvent.AddListener(OnRaised);
     }
 
     private void OnDisable()
     {
-        floatScriptableEvent.RemoveListener(OnRaised);
+        scriptableEvent.RemoveListener(OnRaised);
     }
 
     private void OnRaised(float value)
@@ -353,4 +367,4 @@ public class CustomEventListener : MonoBehaviour
 }
 ```
 
-Note that when using these approaches to subscribe to events you might lose some functionality in the custom inspectors that are provided in this package. For example, losing references in the listener list on event assets.
+Note that when using these approaches to subscribe to events you might lose some functionality in the custom inspectors that are included in this package. For example, you might lose references in the listener list on event assets.
