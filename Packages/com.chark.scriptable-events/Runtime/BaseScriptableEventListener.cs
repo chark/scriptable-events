@@ -16,7 +16,7 @@ namespace ScriptableEvents
         #region Editor
 
         [SerializeField]
-        [Tooltip("ScriptableEvent that triggers the onRaised UnityEvent")]
+        [Tooltip("ScriptableEvent that triggers the On Raised UnityEvent")]
         private BaseScriptableEvent<TArg> scriptableEvent;
 
         [Space]

@@ -12,7 +12,7 @@ Quality of life improvements.
 - `ScriptableEventConstants` class which can be used to order custom events more neatly.
 - `BaseScriptableEvent` class which is used internally to draw inspector GUIs. Using this class also improves Odin integration.
 - Support for `Action<TArg>` listeners. This means that regular methods can now be used as listeners without the need of implementing `IScriptableEventListener<TArg>`.
-- Additional _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector.
+- _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector.
 - Icons for events and listeners (this will require asset re-import).
 
 ### Changed
@@ -22,7 +22,7 @@ Quality of life improvements.
 - `lockDescription` is no longer serialized as its only useful during edit mode.
 - All `bool` properties now have an `is` prefix.
 - Improved `isDebug` messages to be more consistent. Additionally, a listener `Object` will be picked as a context when possible to improve the _ping_ functionality when clicking on a log message.
-- Events can now be raised in edit mode via the _Raise_ button in if any listeners are added.
+- Events can now be raised in Editor mode via the _Raise_ button in if any listeners are added.
 - Improved how `description` is drawn.
 
 ## [2.0.0] - 2021-07-07

@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using ScriptableEvents.Editor.States;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-// TODO: updated readme, there is some funky wording there
-// TODO: update icons
-// TODO: option to disable namespace folder creation (disabled by default)
-// TODO: perhaps event name should update components, not the arg type (arg type only initially)?
-// TODO: need to save defaults, this will get annoying otherwise
-// TODO: UX could be improved, and perhaps a dock window should be used
 namespace ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
@@ -19,27 +11,15 @@ namespace ScriptableEvents.Editor.ScriptCreation
     /// </summary>
     internal class ScriptCreatorEditorWindow : EditorWindow
     {
-        #region Regex Constants
-
-        private static readonly Regex NamespaceRegex = new Regex("[^a-zA-Z0-9\\.]");
-        private static readonly Regex TypeNameRegex = new Regex("[^a-zA-Z0-9]");
-        private static readonly Regex MenuNameRegex = new Regex("[^a-zA-Z0-9 ]");
-
-        #endregion
-
         #region Window Constants
 
         private const string WindowTitle = "Script Creator";
         private const string MenuTitle = "Custom Scriptable Event";
 
-        private static readonly Vector2 MinWindowSize = new Vector2(350f, 500f);
-        private static readonly Vector2 MaxWindowSize = new Vector2(600f, 600f);
-
         #endregion
 
-        #region Private Fields
+        #region Private Event Argument Fields
 
-        // Event arg script fields
         [SerializeField]
         private bool isUseMonoScript = true;
 
@@ -52,16 +32,18 @@ namespace ScriptableEvents.Editor.ScriptCreation
         [SerializeField]
         private string eventArgName;
 
-        // TODO: these values cannot be set from GUI
-        // Event script fields
+        #endregion
+
+        #region Private Event Fields
+
         [SerializeField]
-        private bool isCreateEventNamespaceDirectories;
+        private string eventName;
 
         [SerializeField]
         private string eventNamespace;
 
         [SerializeField]
-        private string eventName;
+        private bool isCreateEventNamespaceDirs;
 
         [SerializeField]
         private string eventMenuName;
@@ -69,18 +51,21 @@ namespace ScriptableEvents.Editor.ScriptCreation
         [SerializeField]
         private int eventMenuOrder;
 
-        // Listener script fields
+        #endregion
+
+        #region Private Listener Fields
+
         [SerializeField]
         private bool isCreateListener;
 
         [SerializeField]
-        private bool isCreateListenerNamespaceDirectories;
+        private string listenerName;
 
         [SerializeField]
         private string listenerNamespace;
 
         [SerializeField]
-        private string listenerName;
+        private bool isCreateListenerNamespaceDirs;
 
         [SerializeField]
         private string listenerMenuName;
@@ -88,84 +73,33 @@ namespace ScriptableEvents.Editor.ScriptCreation
         [SerializeField]
         private int listenerMenuOrder;
 
-        // Editor script fields
-        [SerializeField]
-        private bool isCreateEditor;
+        #endregion
+
+        #region Private Editor Fields
 
         [SerializeField]
-        private bool isCreateEditorNamespaceDirectories;
+        private string editorName;
+
+        [SerializeField]
+        private bool isCreateEditor;
 
         [SerializeField]
         private string editorNamespace;
 
         [SerializeField]
-        private string editorName;
-
-        // Script output fields
-        [SerializeField]
-        private string scriptDirectory;
+        private bool isCreateEditorNamespaceDirs;
 
         #endregion
 
-        #region Private Properties
+        #region Private Fields
 
-        private bool IsRequiredFieldsSet
-        {
-            get
-            {
-                // Event argument type info is always required, regardless if mono script is used
-                // or not.
-                if (isUseMonoScript && IsArgScriptInvalid)
-                {
-                    return false;
-                }
+        [SerializeField]
+        private string scriptDirectory;
 
-                if (!isUseMonoScript && IsAnyEventArgFieldsBlank)
-                {
-                    return false;
-                }
+        [SerializeField]
+        private Vector2 scrollPosition;
 
-                // Event must always have all fields entered as its the base for further scripts.
-                if (IsAnyEventFieldsBlank)
-                {
-                    return false;
-                }
-
-                // Listener is optional, as event might be used via code.
-                if (isCreateListener && IsAnyListenerFieldsBlank)
-                {
-                    return false;
-                }
-
-                // Editor is always optional.
-                if (isCreateEditor && IsAnyEditorFieldsBlank)
-                {
-                    return false;
-                }
-
-                // Need to always know where to output.
-                if (IsScriptDirectoryBlank)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
-
-        private bool IsArgScriptInvalid =>
-            eventArgScript == null || eventArgScript.GetClass() == null;
-
-        private bool IsAnyEventArgFieldsBlank => IsAnyBlank(eventArgNamespace, eventArgName);
-
-        private bool IsAnyEventFieldsBlank => IsAnyBlank(eventNamespace, eventName, eventMenuName);
-
-        private bool IsAnyListenerFieldsBlank =>
-            IsAnyBlank(listenerNamespace, listenerName, listenerMenuName);
-
-        private bool IsAnyEditorFieldsBlank => IsAnyBlank(editorNamespace, editorName);
-
-        private bool IsScriptDirectoryBlank => IsAnyBlank(scriptDirectory);
+        private Rect optionsButtonPosition;
 
         #endregion
 
@@ -177,7 +111,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
         )]
         public static void ShowWindow()
         {
-            var window = GetWindow<ScriptCreatorEditorWindow>(true, WindowTitle);
+            var window = GetWindow<ScriptCreatorEditorWindow>(false, WindowTitle);
 
             var selectedMonoScript = Selection.activeObject as MonoScript;
             if (selectedMonoScript != null)
@@ -185,137 +119,95 @@ namespace ScriptableEvents.Editor.ScriptCreation
                 window.eventArgScript = selectedMonoScript;
             }
 
-            window.minSize = MinWindowSize;
-            window.maxSize = MaxWindowSize;
-        }
-
-        private void OnEnable()
-        {
-            SetupDefaults();
+            window.ApplyDefaults();
+            window.Show();
         }
 
         private void OnGUI()
         {
-            DrawFields();
-
-            // TODO: clean this up a bit
-            EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Save Defaults"))
-            {
-                SaveDefaults();
-            }
-
-            if (GUILayout.Button("Reset Defaults"))
-            {
-                ResetDefaults();
-            }
-
-            GUI.enabled = IsRequiredFieldsSet;
-            if (GUILayout.Button("Create"))
-            {
-                CreateEvent();
-            }
-
-            GUI.enabled = true;
-
-            EditorGUILayout.EndHorizontal();
-        }
-
-        #endregion
-
-        #region Private State Methods
-
-        private void SetupDefaults()
-        {
-            var state = ScriptableEventEditorState.ScriptCreatorState;
-            isUseMonoScript = state.IsUseMonoScript;
-
-            isCreateEventNamespaceDirectories = state.IsCreateEventNamespaceDirectories;
-            eventNamespace = state.EventNamespace;
-
-            isCreateListener = state.IsCreateListener;
-            isCreateListenerNamespaceDirectories = state.IsCreateListenerNamespaceDirectories;
-            listenerNamespace = state.ListenerNamespace;
-
-            isCreateEditor = state.IsCreateEditor;
-            isCreateEditorNamespaceDirectories = state.IsCreateEditorNamespaceDirectories;
-            editorNamespace = state.EditorNamespace;
-
-            scriptDirectory = state.ScriptDirectory;
-        }
-
-        private void SaveDefaults()
-        {
-            var state = ScriptableEventEditorState.ScriptCreatorState;
-            state.IsUseMonoScript = isUseMonoScript;
-
-            state.IsCreateEventNamespaceDirectories = isCreateEventNamespaceDirectories;
-            state.EventNamespace = eventNamespace;
-
-            state.IsCreateListener = isCreateListener;
-            state.IsCreateListenerNamespaceDirectories = isCreateListenerNamespaceDirectories;
-            state.ListenerNamespace = listenerNamespace;
-
-            state.IsCreateEditor = isCreateEditor;
-            state.IsCreateEditorNamespaceDirectories = isCreateEditorNamespaceDirectories;
-            state.EditorNamespace = editorNamespace;
-
-            state.ScriptDirectory = scriptDirectory;
-            ScriptableEventEditorState.ScriptCreatorState = state;
-        }
-
-        private static void ResetDefaults()
-        {
-            var state = ScriptableEventEditorState.ScriptCreatorState;
-            state.ResetDefaults();
-            ScriptableEventEditorState.ScriptCreatorState = state;
+            DrawWindowHeader();
+            scrollPosition = ScriptableEventGUI.Scroll(scrollPosition, DrawContent);
+            DrawCreateButton();
         }
 
         #endregion
 
         #region Private Drawing Methods
 
-        private void DrawFields()
+        private void DrawWindowHeader()
         {
-            EditorGUILayout.LabelField("Event Argument", EditorStyles.boldLabel);
-            ToggleFieldWithUndo(ref isUseMonoScript, ScriptableEventGUI.IsUseMonoScriptLabel);
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            var isBuiltInDefaults = state.IsBuiltInDefaults;
+
+            optionsButtonPosition = ScriptCreatorEditorWindowGUI.DrawWindowHeader(
+                optionsButtonPosition,
+                isBuiltInDefaults,
+                ApplyDefaults,
+                RevertDefaults,
+                OverrideDefaults
+            );
+        }
+
+        private void DrawContent()
+        {
+            ScriptableEventGUI.Group(DrawEventArgumentGroup);
+            ScriptableEventGUI.Group(DrawEventGroup);
+            ScriptableEventGUI.Group(DrawListenerGroup);
+            ScriptableEventGUI.Group(DrawEditorGroup);
+
+            GUILayout.FlexibleSpace();
+
+            scriptDirectory = this.DrawScriptDirectory(scriptDirectory);
+        }
+
+        private void DrawCreateButton()
+        {
+            var isFieldsSet = IsRequiredFieldsSet();
+            ScriptCreatorEditorWindowGUI.DrawCreateEventButton(isFieldsSet, CreateScripts);
+        }
+
+        private void DrawEventArgumentGroup()
+        {
+            ScriptCreatorEditorWindowGUI.DrawEventArgumentHeader();
+            isUseMonoScript = this.DrawMonoScriptToggle(isUseMonoScript);
+
             if (isUseMonoScript)
             {
-                DrawArgMonoScriptFields();
+                DrawEventArgumentMonoFields();
             }
             else
             {
-                DrawArgScriptFields();
+                DrawEventArgumentFields();
             }
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Event Asset Script", EditorStyles.boldLabel);
-            DrawEventFields();
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Listener Component Script", EditorStyles.boldLabel);
-
-            ToggleFieldWithUndo(ref isCreateListener, ScriptableEventGUI.IsCreateListenerLabel);
-            GUI.enabled = isCreateListener;
-            DrawListenerFields();
-            GUI.enabled = true;
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Editor Script", EditorStyles.boldLabel);
-
-            ToggleFieldWithUndo(ref isCreateEditor, ScriptableEventGUI.IsCreateEditorLabel);
-            GUI.enabled = isCreateEditor;
-            DrawEditorFields();
-            GUI.enabled = true;
-
-            GUILayout.FlexibleSpace();
-            DrawDirectoryFields();
         }
 
-        private void DrawArgMonoScriptFields()
+        private void DrawEventGroup()
         {
-            ObjectFieldWithUndo(ref eventArgScript, ScriptableEventGUI.EventArgScriptLabel);
+            ScriptCreatorEditorWindowGUI.DrawEventHeader();
+            DrawEventFields();
+        }
+
+        private void DrawListenerGroup()
+        {
+            isCreateListener = this.DrawListenerToggle(isCreateListener);
+            if (isCreateListener)
+            {
+                DrawListenerFields();
+            }
+        }
+
+        private void DrawEditorGroup()
+        {
+            isCreateEditor = this.DrawEditorToggle(isCreateEditor);
+            if (isCreateEditor)
+            {
+                DrawEditorFields();
+            }
+        }
+
+        private void DrawEventArgumentMonoFields()
+        {
+            eventArgScript = this.DrawEventArgumentMonoField(eventArgScript);
 
             // Script is set to none, cannot proceed as we can't get Name or Namespace of the args
             // script.
@@ -329,14 +221,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
             var eventArgScriptType = eventArgScript.GetClass();
             if (eventArgScriptType == null)
             {
-                EditorGUILayout.HelpBox(
-                    $"Provided script is invalid, make sure that a class exists in " +
-                    $"{eventArgScript.name} file with a matching name. Alternatively, uncheck " +
-                    $"{ObjectNames.NicifyVariableName(nameof(isUseMonoScript))} and enter " +
-                    $"details manually",
-                    MessageType.Error
-                );
-
+                ScriptCreatorEditorWindowGUI.DrawEventArgumentHelpBox(eventArgScript);
                 return;
             }
 
@@ -354,20 +239,11 @@ namespace ScriptableEvents.Editor.ScriptCreation
             eventArgName = newEventArgName;
         }
 
-        private void DrawArgScriptFields()
+        private void DrawEventArgumentFields()
         {
-            TextFieldWithUndo(
-                ref eventArgNamespace,
-                ScriptableEventGUI.EventArgNamespaceLabel,
-                NamespaceRegex
-            );
-
+            eventArgNamespace = this.DrawEventArgumentNamespaceField(eventArgNamespace);
             var oldEventArgName = eventArgName;
-            TextFieldWithUndo(
-                ref eventArgName,
-                ScriptableEventGUI.EventArgNameLabel,
-                TypeNameRegex
-            );
+            eventArgName = this.DrawEventArgumentNameField(eventArgName);
 
             var newEventArgName = eventArgName;
             if (oldEventArgName == newEventArgName)
@@ -380,80 +256,43 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void DrawEventFields()
         {
-            TextFieldWithUndo(
-                ref eventNamespace,
-                ScriptableEventGUI.EventNamespaceLabel,
-                NamespaceRegex
-            );
-
-            TextFieldWithUndo(ref eventName, ScriptableEventGUI.EventNameLabel, TypeNameRegex);
+            eventName = this.DrawEventNameField(eventName);
+            eventNamespace = this.DrawEventNamespaceField(eventNamespace);
+            isCreateEventNamespaceDirs =
+                this.DrawEventNamespaceDirToggle(isCreateEventNamespaceDirs);
 
             EditorGUILayout.Space();
 
-            TextFieldWithUndo(
-                ref eventMenuName,
-                ScriptableEventGUI.EventMenuNameLabel,
-                MenuNameRegex
-            );
-
-            IntFieldWithUndo(ref eventMenuOrder, ScriptableEventGUI.EventMenuOrderLabel);
+            eventMenuName = this.DrawEventMenuNameField(eventMenuName);
+            eventMenuOrder = this.DrawEventMenuOrderField(eventMenuOrder);
         }
 
         private void DrawListenerFields()
         {
-            TextFieldWithUndo(
-                ref listenerNamespace,
-                ScriptableEventGUI.ListenerNamespaceLabel,
-                NamespaceRegex
-            );
-
-            TextFieldWithUndo(
-                ref listenerName,
-                ScriptableEventGUI.ListenerNameLabel,
-                TypeNameRegex
-            );
+            listenerName = this.DrawListenerNameField(listenerName);
+            listenerNamespace = this.DrawListenerNamespaceField(listenerNamespace);
+            isCreateListenerNamespaceDirs =
+                this.DrawListenerNamespaceDirToggle(isCreateListenerNamespaceDirs);
 
             EditorGUILayout.Space();
 
-            TextFieldWithUndo(
-                ref listenerMenuName,
-                ScriptableEventGUI.ListenerMenuNameLabel,
-                MenuNameRegex
-            );
-
-            IntFieldWithUndo(ref listenerMenuOrder, ScriptableEventGUI.ListenerMenuOrderLabel);
+            listenerMenuName = this.DrawListenerMenuNameField(listenerMenuName);
+            listenerMenuOrder = this.DrawListenerMenuOrderField(listenerMenuOrder);
         }
 
         private void DrawEditorFields()
         {
-            TextFieldWithUndo(
-                ref editorNamespace,
-                ScriptableEventGUI.EditorNamespaceLabel,
-                NamespaceRegex
-            );
-
-            TextFieldWithUndo(ref editorName, ScriptableEventGUI.EditorNameLabel, TypeNameRegex);
-        }
-
-        private void DrawDirectoryFields()
-        {
-            EditorGUILayout.BeginHorizontal();
-
-            TextFieldWithUndo(ref scriptDirectory, ScriptableEventGUI.ScriptDirectoryLabel);
-            if (GUILayout.Button("Browse"))
-            {
-                RecordUndo(ScriptableEventGUI.ScriptDirectoryLabel);
-                scriptDirectory = EditorUtility.OpenFolderPanel("Choose script directory", "", "");
-            }
-
-            EditorGUILayout.EndHorizontal();
+            editorName = this.DrawEditorNameField(editorName);
+            editorNamespace = this.DrawEditorNamespaceField(editorNamespace);
+            isCreateEditorNamespaceDirs =
+                this.DrawEditorNamespaceDirToggle(isCreateEditorNamespaceDirs);
         }
 
         #endregion
 
         #region Private Script Creation Methods
 
-        private void CreateEvent()
+        private void CreateScripts()
         {
             CreateEventScript();
 
@@ -491,7 +330,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void SaveEventScript(string content)
         {
-            if (isCreateEventNamespaceDirectories)
+            if (isCreateEventNamespaceDirs)
             {
                 ScriptUtils.SaveScript(content, scriptDirectory, eventName, eventNamespace);
             }
@@ -520,7 +359,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void SaveListenerScript(string content)
         {
-            if (isCreateListenerNamespaceDirectories)
+            if (isCreateListenerNamespaceDirs)
             {
                 ScriptUtils.SaveScript(content, scriptDirectory, listenerName, listenerNamespace);
             }
@@ -549,7 +388,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void SaveEditorScript(string content)
         {
-            if (isCreateEditorNamespaceDirectories)
+            if (isCreateEditorNamespaceDirs)
             {
                 ScriptUtils.SaveScript(content, scriptDirectory, editorName, editorNamespace);
             }
@@ -563,18 +402,64 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #region Private Utility Methods
 
+        private void ApplyDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            isUseMonoScript = state.IsUseMonoScript;
+
+            eventNamespace = state.EventNamespace;
+            isCreateEventNamespaceDirs = state.IsCreateEventNamespaceDirs;
+
+            isCreateListener = state.IsCreateListener;
+            listenerNamespace = state.ListenerNamespace;
+            isCreateListenerNamespaceDirs = state.IsCreateListenerNamespaceDirs;
+
+            isCreateEditor = state.IsCreateEditor;
+            editorNamespace = state.EditorNamespace;
+            isCreateEditorNamespaceDirs = state.IsCreateEditorNamespaceDirs;
+
+            scriptDirectory = state.ScriptDirectory;
+        }
+
+        private void OverrideDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            state.IsUseMonoScript = isUseMonoScript;
+
+            state.EventNamespace = eventNamespace;
+            state.IsCreateEventNamespaceDirs = isCreateEventNamespaceDirs;
+
+            state.IsCreateListener = isCreateListener;
+            state.ListenerNamespace = listenerNamespace;
+            state.IsCreateListenerNamespaceDirs = isCreateListenerNamespaceDirs;
+
+            state.IsCreateEditor = isCreateEditor;
+            state.EditorNamespace = editorNamespace;
+            state.IsCreateEditorNamespaceDirs = isCreateEditorNamespaceDirs;
+
+            state.ScriptDirectory = scriptDirectory;
+            ScriptableEventEditorState.ScriptCreatorState = state;
+        }
+
+        private static void RevertDefaults()
+        {
+            var state = ScriptableEventEditorState.ScriptCreatorState;
+            state.RevertDefaults();
+            ScriptableEventEditorState.ScriptCreatorState = state;
+        }
+
         private void SetupFields(string oldArgName, string newArgName)
         {
-            SetIfUnmodified(ref eventNamespace, oldArgName, newArgName, GetEventNamespace);
             SetIfUnmodified(ref eventName, oldArgName, newArgName, GetEventName);
+            SetIfUnmodified(ref eventNamespace, oldArgName, newArgName, GetEventNamespace);
             SetIfUnmodified(ref eventMenuName, oldArgName, newArgName, GetEventMenuName);
 
-            SetIfUnmodified(ref listenerNamespace, oldArgName, newArgName, GetListenerNamespace);
             SetIfUnmodified(ref listenerName, oldArgName, newArgName, GetListenerName);
+            SetIfUnmodified(ref listenerNamespace, oldArgName, newArgName, GetListenerNamespace);
             SetIfUnmodified(ref listenerMenuName, oldArgName, newArgName, GetListenerMenuName);
 
-            SetIfUnmodified(ref editorNamespace, oldArgName, newArgName, GetEditorNamespace);
             SetIfUnmodified(ref editorName, oldArgName, newArgName, GetEditorName);
+            SetIfUnmodified(ref editorNamespace, oldArgName, newArgName, GetEditorNamespace);
         }
 
         private static string GetEventNamespace(string argName)
@@ -637,83 +522,55 @@ namespace ScriptableEvents.Editor.ScriptCreation
             }
         }
 
+        private bool IsRequiredFieldsSet()
+        {
+            // Event argument type info is always required, regardless if mono script is used
+            // or not.
+            if (isUseMonoScript && (eventArgScript == null || eventArgScript.GetClass() == null))
+            {
+                return false;
+            }
+
+            if (!isUseMonoScript && IsAnyBlank(eventArgName, eventArgNamespace))
+            {
+                return false;
+            }
+
+            // Event must always have all fields entered as its the base for further scripts.
+            if (IsAnyBlank(eventName, eventNamespace, eventMenuName))
+            {
+                return false;
+            }
+
+            // Listener is optional, as event might be used via code.
+            if (isCreateListener && IsAnyBlank(listenerName, listenerNamespace, listenerMenuName))
+            {
+                return false;
+            }
+
+            // Editor is always optional.
+            if (isCreateEditor && IsAnyBlank(editorName, editorNamespace))
+            {
+                return false;
+            }
+
+            // Need to always know where to output.
+            if (IsAnyBlank(scriptDirectory))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private static bool IsAnyBlank(params string[] values)
         {
-            return values.Any(string.IsNullOrWhiteSpace);
+            return values.Any(IsBlank);
         }
 
         private static bool IsBlank(string value)
         {
             return string.IsNullOrWhiteSpace(value);
-        }
-
-        private void ObjectFieldWithUndo<T>(ref T value, GUIContent label) where T : Object
-        {
-            EditorGUI.BeginChangeCheck();
-
-            var newValue = ScriptableEventGUI.ObjectField(value, label);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                RecordUndo(label);
-                value = newValue;
-            }
-        }
-
-        private void TextFieldWithUndo(ref string value, GUIContent label, Regex regex = null)
-        {
-            var originalColor = GUI.color;
-            if (GUI.enabled && string.IsNullOrWhiteSpace(value))
-            {
-                GUI.color = Color.red;
-            }
-
-            EditorGUI.BeginChangeCheck();
-
-            var newValue = ScriptableEventGUI.TextField(value, label);
-            GUI.color = originalColor;
-
-            if (newValue != null && regex != null)
-            {
-                newValue = regex.Replace(newValue, string.Empty).Trim();
-            }
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                RecordUndo(label);
-                value = newValue;
-            }
-        }
-
-        private void ToggleFieldWithUndo(ref bool value, GUIContent label)
-        {
-            EditorGUI.BeginChangeCheck();
-
-            var newValue = ScriptableEventGUI.Toggle(value, label);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                RecordUndo(label);
-                value = newValue;
-            }
-        }
-
-        private void IntFieldWithUndo(ref int value, GUIContent label)
-        {
-            EditorGUI.BeginChangeCheck();
-
-            var newValue = ScriptableEventGUI.IntField(value, label);
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                RecordUndo(label);
-                value = newValue;
-            }
-        }
-
-        private void RecordUndo(GUIContent targetLabel)
-        {
-            Undo.RecordObject(this, $"Modify {targetLabel.text}");
         }
 
         #endregion

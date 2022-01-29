@@ -25,7 +25,7 @@ namespace ScriptableEvents
 
         #region Internal Methods
 
-        public ScriptableIcon(ScriptableIconType type)
+        internal ScriptableIcon(ScriptableIconType type)
         {
             Type = type;
         }

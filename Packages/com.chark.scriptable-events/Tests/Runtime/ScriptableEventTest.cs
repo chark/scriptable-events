@@ -9,7 +9,7 @@ using UnityEngine.TestTools;
 namespace ScriptableEvents.Tests.Runtime
 {
     [TestFixtureSource(typeof(ScriptableEventTestSource))]
-    public class ScriptableEventTest<
+    internal class ScriptableEventTest<
         TScriptableEvent,
         TScriptableEventListener,
         TArg

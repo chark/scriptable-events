@@ -8,7 +8,9 @@ namespace ScriptableEvents.Editor
     /// Base editor for Scriptable Events with an argument. This is used when explicitly defining
     /// an editor for an event.
     /// </summary>
-    /// <typeparam name="TArg"></typeparam>
+    /// <typeparam name="TArg">
+    /// Event argument type
+    /// </typeparam>
     public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
     {
         #region Private Fields
@@ -31,6 +33,15 @@ namespace ScriptableEvents.Editor
 
         #region Protected Methods
 
+        /// <summary>
+        /// Draw event argument inspector GUI.
+        /// </summary>
+        /// <param name="value">
+        /// Current event argument value, can be <c>null</c>
+        /// </param>
+        /// <returns>
+        /// Updated event argument value
+        /// </returns>
         protected abstract TArg DrawArgField(TArg value);
 
         #endregion
@@ -42,49 +53,49 @@ namespace ScriptableEvents.Editor
             base.OnDrawProperties();
 
             EditorGUILayout.Space();
-            DrawEventRaise();
+            DrawRaiseEvent();
         }
 
         internal override void OnDrawListeners()
         {
-            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.BeginVertical();
             base.OnDrawListeners();
-            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
 
         internal override void OnDrawListener(object listener, int listenerIndex)
         {
+            EditorGUILayout.BeginHorizontal();
             base.OnDrawListener(listener, listenerIndex);
-            DrawListenerRaise(listenerIndex);
+            DrawRaiseListener(listenerIndex);
+            EditorGUILayout.EndHorizontal();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void DrawListenerRaise(int listenerIndex)
+        private void DrawRaiseEvent()
         {
-            if (GUILayout.Button("Raise"))
-            {
-                scriptableEvent.Raise(argValue, listenerIndex);
-            }
-        }
-
-        private void DrawEventRaise()
-        {
-            EditorGUILayout.LabelField(ScriptableEventGUI.RaiseEventLabel);
+            ScriptableEventEditorGUI.DrawRaiseEventLabel();
             GUI.enabled = scriptableEvent.ListenerCount > 0;
 
             GUILayout.BeginHorizontal();
 
             argValue = DrawArgField(argValue);
-            if (GUILayout.Button("Raise"))
-            {
-                scriptableEvent.Raise(argValue);
-            }
+            ScriptableEventEditorGUI.DrawRaiseButton(() =>
+                scriptableEvent.Raise(argValue)
+            );
 
             GUILayout.EndHorizontal();
             GUI.enabled = true;
+        }
+
+        private void DrawRaiseListener(int listenerIndex)
+        {
+            ScriptableEventEditorGUI.DrawRaiseButton(() =>
+                scriptableEvent.Raise(argValue, listenerIndex)
+            );
         }
 
         #endregion
@@ -156,8 +167,12 @@ namespace ScriptableEvents.Editor
 #endif
 
             EditorGUILayout.Space();
-            DrawListenerLabel();
-            DrawListenerStats();
+            ScriptableEventEditorGUI.DrawListenersLabel();
+            ScriptableEventEditorGUI.DrawListenerStats(
+                baseScriptableEvent.ListenerCount,
+                baseScriptableEvent.Listeners
+            );
+
             OnDrawListeners();
 
 #if ODIN_INSPECTOR
@@ -170,7 +185,7 @@ namespace ScriptableEvents.Editor
         #region Internal Methods
 
         /// <summary>
-        /// Setup GUI content for the custom editor before drawing.
+        /// Setup inspector before rendering (called once).
         /// </summary>
         internal virtual void SetupEditor()
         {
@@ -180,11 +195,11 @@ namespace ScriptableEvents.Editor
         }
 
         /// <summary>
-        /// Draws serialized properties of the Scriptable Event.
+        /// Draw Scriptable Event serialized properties.
         /// </summary>
         internal virtual void OnDrawProperties()
         {
-            EditorGUILayout.LabelField(ScriptableEventGUI.DescriptionLabelContent);
+            DrawDescriptionLabel();
             DrawDescriptionLockButton();
 
             if (isLockDescription)
@@ -197,12 +212,13 @@ namespace ScriptableEvents.Editor
             }
 
             EditorGUILayout.Space();
+
             DrawIsSuppressExceptions();
             DrawIsDebug();
         }
 
         /// <summary>
-        /// Draws all added to the inspected event.
+        /// Draw all listeners added to the inspected event.
         /// </summary>
         internal virtual void OnDrawListeners()
         {
@@ -215,18 +231,18 @@ namespace ScriptableEvents.Editor
         }
 
         /// <summary>
-        /// Draws a single listener field.
+        /// Draw a single listener field.
         /// </summary>
         internal virtual void OnDrawListener(object listener, int listenerIndex)
         {
             if (listener is Object listenerObject)
             {
-                DrawListenerObject(listenerObject);
+                ScriptableEventEditorGUI.DrawListenerObject(listenerObject);
             }
             else
             {
                 var listenerName = listener.ToString();
-                DrawListenerName(listenerName);
+                ScriptableEventEditorGUI.DrawListenerName(listenerName);
             }
         }
 
@@ -259,28 +275,22 @@ namespace ScriptableEvents.Editor
 
         #endregion
 
-        #region Private Draw Methods
+        #region Private Drawing Methods
 
         private void DrawMonoScript()
         {
             ScriptableEventGUI.MonoScriptField(monoScript);
         }
 
+        private static void DrawDescriptionLabel()
+        {
+            ScriptableEventEditorGUI.DrawDescriptionLabel();
+        }
+
         private void DrawDescriptionLockButton()
         {
-            var descriptionWidth = EditorStyles.label
-                .CalcSize(ScriptableEventGUI.DescriptionLabelContent).x;
-
-            var position = GUILayoutUtility.GetLastRect();
-            position.width = ScriptableEventGUI.DescriptionLockStyle.fixedWidth;
-            position.x = position.xMin + descriptionWidth;
-
-            isLockDescription = EditorGUI.Toggle(
-                position,
-                GUIContent.none,
-                isLockDescription,
-                ScriptableEventGUI.DescriptionLockStyle
-            );
+            isLockDescription = ScriptableEventEditorGUI
+                .DrawDescriptionLockButton(isLockDescription);
         }
 
         private void DrawDescriptionHelpBox()
@@ -290,31 +300,19 @@ namespace ScriptableEvents.Editor
 #else
             var description = descriptionProperty.stringValue;
 #endif
-            if (string.IsNullOrWhiteSpace(description))
-            {
-                EditorGUILayout.LabelField(
-                    "Click the <b>lock</b> icon to add a description to this event asset",
-                    ScriptableEventGUI.DescriptionHelpBoxStyle
-                );
-                return;
-            }
-
-            EditorGUILayout.LabelField(description, ScriptableEventGUI.DescriptionHelpBoxStyle);
+            ScriptableEventEditorGUI.DrawDescriptionHelpBox(description);
         }
 
         private void DrawDescriptionTextArea()
         {
 #if ODIN_INSPECTOR
-            descriptionProperty.ValueEntry.WeakSmartValue =
-                ScriptableEventGUI.TextArea(
-                    descriptionProperty.ValueEntry.WeakSmartValue as string,
-                    ScriptableEventGUI.DescriptionStyle
-                );
+            var value = descriptionProperty.ValueEntry.WeakSmartValue;
+            value = ScriptableEventEditorGUI.DrawDescriptionTextArea(value);
+            descriptionProperty.ValueEntry.WeakSmartValue = value;
 #else
-            descriptionProperty.stringValue = ScriptableEventGUI.TextArea(
-                descriptionProperty.stringValue,
-                ScriptableEventGUI.DescriptionStyle
-            );
+            var value = descriptionProperty.stringValue;
+            value = ScriptableEventEditorGUI.DrawDescriptionTextArea(value);
+            descriptionProperty.stringValue = value;
 #endif
         }
 
@@ -334,69 +332,6 @@ namespace ScriptableEvents.Editor
 #else
             EditorGUILayout.PropertyField(isDebugProperty);
 #endif
-        }
-
-        private static void DrawListenerLabel()
-        {
-            EditorGUILayout.LabelField(ScriptableEventGUI.ListenerLabelContent);
-        }
-
-        private void DrawListenerStats()
-        {
-            if (baseScriptableEvent.ListenerCount == 0)
-            {
-                EditorGUILayout.HelpBox(
-                    "There are no listeners added to this event",
-                    MessageType.Info
-                );
-
-                return;
-            }
-
-            GetListenerCounts(out var objectListenerCount, out var otherListenerCount);
-
-            EditorGUILayout.LabelField(
-                $"Event contains {objectListenerCount} UnityEngine.Object listeners and " +
-                $"{otherListenerCount} other listeners",
-                ScriptableEventGUI.ListenerSubLabelStyle
-            );
-        }
-
-        private static void DrawListenerObject(Object listenerObject)
-        {
-            ScriptableEventGUI.ObjectField(listenerObject);
-        }
-
-        private static void DrawListenerName(string listenerName)
-        {
-            var height = GUILayout.Height(EditorGUIUtility.singleLineHeight);
-            EditorGUILayout.SelectableLabel(
-                listenerName,
-                EditorStyles.textField,
-                height
-            );
-        }
-
-        #endregion
-
-        #region Private Utility Methods
-
-        private void GetListenerCounts(out int objectListenerCount, out int otherListenerCount)
-        {
-            objectListenerCount = 0;
-            otherListenerCount = 0;
-
-            foreach (var listener in baseScriptableEvent.Listeners)
-            {
-                if (listener is Object)
-                {
-                    objectListenerCount++;
-                }
-                else
-                {
-                    otherListenerCount++;
-                }
-            }
         }
 
         #endregion

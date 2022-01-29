@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.States
 {
     /// <summary>
-    /// Holds state used in icon processing.
+    /// Holds state used in <see cref="ScriptableEvents.Editor.Icons.IconPostProcessor"/>.
     /// </summary>
     [Serializable]
     internal class IconState

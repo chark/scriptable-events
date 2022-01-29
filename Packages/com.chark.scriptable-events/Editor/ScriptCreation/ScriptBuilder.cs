@@ -24,36 +24,54 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         #region Public methods
 
-        public ScriptBuilder(string templateName)
+        /// <summary>
+        /// Create a new builder with given script template.
+        /// </summary>
+        internal ScriptBuilder(string templateName)
         {
             this.templateName = templateName;
         }
 
-        public ScriptBuilder AddSubstitute(string name, string value)
+        /// <summary>
+        /// Add a substitute for the given placeholder string.
+        /// </summary>
+        internal ScriptBuilder AddSubstitute(string name, string value)
         {
             substitutes.Add(name, value);
             return this;
         }
 
-        public ScriptBuilder AddSubstitute(string name, int value)
+        /// <summary>
+        /// Add a substitute for the given placeholder int.
+        /// </summary>
+        internal ScriptBuilder AddSubstitute(string name, int value)
         {
             AddSubstitute(name, value.ToString());
             return this;
         }
 
-        public ScriptBuilder AddImport(Type import)
+        /// <summary>
+        /// Add an import (using) statement from a given type.
+        /// </summary>
+        internal ScriptBuilder AddImport(Type import)
         {
             AddImport(import.Namespace);
             return this;
         }
 
-        public ScriptBuilder AddImport(string import)
+        /// <summary>
+        /// Add a raw import (using) statement.
+        /// </summary>
+        internal ScriptBuilder AddImport(string import)
         {
             imports.Add(import);
             return this;
         }
 
-        public string Build()
+        /// <returns>
+        /// Built script content.
+        /// </returns>
+        internal string Build()
         {
             var template = LoadTemplate(templateName);
             var script = template.text;

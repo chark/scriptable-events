@@ -4,64 +4,76 @@ using UnityEngine;
 namespace ScriptableEvents.Editor.States
 {
     /// <summary>
-    /// Holds state used in script creation.
+    /// Holds state used in
+    /// <see cref="ScriptableEvents.Editor.ScriptCreation.ScriptCreatorEditorWindow"/>.
     /// </summary>
     [Serializable]
     internal class ScriptCreatorState
     {
-        #region Private Fields
+        #region Private Event Argument Fields
 
-        // Event arg script fields.
         [SerializeField]
         private bool isUseMonoScript = IsUseMonoScriptDefault;
 
         private const bool IsUseMonoScriptDefault = true;
 
-        // Event script fields.
+        #endregion
+
+        #region Private Event Fields
+
         [SerializeField]
         private string eventNamespace = EventNamespaceDefault;
 
         private const string EventNamespaceDefault = "ScriptableEvents.Events";
 
         [SerializeField]
-        private bool isCreateEventNamespaceDirectories = IsCreateEventNamespaceDirectoriesDefault;
+        private bool isCreateEventNamespaceDirs = IsCreateEventNamespaceDireDefault;
 
-        private const bool IsCreateEventNamespaceDirectoriesDefault = true;
+        private const bool IsCreateEventNamespaceDireDefault = true;
 
-        // Listener script fields.
+        #endregion
+
+        #region Private Listener Fields
+
         [SerializeField]
         private bool isCreateListener = IsCreateListenerDefault;
 
         private const bool IsCreateListenerDefault = true;
 
         [SerializeField]
-        private bool isCreateListenerNamespaceDirectories =
-            IsCreateListenerNamespaceDirectoriesDefault;
-
-        private const bool IsCreateListenerNamespaceDirectoriesDefault = true;
-
-        [SerializeField]
         private string listenerNamespace = ListenerNamespaceDefault;
 
         private const string ListenerNamespaceDefault = "ScriptableEvents.Listeners";
 
-        // Editor script fields.
+        [SerializeField]
+        private bool isCreateListenerNamespaceDirs = IsCreateListenerNamespaceDirsDefault;
+
+        private const bool IsCreateListenerNamespaceDirsDefault = true;
+
+        #endregion
+
+        #region Private Editor Fields
+
         [SerializeField]
         private bool isCreateEditor = IsCreateEditorDefault;
 
         private const bool IsCreateEditorDefault = false;
 
         [SerializeField]
-        private bool isCreateEditorNamespaceDirectories = IsCreateEditorNamespaceDirectoriesDefault;
-
-        private const bool IsCreateEditorNamespaceDirectoriesDefault = true;
-
-        [SerializeField]
         private string editorNamespace = EditorNamespaceDefault;
 
         private const string EditorNamespaceDefault = "ScriptableEvents.Editor.Events";
 
-        // Script output fields.
+
+        [SerializeField]
+        private bool isCreateEditorNamespaceDirs = IsCreateEditorNamespaceDirsDefault;
+
+        private const bool IsCreateEditorNamespaceDirsDefault = true;
+
+        #endregion
+
+        #region Private Utility Fields
+
         [SerializeField]
         private string scriptDirectory = ScriptDirectoryDefault;
 
@@ -97,16 +109,6 @@ namespace ScriptableEvents.Editor.States
         }
 
         /// <summary>
-        /// Should event scripts create directories for namespaces. For default value refer to
-        /// <see cref="IsCreateEventNamespaceDirectoriesDefault"/>.
-        /// </summary>
-        internal bool IsCreateEventNamespaceDirectories
-        {
-            get => isCreateEventNamespaceDirectories;
-            set => isCreateEventNamespaceDirectories = value;
-        }
-
-        /// <summary>
         /// Should editor scripts be created. For default value refer to
         /// <see cref="IsCreateListenerDefault"/>.
         /// </summary>
@@ -117,13 +119,13 @@ namespace ScriptableEvents.Editor.States
         }
 
         /// <summary>
-        /// Should listener scripts create directories for namespaces. For default value refer to
-        /// <see cref="IsCreateListenerNamespaceDirectoriesDefault"/>.
+        /// Should event scripts create directories for namespaces. For default value refer to
+        /// <see cref="IsCreateEventNamespaceDireDefault"/>.
         /// </summary>
-        internal bool IsCreateListenerNamespaceDirectories
+        internal bool IsCreateEventNamespaceDirs
         {
-            get => isCreateListenerNamespaceDirectories;
-            set => isCreateListenerNamespaceDirectories = value;
+            get => isCreateEventNamespaceDirs;
+            set => isCreateEventNamespaceDirs = value;
         }
 
         /// <summary>
@@ -137,6 +139,16 @@ namespace ScriptableEvents.Editor.States
         }
 
         /// <summary>
+        /// Should listener scripts create directories for namespaces. For default value refer to
+        /// <see cref="IsCreateListenerNamespaceDirsDefault"/>.
+        /// </summary>
+        internal bool IsCreateListenerNamespaceDirs
+        {
+            get => isCreateListenerNamespaceDirs;
+            set => isCreateListenerNamespaceDirs = value;
+        }
+
+        /// <summary>
         /// Should editor scripts be created. For default value refer to
         /// <see cref="IsCreateEditorDefault"/>.
         /// </summary>
@@ -144,16 +156,6 @@ namespace ScriptableEvents.Editor.States
         {
             get => isCreateEditor;
             set => isCreateEditor = value;
-        }
-
-        /// <summary>
-        /// Should editor scripts create directories for namespaces. For default value refer to
-        /// <see cref="IsCreateEditorNamespaceDirectoriesDefault"/>.
-        /// </summary>
-        internal bool IsCreateEditorNamespaceDirectories
-        {
-            get => isCreateEditorNamespaceDirectories;
-            set => isCreateEditorNamespaceDirectories = value;
         }
 
         /// <summary>
@@ -167,6 +169,16 @@ namespace ScriptableEvents.Editor.States
         }
 
         /// <summary>
+        /// Should editor scripts create directories for namespaces. For default value refer to
+        /// <see cref="IsCreateEditorNamespaceDirsDefault"/>.
+        /// </summary>
+        internal bool IsCreateEditorNamespaceDirs
+        {
+            get => isCreateEditorNamespaceDirs;
+            set => isCreateEditorNamespaceDirs = value;
+        }
+
+        /// <summary>
         /// Where to output the scripts. For default value refer to
         /// <see cref="ScriptDirectoryDefault"/>.
         /// </summary>
@@ -176,26 +188,41 @@ namespace ScriptableEvents.Editor.States
             set => scriptDirectory = value;
         }
 
+        /// <summary>
+        /// Does the current state match built-in defaults.
+        /// </summary>
+        internal bool IsBuiltInDefaults =>
+            IsUseMonoScript == IsUseMonoScriptDefault
+            && IsCreateEventNamespaceDirs == IsCreateEventNamespaceDireDefault
+            && EventNamespace == EventNamespaceDefault
+            && IsCreateListener == IsCreateListenerDefault
+            && IsCreateListenerNamespaceDirs == IsCreateListenerNamespaceDirsDefault
+            && ListenerNamespace == ListenerNamespaceDefault
+            && IsCreateEditor == IsCreateEditorDefault
+            && IsCreateEditorNamespaceDirs == IsCreateEditorNamespaceDirsDefault
+            && EditorNamespace == EditorNamespaceDefault
+            && ScriptDirectory == ScriptDirectoryDefault;
+
         #endregion
 
         #region Internal Methods
 
         /// <summary>
-        /// Reset script creator state to defaults.
+        /// Revert script creator state to built-in defaults.
         /// </summary>
-        internal void ResetDefaults()
+        internal void RevertDefaults()
         {
             IsUseMonoScript = IsUseMonoScriptDefault;
 
-            IsCreateEventNamespaceDirectories = IsCreateEventNamespaceDirectoriesDefault;
+            IsCreateEventNamespaceDirs = IsCreateEventNamespaceDireDefault;
             EventNamespace = EventNamespaceDefault;
 
             IsCreateListener = IsCreateListenerDefault;
-            IsCreateListenerNamespaceDirectories = IsCreateListenerNamespaceDirectoriesDefault;
+            IsCreateListenerNamespaceDirs = IsCreateListenerNamespaceDirsDefault;
             ListenerNamespace = ListenerNamespaceDefault;
 
             IsCreateEditor = IsCreateEditorDefault;
-            IsCreateEditorNamespaceDirectories = IsCreateEditorNamespaceDirectoriesDefault;
+            IsCreateEditorNamespaceDirs = IsCreateEditorNamespaceDirsDefault;
             EditorNamespace = EditorNamespaceDefault;
 
             ScriptDirectory = ScriptDirectoryDefault;
