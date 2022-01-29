@@ -6,8 +6,7 @@ namespace ScriptableEvents.Samples.CustomEvents
         ScriptableEventConstants.MenuNameCustom + "/Light Randomization Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderCustom + 0
     )]
-    public class LightRandomizationScriptableEventListener
-        : BaseScriptableEventListener<LightRandomizationEventArgs>
+    public class LightRandomizationScriptableEventListener : BaseScriptableEventListener<LightRandomizationEventArgs>
     {
     }
 }
