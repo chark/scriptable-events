@@ -15,15 +15,15 @@ namespace ScriptableEvents.Tests.Editor
         #region Public Methods
 
         [SetUp]
-        public void SetUpEditorPrefs()
+        public void SetUp()
         {
-            EditorPrefs.DeleteAll();
+            CleanupEditorPrefs();
         }
 
         [TearDown]
-        public void TearDownEditorPrefs()
+        public void TearDown()
         {
-            EditorPrefs.DeleteAll();
+            CleanupEditorPrefs();
         }
 
         [Test]
@@ -98,6 +98,12 @@ namespace ScriptableEvents.Tests.Editor
         #endregion
 
         #region Private Methods
+
+        private static void CleanupEditorPrefs()
+        {
+            EditorPrefs.DeleteKey(ScriptCreatorState.Key);
+            EditorPrefs.DeleteKey(IconState.Key);
+        }
 
         private static void SetTestValues(ScriptCreatorState state)
         {
