@@ -306,7 +306,7 @@ namespace ScriptableEvents.Editor
         private void DrawDescriptionTextArea()
         {
 #if ODIN_INSPECTOR
-            var value = descriptionProperty.ValueEntry.WeakSmartValue;
+            var value = descriptionProperty.ValueEntry.WeakSmartValue as string;
             value = ScriptableEventEditorGUI.DrawDescriptionTextArea(value);
             descriptionProperty.ValueEntry.WeakSmartValue = value;
 #else
