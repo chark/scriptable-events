@@ -27,10 +27,10 @@ namespace ScriptableEvents.Editor.ScriptCreation
         private MonoScript eventArgScript;
 
         [SerializeField]
-        private string eventArgNamespace;
+        private string eventArgName;
 
         [SerializeField]
-        private string eventArgName;
+        private string eventArgNamespace;
 
         #endregion
 
@@ -235,23 +235,22 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
             SetupFields(oldEventArgName, newEventArgName);
 
-            eventArgNamespace = eventArgScriptType.Namespace;
             eventArgName = newEventArgName;
+            eventArgNamespace = eventArgScriptType.Namespace;
         }
 
         private void DrawEventArgumentFields()
         {
-            eventArgNamespace = this.DrawEventArgumentNamespaceField(eventArgNamespace);
             var oldEventArgName = eventArgName;
             eventArgName = this.DrawEventArgumentNameField(eventArgName);
-
             var newEventArgName = eventArgName;
-            if (oldEventArgName == newEventArgName)
+
+            if (oldEventArgName != newEventArgName)
             {
-                return;
+                SetupFields(oldEventArgName, newEventArgName);
             }
 
-            SetupFields(oldEventArgName, newEventArgName);
+            eventArgNamespace = this.DrawEventArgumentNamespaceField(eventArgNamespace);
         }
 
         private void DrawEventFields()
