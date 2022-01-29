@@ -7,8 +7,7 @@ namespace ScriptableEvents.Samples.CustomEvents
         menuName = ScriptableEventConstants.MenuNameCustom + "/Light Randomization Scriptable Event",
         order = ScriptableEventConstants.MenuOrderCustom + 0
     )]
-    public class LightRandomizationScriptableEvent
-        : BaseScriptableEvent<LightRandomizationEventArgs>
+    public class LightRandomizationScriptableEvent : BaseScriptableEvent<LightRandomizationEventArgs>
     {
     }
 }
