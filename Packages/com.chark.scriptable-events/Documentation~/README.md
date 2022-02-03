@@ -11,7 +11,7 @@
 ## Samples
 All features shown here can be imported as samples via [Unity Package Manager] from the [Samples~] directory. When stuck, make sure to investigate the corresponding sample:
 <p align="center">
-  <img width="70%" src="samples.png"/>
+  <img src="samples.png"/>
 </p>
 
 ## Getting started
@@ -22,7 +22,7 @@ The simplest use case of _Scriptable Events_ is when a system needs to be notifi
 ### How to Raise Events
 First, create a _Simple Scriptable Event_ asset by right-clicking in the _Project Window_ and selecting _Create/Scriptable Event/Simple Scriptable Event_. The event asset can be renamed and placed anywhere in the project:
 <p align="center">
-  <img width="70%" src="simple-scriptable-event-create.png"/>
+  <img src="simple-scriptable-event-create.png"/>
 </p>
 
 Next, create a new _GameObject_ in the scene and add a _Simple Scriptable Event Listener_ component:
@@ -46,8 +46,8 @@ Now that the listener is ready, the event needs to be raised. This can be done i
 - Clicking the _Raise_ button next to a specific listener on the event asset
 
 <p align="center">
-  <img hspace="2%" width="33%" src="simple-scriptable-event-raise-unity-event.png"/>
-  <img hspace="2%" width="33%" src="simple-scriptable-event-raise.png"/>
+  <img hspace="2%" src="simple-scriptable-event-raise-unity-event.png"/>
+  <img hspace="2%" src="simple-scriptable-event-raise.png"/>
 </p>
 
 ### How to Trigger Events in Custom Components
@@ -91,13 +91,13 @@ Often systems will require some context when they're being invoked. To solve thi
 ### How to Trigger Events with Arguments
 To create an event asset which carries information, right-click in the _Project Window_ and select an event with a specific type from _Create/Scriptable Event/*_ menu:
 <p align="center">
-  <img width="70%" src="scriptable-event-arg-create.png"/>
+  <img src="scriptable-event-arg-create.png"/>
 </p>
 
 Next, a listener for this specific event type must be added into the scene. Each _Scriptable Event_ type contains a corresponding listener component. These typed event listeners work the same way as _Simple Scriptable Event Listener_ components. The only difference is that you must select a **dynamic** method when raising the event from a [Unity Event], otherwise the event will always receive the same value:
 <p align="center">
-  <img hspace="2%" width="26%" src="scriptable-event-arg-listener-components.png"/>
-  <img hspace="2%" width="40%" src="scriptable-event-arg-listener-dynamic.png"/>
+  <img hspace="2%" width="34%" src="scriptable-event-arg-listener-components.png"/>
+  <img hspace="2%" width="53%" src="scriptable-event-arg-listener-dynamic.png"/>
 </p>
 
 To raise the event, follow the same steps as with _Simple Scriptable Event_. Again, make sure to select a **dynamic** `Raise` method:
@@ -174,14 +174,14 @@ public class LightRandomizationEventArgs
 Then we need to tell the _Script Creator_ that this script should be used as a base for our events and listeners. To do so, right-click this script and select _Create/Scriptable Event/Custom Scriptable Event_:
 
 <p align="center">
-  <img width="70%" src="scriptable-event-script-creator-open.png"/>
+  <img src="scriptable-event-script-creator-open.png"/>
 </p>
 
 This will open the _Script Creator_ window:
 
 <p align="center">
-  <img hspace="2%" width="33%" src="scriptable-event-script-creator-window-1.png"/>
-  <img hspace="2%" width="33%" src="scriptable-event-script-creator-window-2.png"/>
+  <img hspace="2%" src="scriptable-event-script-creator-window-1.png"/>
+  <img hspace="2%" src="scriptable-event-script-creator-window-2.png"/>
 </p>
 
 The _Script Creator_ window provides a set of options which can be used to tailor the event script creation to the specifics of your project. Hover over each entry in the window to see an **explanation tooltip** if you're confused as to what each field means. Additionally, click the gear icon to **configure the defaults** for this window.
@@ -279,7 +279,7 @@ namespace ScriptableEvents.Editor.Events
 Finally, in order to create the event asset for the newly generated script, select _Create/Scriptable Events (custom)/Light Randomization Scriptable Event Listener_:
 
 <p align="center">
-  <img width="70%" src="scriptable-event-script-creator-result.png"/>
+  <img src="scriptable-event-script-creator-result.png"/>
 </p>
 
 ## Manually Subscribing to Events
