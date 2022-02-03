@@ -8,6 +8,8 @@ namespace ScriptableEvents.Tests.Editor
     [TestFixtureSource(typeof(ScriptableEventAttributeTestSource))]
     internal class ScriptableEventAttributeTest
     {
+        #region Private Fields
+
         private readonly Type eventType;
         private readonly Type listenerType;
 
@@ -16,6 +18,10 @@ namespace ScriptableEvents.Tests.Editor
         private readonly string listenerMenuName;
 
         private readonly int order;
+
+        #endregion
+
+        #region Public Methods
 
         public ScriptableEventAttributeTest(
             Type eventType,
@@ -51,10 +57,16 @@ namespace ScriptableEvents.Tests.Editor
             Assert.AreEqual(order, listenerMenuAttribute.componentOrder);
         }
 
+        #endregion
+
+        #region Private Methods
+
         private static TAttribute GetAttribute<TAttribute>(MemberInfo type)
             where TAttribute : Attribute
         {
             return (TAttribute) type.GetCustomAttribute(typeof(TAttribute));
         }
+
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override Transform DrawArgField(Transform value)
         {
-            return EditorGUILayout.ObjectField(value, typeof(Transform), true) as Transform;
+            return ScriptableEventGUI.ObjectField(value, isAllowSceneObjects: true);
         }
     }
 }

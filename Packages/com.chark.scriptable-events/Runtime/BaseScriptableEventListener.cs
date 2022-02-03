@@ -3,13 +3,20 @@ using UnityEngine.Events;
 
 namespace ScriptableEvents
 {
+    /// <summary>
+    /// Base Scriptable Event Listener which accepts an argument, used as a base by all internal
+    /// and custom listener components.
+    /// </summary>
+    /// <typeparam name="TArg">
+    /// Type of data which is passed as an argument to this listener
+    /// </typeparam>
     public abstract class BaseScriptableEventListener<TArg>
-        : MonoBehaviour, IScriptableEventListener<TArg>
+        : BaseScriptableEventListener, IScriptableEventListener<TArg>
     {
         #region Editor
 
         [SerializeField]
-        [Tooltip("ScriptableEvent that triggers the onRaised UnityEvent")]
+        [Tooltip("ScriptableEvent that triggers the On Raised UnityEvent")]
         private BaseScriptableEvent<TArg> scriptableEvent;
 
         [Space]
@@ -44,7 +51,7 @@ namespace ScriptableEvents
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public void OnRaised(TArg value)
         {
@@ -52,5 +59,14 @@ namespace ScriptableEvents
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Base Scriptable Event Listener which is implemented by all listener components and is used
+    /// in internal editor scripts.
+    /// </summary>
+    [ScriptableIcon(ScriptableIconType.Listener)]
+    public abstract class BaseScriptableEventListener : MonoBehaviour
+    {
     }
 }

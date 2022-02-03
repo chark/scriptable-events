@@ -55,5 +55,16 @@ UserSettings/EditorUserSettings.asset
 npm-debug.log
 
 # Package specific.
-Assets/Samples
-Assets/Samples.meta
+Assets/*
+!Assets/Scenes
+!Assets/Scenes.meta
+!Assets/ScriptableEvents
+!Assets/ScriptableEvents.meta
+
+!Assets/Scripts
+!Assets/Scripts.meta
+
+Assets/Scripts/*
+
+!Assets/Scripts/Editor
+!Assets/Scripts/Editor.meta

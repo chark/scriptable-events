@@ -9,7 +9,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override Vector2 DrawArgField(Vector2 value)
         {
-            return EditorGUILayout.Vector2Field(GUIContent.none, value);
+            return ScriptableEventGUI.Vector2Field(value);
         }
     }
 }

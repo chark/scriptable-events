@@ -5,21 +5,21 @@
     /// </summary>
     public static class ScriptableEventConstants
     {
-        #region Public Constants
+        #region Public Fields
 
         /// <summary>
-        /// Base menu name of all custom scriptable event sub menus.
+        /// Base menu name of all custom Scriptable Event sub menus.
         /// </summary>
         public const string MenuNameCustom = MenuNameBase + " (Custom)";
 
         /// <summary>
-        /// Base menu order of all custom scriptable event sub menus.
+        /// Base menu order of all custom Scriptable Event sub menus.
         /// </summary>
         public const int MenuOrderCustom = MenuOrderBase;
 
         #endregion
 
-        #region Internal Constants
+        #region Internal Fields
 
         /// <summary>
         /// Prefix of 'Create' event menus.
@@ -58,12 +58,12 @@
 
         #endregion
 
-        #region Private Constants
+        #region Private Fields
 
         /// <summary>
-        /// Base menu order of all scriptable event sub menus.
+        /// Base menu order of all Scriptable Event sub menus.
         /// </summary>
-        private const int MenuOrderBase = -100;
+        private const int MenuOrderBase = 150;
 
         #endregion
     }

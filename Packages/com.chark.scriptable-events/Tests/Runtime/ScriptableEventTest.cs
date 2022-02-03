@@ -9,7 +9,7 @@ using UnityEngine.TestTools;
 namespace ScriptableEvents.Tests.Runtime
 {
     [TestFixtureSource(typeof(ScriptableEventTestSource))]
-    public class ScriptableEventTest<
+    internal class ScriptableEventTest<
         TScriptableEvent,
         TScriptableEventListener,
         TArg
@@ -17,7 +17,7 @@ namespace ScriptableEvents.Tests.Runtime
         where TScriptableEvent : BaseScriptableEvent<TArg>
         where TScriptableEventListener : BaseScriptableEventListener<TArg>
     {
-        #region Fields
+        #region Private Fields
 
         private readonly TArg arg;
 
@@ -28,7 +28,7 @@ namespace ScriptableEvents.Tests.Runtime
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         public ScriptableEventTest(TArg arg)
         {
@@ -54,11 +54,23 @@ namespace ScriptableEvents.Tests.Runtime
         }
 
         [Test]
+        public void ShouldAddActionListenerAndRaiseEvent()
+        {
+            var capturedActionArgs = new List<TArg>();
+            scriptableEvent.AddListener(capturedActionArgs.Add);
+
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(1, capturedArgs.Count);
+            Assert.AreEqual(arg, capturedArgs.First());
+        }
+
+        [Test]
         public void ShouldRaiseEventAndContinueListenerChain()
         {
             LogAssert.ignoreFailingMessages = true;
 
-            scriptableEvent.SetField("suppressExceptions", true);
+            scriptableEvent.SetField("isSuppressExceptions", true);
             scriptableEvent.AddListener(new MockScriptableEventListener<TArg>
             {
                 Action = capturedArg => throw new Exception()
@@ -72,20 +84,42 @@ namespace ScriptableEvents.Tests.Runtime
         [Test]
         public void ShouldRemoveListenerAndRaiseEvent()
         {
+            scriptableEvent.RemoveListeners();
+
+            scriptableEvent.AddListener(scriptableEventListener);
             scriptableEvent.RemoveListener(scriptableEventListener);
             scriptableEvent.Raise(arg);
 
+            Assert.AreEqual(0, scriptableEvent.ListenerCount);
             Assert.AreEqual(0, capturedArgs.Count);
         }
 
         [Test]
-        public void ShouldClearAndRaiseEvent()
+        public void ShouldAddAndRemoveActionListenerAndRaiseEvent()
+        {
+            scriptableEvent.RemoveListeners();
+
+            scriptableEvent.AddListener(capturedArgs.Add);
+            scriptableEvent.RemoveListener(capturedArgs.Add);
+
+            scriptableEvent.Raise(arg);
+
+            Assert.AreEqual(0, scriptableEvent.ListenerCount);
+            Assert.AreEqual(0, capturedArgs.Count);
+        }
+
+        [Test]
+        public void ShouldRemoveListenersAndRaiseEvent()
         {
             scriptableEvent.RemoveListeners();
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(0, capturedArgs.Count);
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void SetupRaisedArgs()
         {

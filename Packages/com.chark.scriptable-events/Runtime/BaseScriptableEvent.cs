@@ -1,34 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace ScriptableEvents
 {
-    public abstract class BaseScriptableEvent<TArg> : ScriptableObject
+    /// <summary>
+    /// Base Scriptable Event which accepts an argument, used as a base by all event Scriptable
+    /// Objects.
+    /// </summary>
+    /// <typeparam name="TArg">
+    /// Type of data which is passed as an argument to this event
+    /// </typeparam>
+    public abstract class BaseScriptableEvent<TArg> : BaseScriptableEvent
     {
         #region Editor
 
         // ReSharper disable once NotAccessedField.Local
-        [SerializeField, TextArea]
-        [Tooltip("Custom description to provide more additional information")]
+        [SerializeField]
         private string description;
 
-        [SerializeField]
         [Tooltip("Should exceptions not break the listener chain")]
-        private bool suppressExceptions;
-
+        [FormerlySerializedAs("suppressExceptions")]
         [SerializeField]
+        private bool isSuppressExceptions;
+
         [Tooltip(
-            "Should additional trace information be logged. Enabling this will degrade performance!"
+            "Should this event log debug info? Enabling this will degrade performance!"
         )]
-        private bool trace;
+        [FormerlySerializedAs("trace")]
+        [SerializeField]
+        private bool isDebug;
 
         #endregion
 
-        #region Fields
+        #region Private Fields
 
-        private readonly List<IScriptableEventListener<TArg>> listeners =
-            new List<IScriptableEventListener<TArg>>();
+        private readonly List<Action<TArg>> listeners = new List<Action<TArg>>();
+
+        #endregion
+
+        #region Internal Properties
+
+        internal override IEnumerable<object> Listeners => listeners
+            .Select(invocation => invocation.Target)
+            .ToList();
+
+        internal override int ListenerCount => listeners.Count;
 
         #endregion
 
@@ -44,36 +64,44 @@ namespace ScriptableEvents
         #region Public Methods
 
         /// <summary>
-        /// Raise this event with an argument.
+        /// Raise this event with an argument and trigger all listeners. The order of listener
+        /// execution is undefined as it can change in the future.
         /// </summary>
         public void Raise(TArg value)
         {
             for (var index = listeners.Count - 1; index >= 0; index--)
             {
                 var listener = listeners[index];
-
-                if (trace)
-                {
-                    LogRaise(listener, value);
-                }
-
-                if (suppressExceptions)
-                {
-                    OnRaiseSuppressed(listener, value);
-                }
-                else
-                {
-                    OnRaise(listener, value);
-                }
+                Raise(listener, value);
             }
         }
 
         /// <summary>
-        /// Add a listener to this event.
+        /// Add a listener to this event. Duplicate listeners can also be added.
         /// </summary>
         public void AddListener(IScriptableEventListener<TArg> listener)
         {
-            if (trace)
+            if (listener == null)
+            {
+                AddListener((Action<TArg>) null);
+                return;
+            }
+
+            AddListener(listener.OnRaised);
+        }
+
+        /// <summary>
+        /// Add a listener action to this event. Duplicate listener actions can also be added.
+        /// </summary>
+        public void AddListener(Action<TArg> listener)
+        {
+            if (listener == null)
+            {
+                Debug.LogError($"{nameof(listener)} cannot be null", this);
+                return;
+            }
+
+            if (isDebug)
             {
                 LogAdd(listener);
             }
@@ -82,16 +110,36 @@ namespace ScriptableEvents
         }
 
         /// <summary>
-        /// Remove a listener from this event.
+        /// Remove first occurrence of <see cref="IScriptableEventListener{TARg}"/> from this event.
         /// </summary>
-        public void RemoveListener(IScriptableEventListener<TArg> listener)
+        public void RemoveListener(IScriptableEventListener<TArg> removeListener)
         {
-            if (trace)
+            if (removeListener == null)
             {
-                LogRemove(listener);
+                RemoveListener((Action<TArg>) null);
+                return;
             }
 
-            listeners.Remove(listener);
+            RemoveListener(removeListener.OnRaised);
+        }
+
+        /// <summary>
+        /// Remove first occurrence of <see cref="Action{TArg}"/> from this event.
+        /// </summary>
+        public void RemoveListener(Action<TArg> removeListener)
+        {
+            if (removeListener == null)
+            {
+                Debug.LogError($"{nameof(removeListener)} cannot be null", this);
+                return;
+            }
+
+            if (isDebug)
+            {
+                LogRemove(removeListener);
+            }
+
+            listeners.Remove(removeListener);
         }
 
         /// <summary>
@@ -99,7 +147,7 @@ namespace ScriptableEvents
         /// </summary>
         public void RemoveListeners()
         {
-            if (trace)
+            if (isDebug)
             {
                 LogRemove();
             }
@@ -109,48 +157,116 @@ namespace ScriptableEvents
 
         #endregion
 
+        #region Internal Methods
+
+        /// <summary>
+        /// Raise this event with an argument by triggering only the specified listener. This is
+        /// used in internal inspector GUI scripts.
+        /// </summary>
+        internal void Raise(TArg value, int listenerIndex)
+        {
+            var listener = listeners[listenerIndex];
+            Raise(listener, value);
+        }
+
+        #endregion
+
         #region Private Methods
 
-        private void OnRaiseSuppressed(IScriptableEventListener<TArg> listener, TArg value)
+        private void Raise(Action<TArg> listener, TArg value)
         {
-            try
+            if (isDebug)
             {
-                listener.OnRaised(value);
+                LogRaise(listener, value);
             }
-            catch (Exception exception)
+
+            if (isSuppressExceptions)
             {
-                Debug.LogException(exception, this);
+                OnRaiseSuppressed(listener, value);
+            }
+            else
+            {
+                OnRaise(listener, value);
             }
         }
 
-        private static void OnRaise(IScriptableEventListener<TArg> listener, TArg value)
+        private void OnRaiseSuppressed(Action<TArg> listener, TArg value)
         {
-            listener.OnRaised(value);
+            try
+            {
+                listener.Invoke(value);
+            }
+            catch (Exception exception)
+            {
+                var context = GetLogContext(listener);
+                Debug.LogException(exception, context);
+            }
+        }
+
+        private static void OnRaise(Action<TArg> listener, TArg value)
+        {
+            listener.Invoke(value);
         }
 
         #endregion
 
         #region Private Logging Methods
 
-        private void LogRaise(IScriptableEventListener<TArg> listener, TArg value)
+        private void LogRaise(Action<TArg> listener, TArg value)
         {
-            Debug.Log($"Raise listener: {listener}, value: {value}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: raise listener {listener.Target} with value {value}", context);
         }
 
-        private void LogAdd(IScriptableEventListener<TArg> listener)
+        private void LogAdd(Action<TArg> listener)
         {
-            Debug.Log($"Adding listener: {listener}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: adding listener {listener.Target}", context);
         }
 
-        private void LogRemove(IScriptableEventListener<TArg> listener)
+        private void LogRemove(Action<TArg> listener)
         {
-            Debug.Log($"Removing listener: {listener}", this);
+            var context = GetLogContext(listener);
+            Debug.Log($"{name}: removing listener {listener.Target}", context);
         }
 
         private void LogRemove()
         {
-            Debug.Log("Removing listeners", this);
+            Debug.Log($"{name}: removing listeners", this);
         }
+
+        private Object GetLogContext(Action<TArg> listener)
+        {
+            var target = listener.Target;
+            if (target is Object targetObject)
+            {
+                return targetObject;
+            }
+
+            return this;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Base Scriptable Event which is implemented by all event assets and is used in internal editor
+    /// scripts.
+    /// </summary>
+    [ScriptableIcon(ScriptableIconType.Event)]
+    public abstract class BaseScriptableEvent : ScriptableObject
+    {
+        #region Internal Properties
+
+        /// <summary>
+        /// Listeners added to this event. Used in inspector GUIs.
+        /// </summary>
+        internal abstract IEnumerable<object> Listeners { get; }
+
+        /// <summary>
+        /// Count of listeners added to this event. Used in inspector GUIs and tests.
+        /// </summary>
+        internal abstract int ListenerCount { get; }
 
         #endregion
     }

@@ -8,7 +8,7 @@ namespace ScriptableEvents.Editor.Events
     {
         protected override int DrawArgField(int value)
         {
-            return EditorGUILayout.IntField(value);
+            return ScriptableEventGUI.IntField(value);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using ScriptableEvents.Editor;
+using ScriptableEvents.Editor.ScriptCreation;
 
 namespace ScriptableEvents.Tests.Editor
 {
@@ -100,7 +100,7 @@ namespace ScriptableEvents.Tests.Editor
                     {
                         protected override TestEventArg DrawArgField(TestEventArg value)
                         {
-                            // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on your
+                            // Use EditorGUILayout.TextField, etc., to draw inputs next to Raise button on the
                             // TestEvent asset.
                             return value;
                         }
