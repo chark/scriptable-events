@@ -9,5 +9,5 @@ end_of_line = lf
 indent_size = 4
 charset = utf-8
 
-[*.{json,asmdef,yml}]
+[*.{json,asmdef,yml,md}]
 indent_size = 2

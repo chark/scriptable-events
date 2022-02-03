@@ -34,7 +34,7 @@ Alternatively, you can also install it by adding the following line to `Packages
 "com.chark.scriptable-events": "https://github.com/chark/scriptable-events.git#upm"
 ```
 
-## Documentation
-- [Usage documentation](../Packages/com.chark.scriptable-events/Documentation~/README.md)
+## Links
+- [Documentation](../Packages/com.chark.scriptable-events/Documentation~/README.md)
 - [Contributing](CONTRIBUTING.md)
 - [Changelog](../Packages/com.chark.scriptable-events/CHANGELOG.md)
