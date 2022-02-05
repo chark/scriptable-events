@@ -4,16 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.0] - 2022-xx-xx
+## [2.1.0] - 2022-02-05
 Quality of life improvements.
 
 ### Added
-- Utility window to help in creation of Scriptable Events. It can be found under _Right Click > Create > Scriptable Event > Custom Scriptable Event_ (at the very bottom).
+- Utility window to help in creation of Scriptable Events. It can be found via _Right Click > Create > Scriptable Event > Custom Scriptable Event_ (at the very bottom).
 - `ScriptableEventConstants` class which can be used to order custom events more neatly.
 - `BaseScriptableEvent` class (without `TArg`) which is inherited by all events and is used internally to draw inspector GUIs.
-- `DefaultScriptableEventEditor` which targets `BaseScriptableEvent`. This addresses some issues when Odin Inspector is used in the project.
+- `DefaultScriptableEventEditor` which targets `BaseScriptableEvent`. This addresses some issues when Odin Inspector is present in the project.
 - `BaseScriptableEventListener` (without `TArg`) which is now inherited by all listeners.
-- `BaseScriptableEventListenerEditor` which targets `BaseScriptableEventListener`. This addresses some issues when Odin Inspector is used in the project and will be used to add additional functionality to listener components in the future.
+- `BaseScriptableEventListenerEditor` which targets `BaseScriptableEventListener`. This addresses some issues when Odin Inspector is present in the project and will be used to add additional functionality to listener components in the future.
 - Support for `Action<TArg>` listeners. This means that regular methods can now be used as listeners without the need of implementing `IScriptableEventListener<TArg>`.
 - _Raise_ button which is shown next to each added listener. Using this button listeners can be raised individually through the inspector. This is useful for debugging purposes.
 - Icons for events and listeners - this will require asset re-import.
@@ -21,13 +21,15 @@ Quality of life improvements.
 
 ### Changed
 - Renamed Scriptable Event creation menu from _Scriptable **Events**_ to _Scriptable **Event**_.
-- Moved Scriptable Event creation menu under _Folder_ and _Script_ creation menus so the package is less intrusive.
+- Moved Scriptable Event menus below _Folder_ and _Script_ creation menu items so the package is less intrusive.
 - All existing events now use `ScriptableEventConstants` to define their menu order.
 - `lockDescription` is no longer serialized as its only useful during edit mode.
 - All `bool` properties now have an `is` prefix.
-- Improved `isDebug` messages to be more consistent. Additionally, a listener `Object` will be used as a context when possible to improve the _ping_ functionality when clicking on a debug message in the Editor.
-- Events can now be raised in Edit mode via the _Raise_ button in if any listeners are added.
+- Improved `isDebug` messages to be more consistent. Additionally, a listener `Object` will be used as a context when possible to improve the [ping](https://docs.unity3d.com/ScriptReference/EditorGUIUtility.PingObject.html) functionality when clicking on a debug message in the Editor.
+- Events can now be raised in Edit mode via the _Raise_ button in if any listeners are present in the event.
 - Improved how event `description` is being drawn.
+- Reworked all samples to be more consistent.
+- Updated usage documentation to follow new samples and showcase event creation.
 
 ## [2.0.0] - 2021-07-07
 This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) in order to utilise generics.
