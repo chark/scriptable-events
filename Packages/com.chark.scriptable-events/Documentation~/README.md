@@ -88,7 +88,7 @@ public class TriggerEvent : MonoBehaviour
 ## Passing Arguments
 Often systems will require some context when they're being invoked. To solve this, this package provides a set of events with commonly used types which can be used to carry information.
 
-### How to Trigger Events with Arguments
+### How to Raise Events with Arguments
 To create an event asset which carries information, right-click in the _Project Window_ and select an event with a specific type from _Create/Scriptable Event/*_ menu:
 <p align="center">
   <img src="scriptable-event-arg-create.png"/>
