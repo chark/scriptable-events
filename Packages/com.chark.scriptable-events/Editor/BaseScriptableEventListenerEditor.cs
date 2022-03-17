@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 namespace ScriptableEvents.Editor
 {
@@ -54,7 +55,18 @@ namespace ScriptableEvents.Editor
             EditorGUI.BeginChangeCheck();
 #endif
 
+            EditorGUILayout.BeginHorizontal();
             DrawScriptableEvent();
+
+            // d_Search Icon
+            var icon = EditorGUIUtility.IconContent("Search Icon");
+            if (GUILayout.Button(new GUIContent(icon), EditorStyles.miniButton, GUILayout.Width(30f)))
+            {
+                ShowSearchWindow();
+            }
+
+            EditorGUILayout.EndHorizontal();
+
             DrawOnRaised();
 
 #if ODIN_INSPECTOR
@@ -124,6 +136,22 @@ namespace ScriptableEvents.Editor
 #else
             EditorGUILayout.PropertyField(onRaisedProperty);
 #endif
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void ShowSearchWindow()
+        {
+            ScriptableEventSearchWindowProvider.SearchListenerEvent(
+                target.GetType(),
+                eventAsset =>
+                {
+                    scriptableEventProperty.objectReferenceValue = eventAsset;
+                    serializedObject.ApplyModifiedProperties();
+                }
+            );
         }
 
         #endregion
