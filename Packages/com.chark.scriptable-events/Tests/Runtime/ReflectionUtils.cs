@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace ScriptableEvents.Tests.Runtime
 {
@@ -20,6 +21,16 @@ namespace ScriptableEvents.Tests.Runtime
         {
             var field = obj.GetField(name);
             field.SetValue(obj, value);
+        }
+        /// <summary>
+        /// Add an item to a field of type List<T>
+        /// </summary>
+        internal static void AddToListField<T>(this object obj, string name, T value)
+        {
+            var field = obj.GetField(name);
+            var fieldValue = (List<T>)field.GetValue(obj);
+            fieldValue.Add(value);
+            field.SetValue(obj, fieldValue);
         }
 
         #endregion

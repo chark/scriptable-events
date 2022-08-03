@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -143,7 +143,10 @@ namespace ScriptableEvents.Tests.Runtime
             gameObject.SetActive(false);
 
             scriptableEventListener = gameObject.AddComponent<TScriptableEventListener>();
-            scriptableEventListener.SetField("scriptableEvent", scriptableEvent);
+
+            // Note: the type for scriptableEvents is NOT TScriptableEvent, it is BaseScriptableEvent<TArg>
+            // If treated as TScriptableEvent, casting fails.
+            scriptableEventListener.AddToListField<BaseScriptableEvent<TArg>>("scriptableEvents", scriptableEvent);
             scriptableEventListener.SetField("onRaised", unityEvent);
 
             // Add listener by triggering OnEnabled.
