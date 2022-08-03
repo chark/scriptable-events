@@ -23,6 +23,7 @@ namespace ScriptableEvents.Tests.Runtime
 
         private List<TArg> capturedArgs;
         private TScriptableEvent scriptableEvent;
+        private TScriptableEvent scriptableEvent2; // Not used in most tests.
         private UnityEvent<TArg> unityEvent;
         private TScriptableEventListener scriptableEventListener;
 
@@ -39,7 +40,7 @@ namespace ScriptableEvents.Tests.Runtime
         public void SetUp()
         {
             SetupRaisedArgs();
-            SetupScriptableEvent();
+            SetupScriptableEvents();
             SetupUnityEvent();
             SetupScriptableEventListener();
         }
@@ -79,6 +80,17 @@ namespace ScriptableEvents.Tests.Runtime
             scriptableEvent.Raise(arg);
 
             Assert.AreEqual(1, capturedArgs.Count);
+        }
+        [Test]
+        public void ShouldListenToMultipleEvents()
+        {
+
+            scriptableEvent.Raise(arg);
+            scriptableEvent2.Raise(arg);
+
+            Assert.AreEqual(2, capturedArgs.Count);
+            Assert.AreEqual(arg, capturedArgs[0]);
+            Assert.AreEqual(arg, capturedArgs[1]);
         }
 
         [Test]
@@ -126,9 +138,10 @@ namespace ScriptableEvents.Tests.Runtime
             capturedArgs = new List<TArg>();
         }
 
-        private void SetupScriptableEvent()
+        private void SetupScriptableEvents()
         {
             scriptableEvent = ScriptableObject.CreateInstance<TScriptableEvent>();
+            scriptableEvent2 = ScriptableObject.CreateInstance<TScriptableEvent>();
         }
 
         private void SetupUnityEvent()
@@ -147,6 +160,7 @@ namespace ScriptableEvents.Tests.Runtime
             // Note: the type for scriptableEvents is NOT TScriptableEvent, it is BaseScriptableEvent<TArg>
             // If treated as TScriptableEvent, casting fails.
             scriptableEventListener.AddToListField<BaseScriptableEvent<TArg>>("scriptableEvents", scriptableEvent);
+            scriptableEventListener.AddToListField<BaseScriptableEvent<TArg>>("scriptableEvents", scriptableEvent2);
             scriptableEventListener.SetField("onRaised", unityEvent);
 
             // Add listener by triggering OnEnabled.
