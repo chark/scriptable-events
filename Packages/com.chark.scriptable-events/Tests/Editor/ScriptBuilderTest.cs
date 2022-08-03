@@ -6,15 +6,6 @@ namespace ScriptableEvents.Tests.Editor
     [TestFixture]
     internal class ScriptBuilderTest
     {
-        /// <summary>
-        /// Quick routine to make sure CRLF values (and CR values) are all treated as LF
-        /// This is relevant as this file may bin in either windows or mac format, as may the template.
-        /// </summary>
-        public string NormaliseCRs(string source)
-        {
-            return source.Replace("\r\n", "\n").Replace("\r", "\n");
-        }
-
         [Test]
         public void ShouldCreateScriptFromEventTemplate()
         {
@@ -134,5 +125,15 @@ namespace ScriptableEvents.Tests.Editor
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
         }
+
+        /// <summary>
+        /// Helper routine to make sure CRLF values (and CR values) are all treated as LF
+        /// This is relevant as this file may be in either windows or mac/unix format, as may the template.
+        /// </summary>
+        private static string NormaliseCRs(string source)
+        {
+            return source.Replace("\r\n", "\n").Replace("\r", "\n");
+        }
+
     }
 }

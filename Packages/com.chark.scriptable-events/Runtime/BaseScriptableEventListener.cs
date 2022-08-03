@@ -38,12 +38,12 @@ namespace ScriptableEvents
         {
             // No null or empty check - a listener can exist with that is listening to nothing.
             // This also avoids issues on initialisation
-            scriptableEvents?.ForEach(scriptableEvent => scriptableEvent.AddListener(this));
+            scriptableEvents.ForEach(scriptableEvent => scriptableEvent.AddListener(this));
         }
 
         private void OnDisable()
         {
-            scriptableEvents?.ForEach(scriptableEvent => scriptableEvent.RemoveListener(this));
+            scriptableEvents.ForEach(scriptableEvent => scriptableEvent.RemoveListener(this));
         }
 
         #endregion
@@ -58,8 +58,11 @@ namespace ScriptableEvents
         public void OnBeforeSerialize()
         {
             // Move from the old single event model to the new model.
-            // Ideally we should only do this in Editor mode but Application.isPlaying will not work during serialisation 
-            if (scriptableEvent != null)
+            if (Application.isPlaying)
+            {
+                return;
+            }
+            if (scriptableEvent!=false)
             {
                 if (!scriptableEvents.Contains(scriptableEvent))
                 {
