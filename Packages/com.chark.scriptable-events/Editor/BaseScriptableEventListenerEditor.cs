@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 
 namespace ScriptableEvents.Editor
 {
@@ -22,10 +22,10 @@ namespace ScriptableEvents.Editor
 
         // Serialized properties.
 #if ODIN_INSPECTOR
-        private Sirenix.OdinInspector.Editor.InspectorProperty scriptableEventProperty;
+        private Sirenix.OdinInspector.Editor.InspectorProperty scriptableEventsProperty;
         private Sirenix.OdinInspector.Editor.InspectorProperty onRaisedProperty;
 #else
-        private SerializedProperty scriptableEventProperty;
+        private SerializedProperty scriptableEventsProperty;
         private SerializedProperty onRaisedProperty;
 #endif
 
@@ -54,7 +54,7 @@ namespace ScriptableEvents.Editor
             EditorGUI.BeginChangeCheck();
 #endif
 
-            DrawScriptableEvent();
+            DrawScriptableEvents();
             DrawOnRaised();
 
 #if ODIN_INSPECTOR
@@ -73,12 +73,12 @@ namespace ScriptableEvents.Editor
 
         private void SetupEditor()
         {
-            SetupBaseScriptableEventListener();
+            SetupBaseScriptableEventsListener();
             SetupMonoScript();
             SetupSerializedProperties();
         }
 
-        private void SetupBaseScriptableEventListener()
+        private void SetupBaseScriptableEventsListener()
         {
             baseScriptableEventListener = target as BaseScriptableEventListener;
         }
@@ -91,10 +91,10 @@ namespace ScriptableEvents.Editor
         private void SetupSerializedProperties()
         {
 #if ODIN_INSPECTOR
-            scriptableEventProperty = Tree.GetPropertyAtPath("scriptableEvent");
+            scriptableEventsProperty = Tree.GetPropertyAtPath("scriptableEvents");
             onRaisedProperty = Tree.GetPropertyAtPath("onRaised");
 #else
-            scriptableEventProperty = serializedObject.FindProperty("scriptableEvent");
+            scriptableEventsProperty = serializedObject.FindProperty("scriptableEvents");
             onRaisedProperty = serializedObject.FindProperty("onRaised");
 #endif
         }
@@ -108,12 +108,12 @@ namespace ScriptableEvents.Editor
             ScriptableEventGUI.MonoScriptField(monoScript);
         }
 
-        private void DrawScriptableEvent()
+        private void DrawScriptableEvents()
         {
 #if ODIN_INSPECTOR
-            scriptableEventProperty.Draw();
+            scriptableEventsProperty.Draw();
 #else
-            EditorGUILayout.PropertyField(scriptableEventProperty);
+            EditorGUILayout.PropertyField(scriptableEventsProperty);
 #endif
         }
 

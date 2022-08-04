@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using ScriptableEvents.Editor.ScriptCreation;
 
 namespace ScriptableEvents.Tests.Editor
@@ -43,7 +43,7 @@ namespace ScriptableEvents.Tests.Editor
                 .AddImport("ScriptableEvents")
                 .Build();
 
-            Assert.AreEqual(expectedContent, scriptContent);
+            Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace ScriptableEvents.Tests.Editor
                 .AddImport("ScriptableEvents")
                 .Build();
 
-            Assert.AreEqual(expectedContent, scriptContent);
+            Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
         }
 
         [Test]
@@ -123,7 +123,17 @@ namespace ScriptableEvents.Tests.Editor
                 .AddImport("ScriptableEvents.Editor")
                 .Build();
 
-            Assert.AreEqual(expectedContent, scriptContent);
+            Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
         }
+
+        /// <summary>
+        /// Helper routine to make sure CRLF values (and CR values) are all treated as LF
+        /// This is relevant as this file may be in either windows or mac/unix format, as may the template.
+        /// </summary>
+        private static string NormaliseCRs(string source)
+        {
+            return source.Replace("\r\n", "\n").Replace("\r", "\n");
+        }
+
     }
 }
