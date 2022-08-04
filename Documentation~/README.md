@@ -31,8 +31,10 @@ Next, create a new _GameObject_ in the scene and add a _Simple Scriptable Event 
 </p>
 
 Afterwards, do the following:
-- Insert event asset into the _Scriptable Event_ field
-- Insert Game Objects which should be triggered into the _On Raised_ [Unity Event] field
+- Add event asset into the _Scriptable Events_ field
+  - Note that you can more than one event of the same type
+  - In case of multiple events, the listener will be triggered when any of those events get raised
+- Add Game Objects which should be triggered into the _On Raised_ [Unity Event] field
 - Select the methods which should be triggered by the event
 
 For example, if you wanted to turn off a light, the listener setup might be as follows (as seen in [Simple Events] sample):

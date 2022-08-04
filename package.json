@@ -5,7 +5,7 @@
     "name": "CHARK",
     "url": "https://chark.io"
   },
-  "version": "2.1.0",
+  "version": "2.2.0",
   "unity": "2020.3",
   "description": "Simple and extensible event system implemented via ScriptableObject.",
   "keywords": [
