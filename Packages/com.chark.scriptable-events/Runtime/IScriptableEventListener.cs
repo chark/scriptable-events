@@ -1,4 +1,4 @@
-﻿namespace ScriptableEvents
+﻿namespace CHARK.ScriptableEvents
 {
     public interface IScriptableEventListener<in TArg>
     {

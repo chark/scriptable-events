@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents.Editor
+namespace CHARK.ScriptableEvents.Editor
 {
     /// <summary>
     /// Utilities to draw inspector GUIs in <see cref="BaseScriptableEventEditor{TArg}"/> and

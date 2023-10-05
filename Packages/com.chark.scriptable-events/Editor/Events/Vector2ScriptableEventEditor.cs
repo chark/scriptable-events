@@ -1,8 +1,8 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(Vector2ScriptableEvent))]
     public class Vector2ScriptableEventEditor : BaseScriptableEventEditor<Vector2>

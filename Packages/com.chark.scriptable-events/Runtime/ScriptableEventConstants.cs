@@ -1,4 +1,4 @@
-﻿namespace ScriptableEvents
+﻿namespace CHARK.ScriptableEvents
 {
     /// <summary>
     /// Constants used in the ScriptableEvent package to reduce duplication.

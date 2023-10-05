@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using ScriptableEvents.Editor.States;
+using CHARK.ScriptableEvents.Editor.States;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace ScriptableEvents.Editor.Icons
+namespace CHARK.ScriptableEvents.Editor.Icons
 {
     /// <summary>
     /// Applies icons to Scriptable Event and Listener assets.

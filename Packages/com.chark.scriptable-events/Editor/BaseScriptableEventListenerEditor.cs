@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace ScriptableEvents.Editor
+namespace CHARK.ScriptableEvents.Editor
 {
     /// <summary>
     /// Default editor for Scriptable Event Listeners which don't an explicit editor.

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents.Editor.ScriptCreation
+namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Utilities to draw editor window GUI in <see cref="ScriptCreatorEditorWindow"/>.

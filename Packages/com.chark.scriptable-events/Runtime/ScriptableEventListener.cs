@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ScriptableEvents
+namespace CHARK.ScriptableEvents
 {
     /// <summary>
     /// Base Scriptable Event Listener which accepts an argument, used as a base by all internal

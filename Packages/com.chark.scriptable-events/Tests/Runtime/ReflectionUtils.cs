@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ScriptableEvents.Tests.Runtime
+namespace CHARK.ScriptableEvents.Tests.Runtime
 {
     internal static class ReflectionUtils
     {
@@ -23,7 +23,7 @@ namespace ScriptableEvents.Tests.Runtime
             field.SetValue(obj, value);
         }
         /// <summary>
-        /// Add an item to a field of type List<T>
+        /// Add an item to a field of type <see cref="List{T}"/>.
         /// </summary>
         internal static void AddToListField<T>(this object obj, string name, T value)
         {

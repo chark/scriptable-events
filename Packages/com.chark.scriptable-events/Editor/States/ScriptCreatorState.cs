@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.States
+namespace CHARK.ScriptableEvents.Editor.States
 {
     /// <summary>
     /// Holds state used in

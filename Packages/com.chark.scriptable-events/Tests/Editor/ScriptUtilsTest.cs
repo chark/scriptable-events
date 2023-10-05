@@ -1,8 +1,8 @@
 ﻿using System.IO;
+using CHARK.ScriptableEvents.Editor.ScriptCreation;
 using NUnit.Framework;
-using ScriptableEvents.Editor.ScriptCreation;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     [TestFixture]
     internal class ScriptUtilsTest

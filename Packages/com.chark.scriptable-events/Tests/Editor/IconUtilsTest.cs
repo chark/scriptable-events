@@ -1,10 +1,10 @@
 ﻿using System.IO;
+using CHARK.ScriptableEvents.Editor.Icons;
 using NUnit.Framework;
-using ScriptableEvents.Editor.Icons;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     [TestFixture]
     internal class IconUtilsTest

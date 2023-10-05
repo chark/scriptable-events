@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using ScriptableEvents.Editor.States;
+using CHARK.ScriptableEvents.Editor.States;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.ScriptCreation
+namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Editor window for creating custom Scriptable Event and Listener scripts.
