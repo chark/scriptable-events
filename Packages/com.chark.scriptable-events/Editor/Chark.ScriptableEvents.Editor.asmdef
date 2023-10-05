@@ -1,10 +1,18 @@
-﻿{
-  "name": "Chark.ScriptableEvents.Editor",
-  "rootNamespace": "ScriptableEvents",
-  "references": [
-    "Chark.ScriptableEvents"
-  ],
-  "includePlatforms": [
-    "Editor"
-  ]
+{
+    "name": "CHARK.ScriptableEvents.Editor",
+    "rootNamespace": "CHARK.ScriptableEvents",
+    "references": [
+        "GUID:d8ff72fdf1f9b014ab4291157a56a767"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

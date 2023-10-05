@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("Chark.ScriptableEvents.Editor")]
+[assembly:InternalsVisibleTo("CHARK.ScriptableEvents.Editor")]
 
-[assembly:InternalsVisibleTo("Chark.ScriptableEvents.Editor.Tests")]
-[assembly:InternalsVisibleTo("Chark.ScriptableEvents.Tests")]
+[assembly:InternalsVisibleTo("CHARK.ScriptableEvents.Editor.Tests")]
+[assembly:InternalsVisibleTo("CHARK.ScriptableEvents.Tests")]
