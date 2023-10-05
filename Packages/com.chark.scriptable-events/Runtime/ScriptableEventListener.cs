@@ -16,6 +16,7 @@ namespace ScriptableEvents
         : ScriptableEventListener, IScriptableEventListener<TArg>, ISerializationCallbackReceiver
     {
         #region Editor
+
         [HideInInspector]
         [SerializeField]
         [Obsolete]
@@ -38,12 +39,12 @@ namespace ScriptableEvents
         {
             // No null or empty check - a listener can exist with that is listening to nothing.
             // This also avoids issues on initialisation
-            scriptableEvents.ForEach(scriptableEvent => scriptableEvent.AddListener(this));
+            scriptableEvents.ForEach(@event => @event.AddListener(this));
         }
 
         private void OnDisable()
         {
-            scriptableEvents.ForEach(scriptableEvent => scriptableEvent.RemoveListener(this));
+            scriptableEvents.ForEach(@event => @event.RemoveListener(this));
         }
 
         #endregion
@@ -62,14 +63,18 @@ namespace ScriptableEvents
             {
                 return;
             }
-            if (scriptableEvent!=false)
+
+#pragma warning disable CS0612 // Type or member is obsolete
+            if (scriptableEvent != false)
             {
                 if (!scriptableEvents.Contains(scriptableEvent))
                 {
                     scriptableEvents.Add(scriptableEvent);
                 }
+
                 scriptableEvent = null;
             }
+#pragma warning restore CS0612 // Type or member is obsolete
         }
 
         public void OnAfterDeserialize()
