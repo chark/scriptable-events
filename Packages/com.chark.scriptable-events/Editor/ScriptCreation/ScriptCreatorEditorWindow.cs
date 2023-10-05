@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using ScriptableEvents.Editor.States;
+using CHARK.ScriptableEvents.Editor.States;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.ScriptCreation
+namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Editor window for creating custom Scriptable Event and Listener scripts.
@@ -310,7 +310,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void CreateEventScript()
         {
-            var baseNamespace = typeof(BaseScriptableEvent<>);
+            var baseNamespace = typeof(ScriptableEvent<>);
 
             var scriptContent = new ScriptBuilder("EventTemplate")
                 .AddSubstitute("EVENT_NAMESPACE", eventNamespace)
@@ -341,7 +341,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void CreateListenerScript()
         {
-            var baseNamespace = typeof(BaseScriptableEvent<>);
+            var baseNamespace = typeof(ScriptableEvent<>);
 
             var scriptContent = new ScriptBuilder("ListenerTemplate")
                 .AddSubstitute("LISTENER_NAMESPACE", listenerNamespace)
@@ -370,7 +370,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void CreateEditorScript()
         {
-            var baseNamespace = typeof(BaseScriptableEventEditor);
+            var baseNamespace = typeof(ScriptableEventEditor);
 
             var scriptContent = new ScriptBuilder("EditorTemplate")
                 .AddSubstitute("EDITOR_NAMESPACE", editorNamespace)

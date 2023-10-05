@@ -3,7 +3,7 @@
 namespace ${EDITOR_NAMESPACE}
 {
     [CustomEditor(typeof(${EVENT_NAME}))]
-    public class ${EDITOR_NAME} : BaseScriptableEventEditor<${EVENT_ARG_NAME}>
+    internal sealed class ${EDITOR_NAME} : ScriptableEventEditor<${EVENT_ARG_NAME}>
     {
         protected override ${EVENT_ARG_NAME} DrawArgField(${EVENT_ARG_NAME} value)
         {

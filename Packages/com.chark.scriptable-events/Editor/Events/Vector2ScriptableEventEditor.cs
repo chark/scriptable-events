@@ -1,11 +1,11 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(Vector2ScriptableEvent))]
-    public class Vector2ScriptableEventEditor : BaseScriptableEventEditor<Vector2>
+    public class Vector2ScriptableEventEditor : ScriptableEventEditor<Vector2>
     {
         protected override Vector2 DrawArgField(Vector2 value)
         {

@@ -1,4 +1,4 @@
-﻿namespace ScriptableEvents
+﻿namespace CHARK.ScriptableEvents
 {
     /// <summary>
     /// Constants used in the ScriptableEvent package to reduce duplication.
@@ -24,7 +24,7 @@
         /// <summary>
         /// Prefix of 'Create' event menus.
         /// </summary>
-        internal const string MenuNameBase = "Scriptable Event";
+        internal const string MenuNameBase = "CHARK/Scriptable Event";
 
         /// <summary>
         /// Menu order of event assets which use simple arguments.

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Listeners
+namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Double Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
     )]
-    public class DoubleScriptableEventListener : BaseScriptableEventListener<double>
+    public sealed class DoubleScriptableEventListener : ScriptableEventListener<double>
     {
     }
 }

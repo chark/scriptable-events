@@ -3,7 +3,7 @@ using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     [TestFixtureSource(typeof(ScriptableEventAttributeTestSource))]
     internal class ScriptableEventAttributeTest

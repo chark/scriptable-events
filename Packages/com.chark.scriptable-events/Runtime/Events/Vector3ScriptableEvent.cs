@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Events
+namespace CHARK.ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "Vector3ScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Vector3 Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
     )]
-    public class Vector3ScriptableEvent : BaseScriptableEvent<Vector3>
+    public sealed class Vector3ScriptableEvent : ScriptableEvent<Vector3>
     {
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.ScriptCreation
+namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Creates custom scriptable event scripts from template files.

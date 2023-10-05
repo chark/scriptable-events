@@ -1,17 +1,13 @@
 ﻿using System.Linq;
+using CHARK.ScriptableEvents.Editor.States;
 using NUnit.Framework;
-using ScriptableEvents.Editor.States;
 using UnityEditor;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     [TestFixture]
     internal class ScriptableEventEditorStateTest
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Methods
 
         [SetUp]

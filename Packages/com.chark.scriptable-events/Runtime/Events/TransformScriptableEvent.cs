@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Events
+namespace CHARK.ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "TransformScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Transform Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
     )]
-    public class TransformScriptableEvent : BaseScriptableEvent<Transform>
+    public sealed class TransformScriptableEvent : ScriptableEvent<Transform>
     {
     }
 }

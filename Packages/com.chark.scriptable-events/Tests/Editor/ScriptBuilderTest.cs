@@ -1,7 +1,7 @@
+using CHARK.ScriptableEvents.Editor.ScriptCreation;
 using NUnit.Framework;
-using ScriptableEvents.Editor.ScriptCreation;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     [TestFixture]
     internal class ScriptBuilderTest
@@ -10,7 +10,7 @@ namespace ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromEventTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents;
+                using CHARK.ScriptableEvents;
                 using TestEventArg.Namespace;
                 using UnityEngine;
 
@@ -21,7 +21,7 @@ namespace ScriptableEvents.Tests.Editor
                         menuName = ScriptableEventConstants.MenuNameCustom + ""/TestEventMenuName"",
                         order = ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestEventName : BaseScriptableEvent<TestEventArgName>
+                    internal sealed class TestEventName : ScriptableEvent<TestEventArgName>
                     {
                     }
                 }
@@ -40,7 +40,7 @@ namespace ScriptableEvents.Tests.Editor
                 // Already exists in namespace, should be skipped.
                 .AddImport("TestEventArg.Namespace")
                 .AddImport("TestEvent.Namespace")
-                .AddImport("ScriptableEvents")
+                .AddImport("CHARK.ScriptableEvents")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
@@ -50,7 +50,7 @@ namespace ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromListenerTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents;
+                using CHARK.ScriptableEvents;
                 using TestEventArg.Namespace;
                 using UnityEngine;
 
@@ -60,7 +60,7 @@ namespace ScriptableEvents.Tests.Editor
                         ScriptableEventConstants.MenuNameCustom + ""/TestListenerMenuName"",
                         ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestListenerName : BaseScriptableEventListener<TestEventArgName>
+                    internal sealed class TestListenerName : ScriptableEventListener<TestEventArgName>
                     {
                     }
                 }
@@ -78,7 +78,7 @@ namespace ScriptableEvents.Tests.Editor
                 // Already exists in namespace, should be skipped.
                 .AddImport("TestListener.Namespace")
                 .AddImport("TestEventArg.Namespace")
-                .AddImport("ScriptableEvents")
+                .AddImport("CHARK.ScriptableEvents")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
@@ -88,7 +88,7 @@ namespace ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromEditorTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents.Editor;
+                using CHARK.ScriptableEvents.Editor;
                 using TestEvent.Namespace;
                 using TestEventArg.Namespace;
                 using UnityEditor;
@@ -96,7 +96,7 @@ namespace ScriptableEvents.Tests.Editor
                 namespace TestEditor.Namespace
                 {
                     [CustomEditor(typeof(TestEvent))]
-                    public class TestEditor : BaseScriptableEventEditor<TestEventArg>
+                    internal sealed class TestEditor : ScriptableEventEditor<TestEventArg>
                     {
                         protected override TestEventArg DrawArgField(TestEventArg value)
                         {
@@ -120,7 +120,7 @@ namespace ScriptableEvents.Tests.Editor
                 .AddImport("TestEditor.Namespace")
                 .AddImport("TestEventArg.Namespace")
                 .AddImport("TestEvent.Namespace")
-                .AddImport("ScriptableEvents.Editor")
+                .AddImport("CHARK.ScriptableEvents.Editor")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
@@ -134,6 +134,5 @@ namespace ScriptableEvents.Tests.Editor
         {
             return source.Replace("\r\n", "\n").Replace("\r", "\n");
         }
-
     }
 }

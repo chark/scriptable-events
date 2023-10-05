@@ -1,10 +1,10 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(BoolScriptableEvent))]
-    public class BoolScriptableEventEditor : BaseScriptableEventEditor<bool>
+    public class BoolScriptableEventEditor : ScriptableEventEditor<bool>
     {
         protected override bool DrawArgField(bool value)
         {

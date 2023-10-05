@@ -1,18 +1,18 @@
 ﻿using System;
 
-namespace ScriptableEvents
+namespace CHARK.ScriptableEvents
 {
     internal enum ScriptableIconType
     {
         Event,
-        Listener
+        Listener,
     }
 
     /// <summary>
     /// Used to tag assets (mono scripts) which must have an icon.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    internal class ScriptableIcon : Attribute
+    internal sealed class ScriptableIcon : Attribute
     {
         #region Internal Properties
 

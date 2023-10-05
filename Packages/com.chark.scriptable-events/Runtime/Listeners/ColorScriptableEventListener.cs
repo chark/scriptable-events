@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Listeners
+namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Color Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
     )]
-    public class ColorScriptableEventListener : BaseScriptableEventListener<Color>
+    public sealed class ColorScriptableEventListener : ScriptableEventListener<Color>
     {
     }
 }

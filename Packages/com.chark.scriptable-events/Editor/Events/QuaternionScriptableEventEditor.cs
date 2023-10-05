@@ -1,11 +1,11 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(QuaternionScriptableEvent))]
-    public class QuaternionScriptableEventEditor : BaseScriptableEventEditor<Quaternion>
+    public class QuaternionScriptableEventEditor : ScriptableEventEditor<Quaternion>
     {
         protected override Quaternion DrawArgField(Quaternion value)
         {

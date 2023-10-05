@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents.Editor.Icons
+namespace CHARK.ScriptableEvents.Editor.Icons
 {
     /// <summary>
     /// Utilities to set icons for Scriptable Events and Listeners. Inspired by:

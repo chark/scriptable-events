@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.States
+namespace CHARK.ScriptableEvents.Editor.States
 {
     /// <summary>
     /// Holds state used in <see cref="ScriptableEvents.Editor.Icons.IconPostProcessor"/>.

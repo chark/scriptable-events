@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Events
+namespace CHARK.ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "LongScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Long Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
     )]
-    public class LongScriptableEvent : BaseScriptableEvent<long>
+    public sealed class LongScriptableEvent : ScriptableEvent<long>
     {
     }
 }

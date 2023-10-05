@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Events
+namespace CHARK.ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "BoolScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Bool Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
     )]
-    public class BoolScriptableEvent : BaseScriptableEvent<bool>
+    public sealed class BoolScriptableEvent : ScriptableEvent<bool>
     {
     }
 }

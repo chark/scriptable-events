@@ -4,11 +4,11 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents.Editor
+namespace CHARK.ScriptableEvents.Editor
 {
     /// <summary>
-    /// Utilities to draw inspector GUIs in <see cref="BaseScriptableEventEditor{TArg}"/> and
-    /// <see cref="BaseScriptableEventEditor"/>.
+    /// Utilities to draw inspector GUIs in <see cref="ScriptableEventEditor{TArg}"/> and
+    /// <see cref="ScriptableEventEditor"/>.
     /// </summary>
     internal static class ScriptableEventEditorGUI
     {

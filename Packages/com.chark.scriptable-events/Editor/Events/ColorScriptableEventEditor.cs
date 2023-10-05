@@ -1,11 +1,11 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(ColorScriptableEvent))]
-    public class ColorScriptableEventEditor : BaseScriptableEventEditor<Color>
+    public class ColorScriptableEventEditor : ScriptableEventEditor<Color>
     {
         protected override Color DrawArgField(Color value)
         {

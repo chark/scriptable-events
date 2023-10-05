@@ -1,13 +1,13 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEngine;
 
-namespace ScriptableEvents.Listeners
+namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Simple Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderSimpleEvent + 0
     )]
-    public class SimpleScriptableEventListener : BaseScriptableEventListener<SimpleArg>
+    public sealed class SimpleScriptableEventListener : ScriptableEventListener<SimpleArg>
     {
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CHARK.ScriptableEvents.Events;
 using NUnit.Framework;
-using ScriptableEvents.Events;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests.Runtime
+namespace CHARK.ScriptableEvents.Tests.Runtime
 {
     [TestFixture]
     internal class SimpleScriptableEventTest

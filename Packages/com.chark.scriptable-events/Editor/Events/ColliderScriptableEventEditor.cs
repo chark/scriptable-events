@@ -1,11 +1,11 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(ColliderScriptableEvent))]
-    public class ColliderScriptableEventEditor : BaseScriptableEventEditor<Collider>
+    public class ColliderScriptableEventEditor : ScriptableEventEditor<Collider>
     {
         protected override Collider DrawArgField(Collider value)
         {

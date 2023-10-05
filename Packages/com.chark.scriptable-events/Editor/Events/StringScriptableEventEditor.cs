@@ -1,10 +1,10 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(StringScriptableEvent))]
-    public class StringScriptableEventEditor : BaseScriptableEventEditor<string>
+    public class StringScriptableEventEditor : ScriptableEventEditor<string>
     {
         protected override string DrawArgField(string value)
         {

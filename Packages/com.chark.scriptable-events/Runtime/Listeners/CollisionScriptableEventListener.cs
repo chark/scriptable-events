@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Listeners
+namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Collision Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
     )]
-    public class CollisionScriptableEventListener : BaseScriptableEventListener<Collision>
+    public sealed class CollisionScriptableEventListener : ScriptableEventListener<Collision>
     {
     }
 }

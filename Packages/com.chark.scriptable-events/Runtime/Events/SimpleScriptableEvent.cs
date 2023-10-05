@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Events
+namespace CHARK.ScriptableEvents.Events
 {
     [CreateAssetMenu(
         fileName = "SimpleScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Simple Scriptable Event",
         order = ScriptableEventConstants.MenuOrderSimpleEvent + 0
     )]
-    public class SimpleScriptableEvent : BaseScriptableEvent<SimpleArg>
+    public sealed class SimpleScriptableEvent : ScriptableEvent<SimpleArg>
     {
         /// <summary>
         /// Raise this event without an argument.

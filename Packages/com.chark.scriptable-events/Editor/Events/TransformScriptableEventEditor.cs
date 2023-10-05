@@ -1,11 +1,11 @@
-using ScriptableEvents.Events;
+using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(TransformScriptableEvent))]
-    public class TransformScriptableEventEditor : BaseScriptableEventEditor<Transform>
+    public class TransformScriptableEventEditor : ScriptableEventEditor<Transform>
     {
         protected override Transform DrawArgField(Transform value)
         {

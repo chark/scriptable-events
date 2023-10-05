@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         unityVersion:
-          - 2020.3.25f1
+          - 2020.3.48f1
 
     steps:
 
@@ -56,7 +56,7 @@ jobs:
 
       # Test
       - name: Run Tests
-        uses: game-ci/unity-test-runner@v2
+        uses: game-ci/unity-test-runner@v3.0.0
         id: tests
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -68,5 +68,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: Test Restuls
+          name: Test Results
           path: ${{ steps.tests.outputs.artifactsPath }}
