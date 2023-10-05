@@ -1,8 +1,0 @@
-{
-  "name": "Chark.ScriptableEvents.Samples",
-  "rootNamespace": "ScriptableEvents",
-  "references": [
-    "Chark.ScriptableEvents",
-    "Chark.ScriptableEvents.Editor"
-  ]
-}

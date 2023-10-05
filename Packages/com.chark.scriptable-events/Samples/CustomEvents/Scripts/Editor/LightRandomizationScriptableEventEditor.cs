@@ -2,7 +2,7 @@ using ScriptableEvents.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Samples.CustomEvents.Editor
+namespace CHARK.ScriptableEvents.Samples.CustomEvents.Editor
 {
     [CustomEditor(typeof(LightRandomizationScriptableEvent))]
     public class LightRandomizationScriptableEventEditor : BaseScriptableEventEditor<LightRandomizationEventArgs>

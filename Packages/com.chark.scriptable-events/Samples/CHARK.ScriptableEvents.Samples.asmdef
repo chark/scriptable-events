@@ -1,0 +1,17 @@
+{
+    "name": "CHARK.ScriptableEvents.Samples",
+    "rootNamespace": "CHARK.ScriptableEvents",
+    "references": [
+        "GUID:d8ff72fdf1f9b014ab4291157a56a767",
+        "GUID:87b8abe4ff9fd7e42aa654cc986d3202"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
