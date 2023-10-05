@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v3.0.0](https://github.com/chark/scriptable-events/compare/v2.2.0...v3.0.0) - 2023-10-XX
+## [v3.0.0](https://github.com/chark/scriptable-events/compare/v2.2.0...v3.0.0) - 2023-10-05
 
 This release tidies up this package, so it is consistent with other packages published by CHARK. Additionally, this release includes a set of **breaking changes** which will affect you if you're upgrading from previous versions.
 
