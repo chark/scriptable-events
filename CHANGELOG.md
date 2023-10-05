@@ -15,7 +15,7 @@ This release tidies up this package, so it is consistent with other packages pub
 - Renamed `BaseScriptableEvent` to `ScriptableEvent`.
 - Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
 - Updated namespaces to use `CHARK.` prefix.
-- Updated menu items to use `CHARK/`.
+- Updated menu items to use `CHARK/` prefix.
 - Updated script generation logic to accomodate namespace and naming changes.
 - Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
 
