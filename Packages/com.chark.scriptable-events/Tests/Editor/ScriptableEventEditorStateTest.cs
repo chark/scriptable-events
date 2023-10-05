@@ -8,10 +8,6 @@ namespace CHARK.ScriptableEvents.Tests.Editor
     [TestFixture]
     internal class ScriptableEventEditorStateTest
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Methods
 
         [SetUp]
