@@ -6,7 +6,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/Quaternion Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
     )]
-    public class QuaternionScriptableEventListener : BaseScriptableEventListener<Quaternion>
+    public sealed class QuaternionScriptableEventListener : ScriptableEventListener<Quaternion>
     {
     }
 }

@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Quaternion Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
     )]
-    public class QuaternionScriptableEvent : BaseScriptableEvent<Quaternion>
+    public sealed class QuaternionScriptableEvent : ScriptableEvent<Quaternion>
     {
     }
 }

@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Float Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
     )]
-    public class FloatScriptableEvent : BaseScriptableEvent<float>
+    public sealed class FloatScriptableEvent : ScriptableEvent<float>
     {
     }
 }

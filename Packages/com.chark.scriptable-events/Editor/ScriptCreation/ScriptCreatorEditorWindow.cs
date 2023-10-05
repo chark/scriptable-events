@@ -310,7 +310,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void CreateEventScript()
         {
-            var baseNamespace = typeof(BaseScriptableEvent<>);
+            var baseNamespace = typeof(ScriptableEvent<>);
 
             var scriptContent = new ScriptBuilder("EventTemplate")
                 .AddSubstitute("EVENT_NAMESPACE", eventNamespace)
@@ -341,7 +341,7 @@ namespace ScriptableEvents.Editor.ScriptCreation
 
         private void CreateListenerScript()
         {
-            var baseNamespace = typeof(BaseScriptableEvent<>);
+            var baseNamespace = typeof(ScriptableEvent<>);
 
             var scriptContent = new ScriptBuilder("ListenerTemplate")
                 .AddSubstitute("LISTENER_NAMESPACE", listenerNamespace)

@@ -6,7 +6,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/Transform Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
     )]
-    public class TransformScriptableEventListener : BaseScriptableEventListener<Transform>
+    public sealed class TransformScriptableEventListener : ScriptableEventListener<Transform>
     {
     }
 }

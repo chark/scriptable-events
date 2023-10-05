@@ -6,7 +6,7 @@ namespace ScriptableEvents.Editor
     /// Default editor for Scriptable Event Listeners which don't an explicit editor.
     /// </summary>
     [CanEditMultipleObjects]
-    [CustomEditor(typeof(BaseScriptableEventListener), true)]
+    [CustomEditor(typeof(ScriptableEventListener), true)]
     internal class BaseScriptableEventListenerEditor
 #if ODIN_INSPECTOR
         : Sirenix.OdinInspector.Editor.OdinEditor
@@ -17,7 +17,7 @@ namespace ScriptableEvents.Editor
         #region Private Fields
 
         // Target scriptable event listener fields.
-        private BaseScriptableEventListener baseScriptableEventListener;
+        private ScriptableEventListener scriptableEventListener;
         private MonoScript monoScript;
 
         // Serialized properties.
@@ -80,12 +80,12 @@ namespace ScriptableEvents.Editor
 
         private void SetupBaseScriptableEventsListener()
         {
-            baseScriptableEventListener = target as BaseScriptableEventListener;
+            scriptableEventListener = target as ScriptableEventListener;
         }
 
         private void SetupMonoScript()
         {
-            monoScript = MonoScript.FromMonoBehaviour(baseScriptableEventListener);
+            monoScript = MonoScript.FromMonoBehaviour(scriptableEventListener);
         }
 
         private void SetupSerializedProperties()

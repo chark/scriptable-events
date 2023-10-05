@@ -15,7 +15,7 @@ namespace ScriptableEvents.Editor
     {
         #region Private Fields
 
-        private BaseScriptableEvent<TArg> scriptableEvent;
+        private ScriptableEvent<TArg> scriptableEvent;
         private TArg argValue;
 
         #endregion
@@ -26,7 +26,7 @@ namespace ScriptableEvents.Editor
         {
             base.SetupEditor();
 
-            scriptableEvent = target as BaseScriptableEvent<TArg>;
+            scriptableEvent = target as ScriptableEvent<TArg>;
         }
 
         #endregion

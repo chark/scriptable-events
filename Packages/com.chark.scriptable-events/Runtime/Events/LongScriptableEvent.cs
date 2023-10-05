@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Long Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
     )]
-    public class LongScriptableEvent : BaseScriptableEvent<long>
+    public sealed class LongScriptableEvent : ScriptableEvent<long>
     {
     }
 }

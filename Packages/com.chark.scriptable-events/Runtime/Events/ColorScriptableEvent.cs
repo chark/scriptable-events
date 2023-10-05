@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Color Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
     )]
-    public class ColorScriptableEvent : BaseScriptableEvent<Color>
+    public sealed class ColorScriptableEvent : ScriptableEvent<Color>
     {
     }
 }

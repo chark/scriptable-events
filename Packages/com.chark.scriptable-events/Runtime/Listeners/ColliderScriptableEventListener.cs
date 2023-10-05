@@ -6,7 +6,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/Collider Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
     )]
-    public class ColliderScriptableEventListener : BaseScriptableEventListener<Collider>
+    public sealed class ColliderScriptableEventListener : ScriptableEventListener<Collider>
     {
     }
 }

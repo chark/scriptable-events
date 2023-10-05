@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/String Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
     )]
-    public class StringScriptableEvent : BaseScriptableEvent<string>
+    public sealed class StringScriptableEvent : ScriptableEvent<string>
     {
     }
 }

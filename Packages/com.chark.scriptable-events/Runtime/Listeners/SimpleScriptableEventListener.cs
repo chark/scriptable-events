@@ -7,7 +7,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/Simple Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderSimpleEvent + 0
     )]
-    public class SimpleScriptableEventListener : BaseScriptableEventListener<SimpleArg>
+    public sealed class SimpleScriptableEventListener : ScriptableEventListener<SimpleArg>
     {
     }
 }

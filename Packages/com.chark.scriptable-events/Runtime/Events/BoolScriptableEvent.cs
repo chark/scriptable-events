@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Bool Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
     )]
-    public class BoolScriptableEvent : BaseScriptableEvent<bool>
+    public sealed class BoolScriptableEvent : ScriptableEvent<bool>
     {
     }
 }

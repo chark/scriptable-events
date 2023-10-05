@@ -6,7 +6,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/String Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
     )]
-    public class StringScriptableEventListener : BaseScriptableEventListener<string>
+    public sealed class StringScriptableEventListener : ScriptableEventListener<string>
     {
     }
 }

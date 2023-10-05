@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Double Scriptable Event",
         order = ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
     )]
-    public class DoubleScriptableEvent : BaseScriptableEvent<double>
+    public sealed class DoubleScriptableEvent : ScriptableEvent<double>
     {
     }
 }
