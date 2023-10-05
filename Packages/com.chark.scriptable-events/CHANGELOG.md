@@ -23,6 +23,7 @@ This release tidies up this package, so it is consistent with other packages pub
 - Updated samples as they broke after changing class names and namespaces.
 - Updated script generation logic to accomodate namespace and naming changes.
 - Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
+- Updated Script Creator window to generate more restricted classes, with `sealed` and `internal` keywords instead of just `public`.
 
 ## [v2.2.0](https://github.com/chark/scriptable-events/compare/v2.1.0...v2.2.0) - 2022-08-04
 
