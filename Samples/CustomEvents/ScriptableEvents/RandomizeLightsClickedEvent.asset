@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3fa7767af2d4c4cbf41d0d4f11146a, type: 3}
+  m_Script: {fileID: 11500000, guid: 38344ae4ccc85c7488d49e382944fb01, type: 3}
   m_Name: RandomizeLightsClickedEvent
   m_EditorClassIdentifier: 
-  description: 'Raised when <i>RandomizeLightsButton</i> is clicked
-
-'
+  description: 
   isSuppressExceptions: 0
   isDebug: 0

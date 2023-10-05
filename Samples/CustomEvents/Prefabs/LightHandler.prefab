@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8325368634440203029}
   - component: {fileID: 8325368634440203031}
-  - component: {fileID: 8325368634440203030}
+  - component: {fileID: -1451942269863958815}
   m_Layer: 0
   m_Name: LightHandler
   m_TagString: Untagged
@@ -324,16 +324,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 8325368634440203028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9fc3b731d1a38549a0bc9c5008c4ddf, type: 3}
+  m_Script: {fileID: 11500000, guid: 94fcec3630648444ea6290c96065a05f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableEvent: {fileID: 11400000, guid: 124303561f1805d43b120e0ca4ab14db, type: 2}
+--- !u!114 &-1451942269863958815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325368634440203028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023e9019d7c3f604fa65c27041d7bbc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptableEvent: {fileID: 0}
+  scriptableEvents:
+  - {fileID: 11400000, guid: abd92e07deed9a74a9d80d07a6a3dcc2, type: 2}
   onRaised:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8325368634440203030}
-        m_TargetAssemblyTypeName: ScriptableEvents.Samples.CustomEvents.LightHandler,
-          Chark.ScriptableEvents.Samples
+      - m_Target: {fileID: 8325368634440203031}
+        m_TargetAssemblyTypeName: CHARK.ScriptableEvents.Samples.CustomEvents.LightHandler,
+          CHARK.ScriptableEvents.Samples
         m_MethodName: HandleLightRandomization
         m_Mode: 0
         m_Arguments:
@@ -344,18 +358,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8325368634440203030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8325368634440203028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6007d7f80aac5f469eb577948215aa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8325368635017290188
 GameObject:
   m_ObjectHideFlags: 0
