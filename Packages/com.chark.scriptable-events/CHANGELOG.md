@@ -11,13 +11,14 @@ This release tidies up this package, so it is consistent with other packages pub
 
 ### Changes
 
-- Updated all built-in `BaseScriptableEvent` and `ScriptableEvent` implementations to use `sealed` keyword to prevent inheriting built-in event and listener implementations.
 - Renamed `BaseScriptableEvent` to `ScriptableEvent`.
 - Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
 - Renamed `BaseScriptableEventEditor` to `ScriptableEventEditor`.
 - Renamed `BaseScriptableEventListenerEditor` to `ScriptableEventListenerEditor`.
+- Updated all built-in `BaseScriptableEvent` and `ScriptableEvent` implementations to use `sealed` keyword to prevent inheriting built-in event and listener implementations.
 - Updated namespaces to use `CHARK.` prefix.
 - Updated menu items to use `CHARK/` prefix.
+- Updated samples as they broke after changing class names and namespaces.
 - Updated script generation logic to accomodate namespace and naming changes.
 - Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
 
