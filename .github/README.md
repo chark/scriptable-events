@@ -35,7 +35,7 @@ https://github.com/chark/scriptable-events.git#upm
 Alternatively, manually install by adding the following entry to `Packages/manifest.json`:
 ```json
 {
-  "com.chark.build-tools": "https://github.com/chark/scriptable-events.git#upm"
+  "com.chark.scriptable-events": "https://github.com/chark/scriptable-events.git#upm"
 }
 ```
 
