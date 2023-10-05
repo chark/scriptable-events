@@ -14,7 +14,7 @@ namespace ScriptableEvents
     /// <typeparam name="TArg">
     /// Type of data which is passed as an argument to this event
     /// </typeparam>
-    public abstract class BaseScriptableEvent<TArg> : BaseScriptableEvent
+    public abstract class ScriptableEvent<TArg> : BaseScriptableEvent
     {
         #region Editor
 

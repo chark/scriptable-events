@@ -12,19 +12,19 @@ namespace ScriptableEvents
     /// <typeparam name="TArg">
     /// Type of data which is passed as an argument to this listener
     /// </typeparam>
-    public abstract class BaseScriptableEventListener<TArg>
-        : BaseScriptableEventListener, IScriptableEventListener<TArg>, ISerializationCallbackReceiver
+    public abstract class ScriptableEventListener<TArg>
+        : ScriptableEventListener, IScriptableEventListener<TArg>, ISerializationCallbackReceiver
     {
         #region Editor
         [HideInInspector]
         [SerializeField]
         [Obsolete]
         [Tooltip("ScriptableEvent that triggers the On Raised UnityEvent")]
-        private BaseScriptableEvent<TArg> scriptableEvent;
+        private ScriptableEvent<TArg> scriptableEvent;
 
         [SerializeField]
         [Tooltip("List of ScriptableEvents that trigger the On Raised UnityEvent")]
-        private List<BaseScriptableEvent<TArg>> scriptableEvents = new List<BaseScriptableEvent<TArg>>();
+        private List<ScriptableEvent<TArg>> scriptableEvents = new List<ScriptableEvent<TArg>>();
 
         [Space]
         [SerializeField]
@@ -84,7 +84,7 @@ namespace ScriptableEvents
     /// in internal editor scripts.
     /// </summary>
     [ScriptableIcon(ScriptableIconType.Listener)]
-    public abstract class BaseScriptableEventListener : MonoBehaviour
+    public abstract class ScriptableEventListener : MonoBehaviour
     {
     }
 }

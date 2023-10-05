@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Game Object Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
     )]
-    public class GameObjectScriptableEvent : BaseScriptableEvent<GameObject>
+    public sealed class GameObjectScriptableEvent : ScriptableEvent<GameObject>
     {
     }
 }

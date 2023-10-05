@@ -11,6 +11,7 @@ This release tidies up this package, so it is consistent with other packages pub
 
 ### Changes
 
+- Updated all built-in `BaseScriptableEvent` and `ScriptableEvent` implementations to use `sealed` keyword to prevent inheriting built-in event and listener implementations.
 - Renamed `BaseScriptableEvent` to `ScriptableEvent`.
 - Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
 - Updated namespaces to use `CHARK.` prefix.

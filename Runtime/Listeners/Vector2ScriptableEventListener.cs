@@ -6,7 +6,7 @@ namespace ScriptableEvents.Listeners
         ScriptableEventConstants.MenuNameBase + "/Vector2 Scriptable Event Listener",
         ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
     )]
-    public class Vector2ScriptableEventListener : BaseScriptableEventListener<Vector2>
+    public sealed class Vector2ScriptableEventListener : ScriptableEventListener<Vector2>
     {
     }
 }

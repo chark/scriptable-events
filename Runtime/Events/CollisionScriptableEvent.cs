@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Collision Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
     )]
-    public class CollisionScriptableEvent : BaseScriptableEvent<Collision>
+    public sealed class CollisionScriptableEvent : ScriptableEvent<Collision>
     {
     }
 }

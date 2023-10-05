@@ -7,7 +7,7 @@ namespace ScriptableEvents.Events
         menuName = ScriptableEventConstants.MenuNameBase + "/Transform Scriptable Event",
         order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
     )]
-    public class TransformScriptableEvent : BaseScriptableEvent<Transform>
+    public sealed class TransformScriptableEvent : ScriptableEvent<Transform>
     {
     }
 }

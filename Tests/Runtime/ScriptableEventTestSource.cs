@@ -125,8 +125,8 @@ namespace ScriptableEvents.Tests.Runtime
             TScriptableEventListener,
             TArg
         >(TArg arg)
-            where TScriptableEvent : BaseScriptableEvent<TArg>
-            where TScriptableEventListener : BaseScriptableEventListener<TArg>
+            where TScriptableEvent : ScriptableEvent<TArg>
+            where TScriptableEventListener : ScriptableEventListener<TArg>
         {
             var attribute = new TestFixtureAttribute(arg)
             {

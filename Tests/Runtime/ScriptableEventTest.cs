@@ -14,8 +14,8 @@ namespace ScriptableEvents.Tests.Runtime
         TScriptableEventListener,
         TArg
     >
-        where TScriptableEvent : BaseScriptableEvent<TArg>
-        where TScriptableEventListener : BaseScriptableEventListener<TArg>
+        where TScriptableEvent : ScriptableEvent<TArg>
+        where TScriptableEventListener : ScriptableEventListener<TArg>
     {
         #region Private Fields
 
@@ -159,8 +159,8 @@ namespace ScriptableEvents.Tests.Runtime
 
             // Note: the type for scriptableEvents is NOT TScriptableEvent, it is BaseScriptableEvent<TArg>
             // If treated as TScriptableEvent, casting fails.
-            scriptableEventListener.AddToListField<BaseScriptableEvent<TArg>>("scriptableEvents", scriptableEvent);
-            scriptableEventListener.AddToListField<BaseScriptableEvent<TArg>>("scriptableEvents", scriptableEvent2);
+            scriptableEventListener.AddToListField<ScriptableEvent<TArg>>("scriptableEvents", scriptableEvent);
+            scriptableEventListener.AddToListField<ScriptableEvent<TArg>>("scriptableEvents", scriptableEvent2);
             scriptableEventListener.SetField("onRaised", unityEvent);
 
             // Add listener by triggering OnEnabled.
