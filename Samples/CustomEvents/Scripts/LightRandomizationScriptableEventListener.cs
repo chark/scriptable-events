@@ -1,4 +1,3 @@
-using ScriptableEvents;
 using UnityEngine;
 
 namespace CHARK.ScriptableEvents.Samples.CustomEvents

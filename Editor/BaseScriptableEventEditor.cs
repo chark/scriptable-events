@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents.Editor
+namespace CHARK.ScriptableEvents.Editor
 {
     /// <summary>
     /// Base editor for Scriptable Events with an argument. This is used when explicitly defining

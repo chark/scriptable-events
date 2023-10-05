@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptableEvents
+namespace CHARK.ScriptableEvents
 {
     internal enum ScriptableIconType
     {

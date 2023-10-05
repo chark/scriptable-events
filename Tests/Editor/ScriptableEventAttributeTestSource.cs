@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using ScriptableEvents.Events;
-using ScriptableEvents.Listeners;
+using CHARK.ScriptableEvents.Events;
+using CHARK.ScriptableEvents.Listeners;
 
-namespace ScriptableEvents.Tests.Editor
+namespace CHARK.ScriptableEvents.Tests.Editor
 {
     internal class ScriptableEventAttributeTestSource : IEnumerable
     {

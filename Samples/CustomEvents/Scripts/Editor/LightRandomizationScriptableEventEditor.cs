@@ -1,4 +1,4 @@
-using ScriptableEvents.Editor;
+using CHARK.ScriptableEvents.Editor;
 using UnityEditor;
 using UnityEngine;
 

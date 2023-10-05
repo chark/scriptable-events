@@ -1,11 +1,11 @@
 ﻿using System.Collections;
+using CHARK.ScriptableEvents.Events;
+using CHARK.ScriptableEvents.Listeners;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using ScriptableEvents.Events;
-using ScriptableEvents.Listeners;
 using UnityEngine;
 
-namespace ScriptableEvents.Tests.Runtime
+namespace CHARK.ScriptableEvents.Tests.Runtime
 {
     internal class ScriptableEventTestSource : IEnumerable
     {

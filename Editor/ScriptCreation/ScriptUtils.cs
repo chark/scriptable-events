@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ScriptableEvents.Editor.ScriptCreation
+namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 {
     /// <summary>
     /// Utilities to persist custom C# scripts.

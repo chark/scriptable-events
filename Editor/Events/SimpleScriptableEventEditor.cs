@@ -1,7 +1,7 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(SimpleScriptableEvent))]
     public class SimpleScriptableEventEditor : BaseScriptableEventEditor<SimpleArg>

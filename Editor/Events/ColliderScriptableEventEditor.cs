@@ -1,8 +1,8 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(ColliderScriptableEvent))]
     public class ColliderScriptableEventEditor : BaseScriptableEventEditor<Collider>

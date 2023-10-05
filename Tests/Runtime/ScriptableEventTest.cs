@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.TestTools;
 
-namespace ScriptableEvents.Tests.Runtime
+namespace CHARK.ScriptableEvents.Tests.Runtime
 {
     [TestFixtureSource(typeof(ScriptableEventTestSource))]
     internal class ScriptableEventTest<

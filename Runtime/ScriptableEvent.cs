@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-namespace ScriptableEvents
+namespace CHARK.ScriptableEvents
 {
     /// <summary>
     /// Base Scriptable Event which accepts an argument, used as a base by all event Scriptable

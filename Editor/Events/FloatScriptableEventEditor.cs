@@ -1,7 +1,7 @@
-﻿using ScriptableEvents.Events;
+﻿using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 
-namespace ScriptableEvents.Editor.Events
+namespace CHARK.ScriptableEvents.Editor.Events
 {
     [CustomEditor(typeof(FloatScriptableEvent))]
     public class FloatScriptableEventEditor : BaseScriptableEventEditor<float>
