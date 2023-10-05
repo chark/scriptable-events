@@ -1,0 +1,14 @@
+{
+    "name": "CHARK.ScriptableEvents",
+    "rootNamespace": "CHARK.ScriptableEvents",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
