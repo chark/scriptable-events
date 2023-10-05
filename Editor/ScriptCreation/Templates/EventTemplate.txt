@@ -7,7 +7,7 @@ namespace ${EVENT_NAMESPACE}
         menuName = ScriptableEventConstants.MenuNameCustom + "/${EVENT_MENU_NAME}",
         order = ScriptableEventConstants.MenuOrderCustom + ${EVENT_MENU_ORDER}
     )]
-    public class ${EVENT_NAME} : ScriptableEvent<${EVENT_ARG_NAME}>
+    internal sealed class ${EVENT_NAME} : ScriptableEvent<${EVENT_ARG_NAME}>
     {
     }
 }
