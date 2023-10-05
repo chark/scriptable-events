@@ -24,7 +24,7 @@ This release tidies up this package, so it is consistent with other packages pub
 - Updated script generation logic to accomodate namespace and naming changes.
 - Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
 
-## [v2.2.0](https://github.com/chark/scriptable-events/compare/v2.0.0...v2.2.0) - 2022-08-04
+## [v2.2.0](https://github.com/chark/scriptable-events/compare/v2.1.0...v2.2.0) - 2022-08-04
 
 Multi events.
 
