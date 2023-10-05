@@ -123,8 +123,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9008442619944084030}
-        m_TargetAssemblyTypeName: ScriptableEvents.Samples.CustomEvents.LightRandomizationTrigger,
-          Chark.ScriptableEvents.Samples
+        m_TargetAssemblyTypeName: CHARK.ScriptableEvents.Samples.CustomEvents.LightRandomizationTrigger,
+          CHARK.ScriptableEvents.Samples
         m_MethodName: RandomizeLights
         m_Mode: 1
         m_Arguments:
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9008442619944084417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e141cf35eea50d4da8bd6f9c60011b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 922263424603e2b4f828281078bad424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minIntensity: 0
@@ -181,9 +181,9 @@ MonoBehaviour:
   onRandomizeLights:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 124303561f1805d43b120e0ca4ab14db, type: 2}
-        m_TargetAssemblyTypeName: ScriptableEvents.BaseScriptableEvent`1[[ScriptableEvents.Samples.CustomEvents.LightRandomizationEventArgs,
-          Chark.ScriptableEvents.Samples
+      - m_Target: {fileID: 11400000, guid: abd92e07deed9a74a9d80d07a6a3dcc2, type: 2}
+        m_TargetAssemblyTypeName: CHARK.ScriptableEvents.ScriptableEvent`1[[CHARK.ScriptableEvents.Samples.CustomEvents.LightRandomizationEventArgs,
+          CHARK.ScriptableEvents.Samples
         m_MethodName: Raise
         m_Mode: 0
         m_Arguments:
