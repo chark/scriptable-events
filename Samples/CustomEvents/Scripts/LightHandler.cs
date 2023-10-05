@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ScriptableEvents.Samples.CustomEvents
+namespace CHARK.ScriptableEvents.Samples.CustomEvents
 {
     public class LightHandler : MonoBehaviour
     {

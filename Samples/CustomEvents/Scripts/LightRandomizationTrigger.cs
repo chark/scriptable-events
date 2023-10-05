@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-namespace ScriptableEvents.Samples.CustomEvents
+namespace CHARK.ScriptableEvents.Samples.CustomEvents
 {
     public class LightRandomizationTrigger : MonoBehaviour
     {
