@@ -377,3 +377,7 @@ public class CustomEventListener : MonoBehaviour
 ```
 
 Note that when using these approaches to subscribe to events, some functionality in the custom Editor inspectors that are included in this package might not work. For example, the functionality to click on `UnityEngine.Object` references in _Scriptable Event_ assets, as it relies on the listeners being of type `UnityEngine.Object`.
+
+## Addressables
+
+Officially Scriptable Events do not support addressables. You may experience issues if you try to use the same event asset between scenes loaded by addressables. To read more about this and possible workarounds, see [this issue](https://github.com/chark/scriptable-events/issues/26).
