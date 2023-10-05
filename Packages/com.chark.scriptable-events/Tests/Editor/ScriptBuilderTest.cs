@@ -21,7 +21,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                         menuName = ScriptableEventConstants.MenuNameCustom + ""/TestEventMenuName"",
                         order = ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestEventName : ScriptableEvent<TestEventArgName>
+                    internal sealed class TestEventName : ScriptableEvent<TestEventArgName>
                     {
                     }
                 }
@@ -60,7 +60,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                         ScriptableEventConstants.MenuNameCustom + ""/TestListenerMenuName"",
                         ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestListenerName : ScriptableEventListener<TestEventArgName>
+                    internal sealed class TestListenerName : ScriptableEventListener<TestEventArgName>
                     {
                     }
                 }
@@ -96,7 +96,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 namespace TestEditor.Namespace
                 {
                     [CustomEditor(typeof(TestEvent))]
-                    public class TestEditor : ScriptableEventEditor<TestEventArg>
+                    internal sealed class TestEditor : ScriptableEventEditor<TestEventArg>
                     {
                         protected override TestEventArg DrawArgField(TestEventArg value)
                         {
