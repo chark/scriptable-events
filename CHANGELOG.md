@@ -18,6 +18,8 @@ This release tidies up this package, so it is consistent with other packages pub
 - Updated all built-in `BaseScriptableEvent` and `ScriptableEvent` implementations to use `sealed` keyword to prevent inheriting built-in event and listener implementations.
 - Updated namespaces to use `CHARK.` prefix.
 - Updated menu items to use `CHARK/` prefix.
+- Updated assemblies to use `CHARK.` (instead of `Chark.`) prefix in their names.
+- Updated assemblies to use GUIDs instead of assembly names when referencing other assemblies.
 - Updated samples as they broke after changing class names and namespaces.
 - Updated script generation logic to accomodate namespace and naming changes.
 - Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
