@@ -1,8 +1,8 @@
 # Scriptable Events
 
 [![Unity 2020.3+](https://img.shields.io/badge/unity-2020.3%2B-blue.svg)](https://unity3d.com/get-unity/download)
-[![Actions Status](https://github.com/chark/scriptable-events/workflows/CI/badge.svg)](https://github.com/chark/scriptable-events/actions)
 [![openupm](https://img.shields.io/npm/v/com.chark.scriptable-events?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.chark.scriptable-events/)
+[![Actions Status](https://github.com/chark/scriptable-events/workflows/CI/badge.svg)](https://github.com/chark/scriptable-events/actions)
 
 Minimalistic and extensible event system implemented via `ScriptableObject`, inspired by [Unite2017](https://www.youtube.com/watch?v=raQ3iHhE_Kk).
 
