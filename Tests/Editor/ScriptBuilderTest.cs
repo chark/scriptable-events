@@ -134,6 +134,5 @@ namespace CHARK.ScriptableEvents.Tests.Editor
         {
             return source.Replace("\r\n", "\n").Replace("\r", "\n");
         }
-
     }
 }
