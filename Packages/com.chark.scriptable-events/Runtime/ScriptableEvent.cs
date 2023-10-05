@@ -14,7 +14,7 @@ namespace CHARK.ScriptableEvents
     /// <typeparam name="TArg">
     /// Type of data which is passed as an argument to this event
     /// </typeparam>
-    public abstract class ScriptableEvent<TArg> : BaseScriptableEvent
+    public abstract class ScriptableEvent<TArg> : ScriptableEvent
     {
         #region Editor
 
@@ -254,7 +254,7 @@ namespace CHARK.ScriptableEvents
     /// scripts.
     /// </summary>
     [ScriptableIcon(ScriptableIconType.Event)]
-    public abstract class BaseScriptableEvent : ScriptableObject
+    public abstract class ScriptableEvent : ScriptableObject
     {
         #region Internal Properties
 

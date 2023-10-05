@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.0.0](https://github.com/chark/scriptable-events/compare/v2.2.0...v3.0.0) - 2023-10-XX
 
-This release tidies up this package, so it is consistent with other packages published by CHARK.
+This release tidies up this package, so it is consistent with other packages published by CHARK. Additionally, this release includes a set of **breaking changes** which will affect you if you're upgrading from previous versions.
 
 ### Changes
 
 - Updated all built-in `BaseScriptableEvent` and `ScriptableEvent` implementations to use `sealed` keyword to prevent inheriting built-in event and listener implementations.
 - Renamed `BaseScriptableEvent` to `ScriptableEvent`.
 - Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
+- Renamed `BaseScriptableEventEditor` to `ScriptableEventEditor`.
+- Renamed `BaseScriptableEventListenerEditor` to `ScriptableEventListenerEditor`.
 - Updated namespaces to use `CHARK.` prefix.
 - Updated menu items to use `CHARK/` prefix.
 - Updated script generation logic to accomodate namespace and naming changes.

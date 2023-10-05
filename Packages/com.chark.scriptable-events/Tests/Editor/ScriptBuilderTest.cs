@@ -10,7 +10,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromEventTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents;
+                using CHARK.ScriptableEvents;
                 using TestEventArg.Namespace;
                 using UnityEngine;
 
@@ -21,7 +21,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                         menuName = ScriptableEventConstants.MenuNameCustom + ""/TestEventMenuName"",
                         order = ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestEventName : BaseScriptableEvent<TestEventArgName>
+                    public class TestEventName : ScriptableEvent<TestEventArgName>
                     {
                     }
                 }
@@ -50,7 +50,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromListenerTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents;
+                using CHARK.ScriptableEvents;
                 using TestEventArg.Namespace;
                 using UnityEngine;
 
@@ -60,7 +60,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                         ScriptableEventConstants.MenuNameCustom + ""/TestListenerMenuName"",
                         ScriptableEventConstants.MenuOrderCustom + 123
                     )]
-                    public class TestListenerName : BaseScriptableEventListener<TestEventArgName>
+                    public class TestListenerName : ScriptableEventListener<TestEventArgName>
                     {
                     }
                 }
@@ -88,7 +88,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
         public void ShouldCreateScriptFromEditorTemplate()
         {
             var expectedContent = @"
-                using ScriptableEvents.Editor;
+                using CHARK.ScriptableEvents.Editor;
                 using TestEvent.Namespace;
                 using TestEventArg.Namespace;
                 using UnityEditor;
@@ -96,7 +96,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 namespace TestEditor.Namespace
                 {
                     [CustomEditor(typeof(TestEvent))]
-                    public class TestEditor : BaseScriptableEventEditor<TestEventArg>
+                    public class TestEditor : ScriptableEventEditor<TestEventArg>
                     {
                         protected override TestEventArg DrawArgField(TestEventArg value)
                         {

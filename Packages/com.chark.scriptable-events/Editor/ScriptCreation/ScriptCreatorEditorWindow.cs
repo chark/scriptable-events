@@ -370,7 +370,7 @@ namespace CHARK.ScriptableEvents.Editor.ScriptCreation
 
         private void CreateEditorScript()
         {
-            var baseNamespace = typeof(BaseScriptableEventEditor);
+            var baseNamespace = typeof(ScriptableEventEditor);
 
             var scriptContent = new ScriptBuilder("EditorTemplate")
                 .AddSubstitute("EDITOR_NAMESPACE", editorNamespace)

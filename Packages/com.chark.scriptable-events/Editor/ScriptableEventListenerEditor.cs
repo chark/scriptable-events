@@ -7,7 +7,7 @@ namespace CHARK.ScriptableEvents.Editor
     /// </summary>
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ScriptableEventListener), true)]
-    internal class BaseScriptableEventListenerEditor
+    internal class ScriptableEventListenerEditor
 #if ODIN_INSPECTOR
         : Sirenix.OdinInspector.Editor.OdinEditor
 #else
@@ -73,12 +73,12 @@ namespace CHARK.ScriptableEvents.Editor
 
         private void SetupEditor()
         {
-            SetupBaseScriptableEventsListener();
+            SetupScriptableEventsListener();
             SetupMonoScript();
             SetupSerializedProperties();
         }
 
-        private void SetupBaseScriptableEventsListener()
+        private void SetupScriptableEventsListener()
         {
             scriptableEventListener = target as ScriptableEventListener;
         }
