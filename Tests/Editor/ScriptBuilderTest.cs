@@ -40,7 +40,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 // Already exists in namespace, should be skipped.
                 .AddImport("TestEventArg.Namespace")
                 .AddImport("TestEvent.Namespace")
-                .AddImport("ScriptableEvents")
+                .AddImport("CHARK.ScriptableEvents")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
@@ -78,7 +78,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 // Already exists in namespace, should be skipped.
                 .AddImport("TestListener.Namespace")
                 .AddImport("TestEventArg.Namespace")
-                .AddImport("ScriptableEvents")
+                .AddImport("CHARK.ScriptableEvents")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
@@ -120,7 +120,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 .AddImport("TestEditor.Namespace")
                 .AddImport("TestEventArg.Namespace")
                 .AddImport("TestEvent.Namespace")
-                .AddImport("ScriptableEvents.Editor")
+                .AddImport("CHARK.ScriptableEvents.Editor")
                 .Build();
 
             Assert.AreEqual(NormaliseCRs(expectedContent), NormaliseCRs(scriptContent));
