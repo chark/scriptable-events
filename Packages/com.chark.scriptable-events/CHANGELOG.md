@@ -1,18 +1,37 @@
 ﻿# Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.0] - 2022-08-04
+## [v3.0.0](https://github.com/chark/scriptable-events/compare/v2.2.0...v3.0.0) - 2023-10-XX
+
+This release tidies up this package, so it is consistent with other packages published by CHARK.
+
+### Changes
+
+- Renamed `BaseScriptableEvent` to `ScriptableEvent`.
+- Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
+- Updated namespaces to use `CHARK.` prefix.
+- Updated menu items to use `CHARK/`.
+- Updated script generation logic to accomodate namespace and naming changes.
+- Updated Documentation to include, namespace, menu item and renaming changes. Additionally, some information regarding addressables was added as well.
+
+## [v2.2.0](https://github.com/chark/scriptable-events/compare/v2.0.0...v2.2.0) - 2022-08-04
+
 Multi events.
+
+### Changed
 
 - `BaseScriptableEventListener<TArg>` now supports multiple events. This should be a non-breaking change. Migration from `scriptableEvent` to a list of `scriptableEvents` is done via `ISerializationCallbackReceiver` which is implemented in `BaseScriptableEventListener<TArg>`.
 
-## [2.1.0] - 2022-02-05
+## [v2.1.0](https://github.com/chark/scriptable-events/compare/v2.0.0...v2.1.0) - 2022-02-05
+
 Quality of life improvements.
 
 ### Added
+
 - Utility window to help in creation of Scriptable Events. It can be found via _Right Click > Create > Scriptable Event > Custom Scriptable Event_ (at the very bottom).
 - `ScriptableEventConstants` class which can be used to order custom events more neatly.
 - `BaseScriptableEvent` class (without `TArg`) which is inherited by all events and is used internally to draw inspector GUIs.
@@ -25,6 +44,7 @@ Quality of life improvements.
 - Odin Inspector support via the use of `#if ODIN_INSPECTOR`.
 
 ### Changed
+
 - Renamed Scriptable Event creation menu from _Scriptable **Events**_ to _Scriptable **Event**_.
 - Moved Scriptable Event menus below _Folder_ and _Script_ creation menu items so the package is less intrusive.
 - All existing events now use `ScriptableEventConstants` to define their menu order.
@@ -36,15 +56,18 @@ Quality of life improvements.
 - Reworked all samples to be more consistent.
 - Updated usage documentation to follow new samples and showcase event creation.
 
-## [2.0.0] - 2021-07-07
+## [v2.0.0](https://github.com/chark/scriptable-events/compare/v1.0.1...v2.0.0) - 2021-07-07
+
 This release contains major breaking changes and migrates from 2019 (LTS) to 2020 (LTS) in order to utilise generics.
 
 ### Added
+
 - `BaseScriptableEventEditor` by default applies to all `BaseScriptableEvent<T>` assets. `BaseScriptableEventEditor<T>` (with a generic type) should be used only if `Raise` button functionality is required.
 - Additional listener info including listener counts (see below "Added Listeners" label on `IScriptableEvent` assets).
 - Events, listeners and editors (except editors for `Collision*` types) for `long`, `double`, `Quaternion`, `Collider`, `Collider2D`, `Collision`, `Collision2D` types.
 
 ### Changed
+
 - All public `BaseScriptableEvent<T>` methods apart from `Raise` were renamed to have a `*Listener` suffix.
 - Each listener now uses a generic `BaseScriptableEvent<T>` field instead of a concrete implementation. The additional argument for the event type as well as the `UnityEvent` type is no longer required.
 - All events have been moved to `ScriptableEvents.Events` namespace to avoid clashing with Unity namespaces.
@@ -53,20 +76,24 @@ This release contains major breaking changes and migrates from 2019 (LTS) to 202
 - Order of components and scriptable events in menus.
 
 ### Removed
+
 - `IScriptableEvent` interface as it had no use and only added boilerplate.
 - `Listeners` property from `BaseScriptableEvent<T>`.
 - All `UnityEvent` implementations.
 - Duplicate listener check under `BaseScriptableEvent<T>`.
 
-## [1.0.1] - 2021-02-07
+## [v1.0.1](https://github.com/chark/scriptable-events/compare/v1.0.0...v1.0.1) - 2021-02-07
 
 ### Changed
+
 - Fixed naming of GameObject event listener file. Now it should appear as expected in the editor.
 
-## [1.0.0] - 2021-02-01
+## [v1.0.0](https://github.com/chark/scriptable-events/compare/v1.0.0) - 2021-02-01
+
 Initial release, here we list changes made after moving away from [Unity Scriptable Objects](https://github.com/chark/unity-scriptable-objects).
 
 ### Changed
+
 - Naming of events, `*GameEvent` -> `*ScriptableEvent`.
 - Rewrote event, listener and inspector GUI APIs.
 - Rewrote test code.
