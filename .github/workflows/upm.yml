@@ -3,23 +3,44 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch'     
+        description: 'Branch'
         required: true
         default: 'upm'
 
 jobs:
-  split-upm:
-    name: Split UPM branch
+  deploy-upm:
+    name: Deploy to UPM branch
     runs-on: ubuntu-latest
+
+    env:
+      PACKAGE_DIR: Packages/com.chark.scriptable-events
+      SAMPLE_SRC_DIR: Samples
+      SAMPLE_DST_DIR: Samples~
+
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: split upm branch
-      run: |
-        git branch -d ${{ github.event.inputs.branch }} &> /dev/null || echo the branch not found
-        git subtree split -P "$PKG_ROOT" -b ${{ github.event.inputs.branch }}
-        git checkout ${{ github.event.inputs.branch }}
-        git push -f -u origin ${{ github.event.inputs.branch }}
-      env:
-        PKG_ROOT: Packages/com.chark.scriptable-events
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Create '${{ github.event.inputs.branch }}' branch from '${{ env.PACKAGE_DIR }}' directory
+        run: |
+          git branch -d '${{ github.event.inputs.branch }}' &> /dev/null || echo '${{ github.event.inputs.branch }} branch not found'
+          git subtree split -P '${{ env.PACKAGE_DIR }}' -b '${{ github.event.inputs.branch }}'
+          git checkout '${{ github.event.inputs.branch }}'
+
+      - name: Move '${{ env.SAMPLE_SRC_DIR }}' directory to '${{ env.SAMPLE_DST_DIR }}'
+        run: |
+          rm -f '${{ env.SAMPLE_SRC_DIR }}.meta'
+          git mv '${{ env.SAMPLE_SRC_DIR }}' '${{ env.SAMPLE_DST_DIR }}'
+
+          git config --global user.name 'github-bot'
+          git config --global user.email 'github-bot@users.noreply.github.com'
+
+          git add '${{ env.SAMPLE_SRC_DIR }}.meta'
+          git add '${{ env.SAMPLE_DST_DIR }}'
+
+          git commit -m "Move '${{ env.SAMPLE_SRC_DIR }}' directory to '${{ env.SAMPLE_DST_DIR }}'"
+
+      - name: Push '${{ github.event.inputs.branch }}' branch
+        run: |
+          git push -f -u origin '${{ github.event.inputs.branch }}'
