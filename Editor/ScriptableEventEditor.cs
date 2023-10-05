@@ -11,7 +11,7 @@ namespace CHARK.ScriptableEvents.Editor
     /// <typeparam name="TArg">
     /// Event argument type
     /// </typeparam>
-    public abstract class BaseScriptableEventEditor<TArg> : BaseScriptableEventEditor
+    public abstract class ScriptableEventEditor<TArg> : ScriptableEventEditor
     {
         #region Private Fields
 
@@ -105,7 +105,7 @@ namespace CHARK.ScriptableEvents.Editor
     /// Base editor for all Scriptable Events.
     /// </summary>
     [CanEditMultipleObjects]
-    public abstract class BaseScriptableEventEditor
+    public abstract class ScriptableEventEditor
 #if ODIN_INSPECTOR
         : Sirenix.OdinInspector.Editor.OdinEditor
 #else
@@ -115,7 +115,7 @@ namespace CHARK.ScriptableEvents.Editor
         #region Private Fields
 
         // Target scriptable event fields.
-        private BaseScriptableEvent baseScriptableEvent;
+        private ScriptableEvent scriptableEvent;
         private MonoScript monoScript;
 
         // Serialized properties.
@@ -169,8 +169,8 @@ namespace CHARK.ScriptableEvents.Editor
             EditorGUILayout.Space();
             ScriptableEventEditorGUI.DrawListenersLabel();
             ScriptableEventEditorGUI.DrawListenerStats(
-                baseScriptableEvent.ListenerCount,
-                baseScriptableEvent.Listeners
+                scriptableEvent.ListenerCount,
+                scriptableEvent.Listeners
             );
 
             OnDrawListeners();
@@ -189,7 +189,7 @@ namespace CHARK.ScriptableEvents.Editor
         /// </summary>
         internal virtual void SetupEditor()
         {
-            SetupBaseScriptableEvent();
+            SetupScriptableEvent();
             SetupMonoScript();
             SetupSerializedProperties();
         }
@@ -223,7 +223,7 @@ namespace CHARK.ScriptableEvents.Editor
         internal virtual void OnDrawListeners()
         {
             var listenerIndex = 0;
-            foreach (var listener in baseScriptableEvent.Listeners)
+            foreach (var listener in scriptableEvent.Listeners)
             {
                 OnDrawListener(listener, listenerIndex);
                 listenerIndex++;
@@ -250,14 +250,14 @@ namespace CHARK.ScriptableEvents.Editor
 
         #region Private Setup Methods
 
-        private void SetupBaseScriptableEvent()
+        private void SetupScriptableEvent()
         {
-            baseScriptableEvent = target as BaseScriptableEvent;
+            scriptableEvent = target as ScriptableEvent;
         }
 
         private void SetupMonoScript()
         {
-            monoScript = MonoScript.FromScriptableObject(baseScriptableEvent);
+            monoScript = MonoScript.FromScriptableObject(scriptableEvent);
         }
 
         private void SetupSerializedProperties()
