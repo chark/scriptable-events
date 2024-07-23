@@ -1,0 +1,19 @@
+{
+    "name": "CHARK.ScriptableEvents.VisualScripting",
+    "rootNamespace": "CHARK.ScriptableEvents.UVS",
+    "references": [
+        "CHARK.ScriptableEvents",
+        "Unity.VisualScripting.Core",
+        "Unity.VisualScripting.Flow",
+        "Unity.VisualScripting.State"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
