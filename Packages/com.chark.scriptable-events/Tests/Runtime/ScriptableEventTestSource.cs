@@ -26,6 +26,12 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
             >(true);
 
             yield return CreateTestCase<
+                ShortScriptableEvent,
+                ShortScriptableEventListener,
+                short
+            >(1);
+
+            yield return CreateTestCase<
                 IntScriptableEvent,
                 IntScriptableEventListener,
                 int
@@ -71,6 +77,13 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
                 Vector3
             >(Vector3.one);
 
+
+            yield return CreateTestCase<
+                Vector4ScriptableEvent,
+                Vector4ScriptableEventListener,
+                Vector4
+            >(Vector4.one);
+
             yield return CreateTestCase<
                 QuaternionScriptableEvent,
                 QuaternionScriptableEventListener,
@@ -114,6 +127,12 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
                 Collider
             >(new Collider());
 #endif
+
+            yield return CreateTestCase<
+                ObjectScriptableEvent,
+                ObjectScriptableEventListener,
+                Object
+            >(new GameObject());
 
             yield return CreateTestCase<
                 GameObjectScriptableEvent,

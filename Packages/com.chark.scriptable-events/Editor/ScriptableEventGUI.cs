@@ -73,16 +73,14 @@ namespace CHARK.ScriptableEvents.Editor
         }
 
         /// <summary>
-        /// Draw an <see cref="int"/> field.
+        /// Draw a <see cref="byte"/> field.
         /// </summary>
-        internal static int IntField(int value, GUIContent label = null)
+        internal static byte ByteField(byte value)
         {
-            var safeLabel = label ?? GUIContent.none;
-
 #if ODIN_INSPECTOR
-            return Sirenix.Utilities.Editor.SirenixEditorFields.IntField(safeLabel, value);
+            return (byte)Sirenix.Utilities.Editor.SirenixEditorFields.IntField(value);
 #else
-            return EditorGUILayout.IntField(safeLabel, value);
+            return (byte)EditorGUILayout.IntField(value);
 #endif
         }
 
@@ -95,6 +93,20 @@ namespace CHARK.ScriptableEvents.Editor
             return (short)Sirenix.Utilities.Editor.SirenixEditorFields.IntField(value);
 #else
             return (short)EditorGUILayout.IntField(value);
+#endif
+        }
+
+        /// <summary>
+        /// Draw an <see cref="int"/> field.
+        /// </summary>
+        internal static int IntField(int value, GUIContent label = null)
+        {
+            var safeLabel = label ?? GUIContent.none;
+
+#if ODIN_INSPECTOR
+            return Sirenix.Utilities.Editor.SirenixEditorFields.IntField(safeLabel, value);
+#else
+            return EditorGUILayout.IntField(safeLabel, value);
 #endif
         }
 
@@ -188,7 +200,7 @@ namespace CHARK.ScriptableEvents.Editor
         }
 
         /// <summary>
-        /// Draw a <see cref="Vector3"/> field (each component gets an input).
+        /// Draw a <see cref="Vector4"/> field (each component gets an input).
         /// </summary>
         internal static Vector4 Vector4Field(Vector4 value)
         {
@@ -250,7 +262,7 @@ namespace CHARK.ScriptableEvents.Editor
             var result = EditorGUILayout
                 .ObjectField(safeLabel, @object, typeof(T), isAllowSceneObjects);
 #endif
-            return (T) result;
+            return (T)result;
         }
 
         #endregion
