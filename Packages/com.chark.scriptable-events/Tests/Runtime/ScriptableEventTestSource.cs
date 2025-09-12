@@ -26,6 +26,12 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
             >(true);
 
             yield return CreateTestCase<
+                ByteScriptableEvent,
+                ByteScriptableEventListener,
+                byte
+            >(1);
+
+            yield return CreateTestCase<
                 ShortScriptableEvent,
                 ShortScriptableEventListener,
                 short
