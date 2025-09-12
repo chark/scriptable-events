@@ -72,12 +72,6 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
             >(Vector3.one);
 
             yield return CreateTestCase<
-                CollisionScriptableEvent,
-                CollisionScriptableEventListener,
-                Collision
-            >(new Collision());
-
-            yield return CreateTestCase<
                 QuaternionScriptableEvent,
                 QuaternionScriptableEventListener,
                 Quaternion
@@ -93,17 +87,33 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
 
             #region Objects
 
+#if UNITY_PHYSICS_2D
+            yield return CreateTestCase<
+                Collision2DScriptableEvent,
+                Collision2DScriptableEventListener,
+                Collision2D
+            >(new Collision2D());
+
             yield return CreateTestCase<
                 Collider2DScriptableEvent,
                 Collider2DScriptableEventListener,
                 Collider2D
             >(new Collider2D());
+#endif
+
+#if UNITY_PHYSICS_3D
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener,
+                Collision
+            >(new Collision());
 
             yield return CreateTestCase<
                 ColliderScriptableEvent,
                 ColliderScriptableEventListener,
                 Collider
             >(new Collider());
+#endif
 
             yield return CreateTestCase<
                 GameObjectScriptableEvent,
@@ -134,7 +144,7 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
                 {
                     typeof(TScriptableEvent),
                     typeof(TScriptableEventListener),
-                    arg.GetType()
+                    arg.GetType(),
                 }
             };
 

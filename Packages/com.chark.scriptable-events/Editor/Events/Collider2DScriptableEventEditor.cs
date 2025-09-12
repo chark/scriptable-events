@@ -1,4 +1,6 @@
-﻿using CHARK.ScriptableEvents.Events;
+﻿#if UNITY_PHYSICS_2D
+
+using CHARK.ScriptableEvents.Events;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,3 +15,5 @@ namespace CHARK.ScriptableEvents.Editor.Events
         }
     }
 }
+
+#endif

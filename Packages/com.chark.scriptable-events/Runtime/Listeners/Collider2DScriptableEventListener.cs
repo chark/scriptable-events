@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_PHYSICS_2D
+
+using UnityEngine;
 
 namespace CHARK.ScriptableEvents.Listeners
 {
@@ -10,3 +12,5 @@ namespace CHARK.ScriptableEvents.Listeners
     {
     }
 }
+
+#endif

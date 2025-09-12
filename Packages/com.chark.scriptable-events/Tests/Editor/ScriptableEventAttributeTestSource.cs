@@ -12,10 +12,10 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 SimpleScriptableEvent,
                 SimpleScriptableEventListener
             >(
-                "SimpleScriptableEvent",
-                "/Simple Scriptable Event",
-                "/Simple Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderSimpleEvent
+                eventFileName: "SimpleScriptableEvent",
+                eventMenuName: "/Simple Scriptable Event",
+                listenerMenuName: "/Simple Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderSimpleEvent
             );
 
             #region Primitives
@@ -24,60 +24,60 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 BoolScriptableEvent,
                 BoolScriptableEventListener
             >(
-                "BoolScriptableEvent",
-                "/Bool Scriptable Event",
-                "/Bool Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
+                eventFileName: "BoolScriptableEvent",
+                eventMenuName: "/Bool Scriptable Event",
+                listenerMenuName: "/Bool Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
             );
 
             yield return CreateTestCase<
                 IntScriptableEvent,
                 IntScriptableEventListener
             >(
-                "IntScriptableEvent",
-                "/Int Scriptable Event",
-                "/Int Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
+                eventFileName: "IntScriptableEvent",
+                eventMenuName: "/Int Scriptable Event",
+                listenerMenuName: "/Int Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
             );
 
             yield return CreateTestCase<
                 LongScriptableEvent,
                 LongScriptableEventListener
             >(
-                "LongScriptableEvent",
-                "/Long Scriptable Event",
-                "/Long Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
+                eventFileName: "LongScriptableEvent",
+                eventMenuName: "/Long Scriptable Event",
+                listenerMenuName: "/Long Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 2
             );
 
             yield return CreateTestCase<
                 FloatScriptableEvent,
                 FloatScriptableEventListener
             >(
-                "FloatScriptableEvent",
-                "/Float Scriptable Event",
-                "/Float Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
+                eventFileName: "FloatScriptableEvent",
+                eventMenuName: "/Float Scriptable Event",
+                listenerMenuName: "/Float Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
             );
 
             yield return CreateTestCase<
                 DoubleScriptableEvent,
                 DoubleScriptableEventListener
             >(
-                "DoubleScriptableEvent",
-                "/Double Scriptable Event",
-                "/Double Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
+                eventFileName: "DoubleScriptableEvent",
+                eventMenuName: "/Double Scriptable Event",
+                listenerMenuName: "/Double Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
             );
 
             yield return CreateTestCase<
                 StringScriptableEvent,
                 StringScriptableEventListener
             >(
-                "StringScriptableEvent",
-                "/String Scriptable Event",
-                "/String Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
+                eventFileName: "StringScriptableEvent",
+                eventMenuName: "/String Scriptable Event",
+                listenerMenuName: "/String Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderPrimitiveEvent + 5
             );
 
             #endregion
@@ -88,105 +88,108 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 Vector2ScriptableEvent,
                 Vector2ScriptableEventListener
             >(
-                "Vector2ScriptableEvent",
-                "/Vector2 Scriptable Event",
-                "/Vector2 Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
+                eventFileName: "Vector2ScriptableEvent",
+                eventMenuName: "/Vector2 Scriptable Event",
+                listenerMenuName: "/Vector2 Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 0
             );
 
             yield return CreateTestCase<
                 Vector3ScriptableEvent,
                 Vector3ScriptableEventListener
             >(
-                "Vector3ScriptableEvent",
-                "/Vector3 Scriptable Event",
-                "/Vector3 Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
-            );
-
-
-            yield return CreateTestCase<
-                Collision2DScriptableEvent,
-                Collision2DScriptableEventListener
-            >(
-                "Collision2DScriptableEvent",
-                "/Collision 2D Scriptable Event",
-                "/Collision 2D Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 2
-            );
-
-            yield return CreateTestCase<
-                CollisionScriptableEvent,
-                CollisionScriptableEventListener
-            >(
-                "CollisionScriptableEvent",
-                "/Collision Scriptable Event",
-                "/Collision Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
+                eventFileName: "Vector3ScriptableEvent",
+                eventMenuName: "/Vector3 Scriptable Event",
+                listenerMenuName: "/Vector3 Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
             );
 
             yield return CreateTestCase<
                 QuaternionScriptableEvent,
                 QuaternionScriptableEventListener
             >(
-                "QuaternionScriptableEvent",
-                "/Quaternion Scriptable Event",
-                "/Quaternion Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
+                eventFileName: "QuaternionScriptableEvent",
+                eventMenuName: "/Quaternion Scriptable Event",
+                listenerMenuName: "/Quaternion Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
             );
 
             yield return CreateTestCase<
                 ColorScriptableEvent,
                 ColorScriptableEventListener
             >(
-                "ColorScriptableEvent",
-                "/Color Scriptable Event",
-                "/Color Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
+                eventFileName: "ColorScriptableEvent",
+                eventMenuName: "/Color Scriptable Event",
+                listenerMenuName: "/Color Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
             );
 
             #endregion
 
             #region Objects
 
+#if UNITY_PHYSICS_2D
+            yield return CreateTestCase<
+                Collision2DScriptableEvent,
+                Collision2DScriptableEventListener
+            >(
+                eventFileName: "Collision2DScriptableEvent",
+                eventMenuName: "/Collision 2D Scriptable Event",
+                listenerMenuName: "/Collision 2D Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 2
+            );
+
             yield return CreateTestCase<
                 Collider2DScriptableEvent,
                 Collider2DScriptableEventListener
             >(
-                "Collider2DScriptableEvent",
-                "/Collider 2D Scriptable Event",
-                "/Collider 2D Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityObjectEvent + 0
+                eventFileName: "Collider2DScriptableEvent",
+                eventMenuName: "/Collider 2D Scriptable Event",
+                listenerMenuName: "/Collider 2D Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityObjectEvent + 0
+            );
+#endif
+
+#if UNITY_PHYSICS_3D
+            yield return CreateTestCase<
+                CollisionScriptableEvent,
+                CollisionScriptableEventListener
+            >(
+                eventFileName: "CollisionScriptableEvent",
+                eventMenuName: "/Collision Scriptable Event",
+                listenerMenuName: "/Collision Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
             );
 
             yield return CreateTestCase<
                 ColliderScriptableEvent,
                 ColliderScriptableEventListener
             >(
-                "ColliderScriptableEvent",
-                "/Collider Scriptable Event",
-                "/Collider Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
+                eventFileName: "ColliderScriptableEvent",
+                eventMenuName: "/Collider Scriptable Event",
+                listenerMenuName: "/Collider Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityObjectEvent + 1
             );
+#endif
 
             yield return CreateTestCase<
                 GameObjectScriptableEvent,
                 GameObjectScriptableEventListener
             >(
-                "GameObjectScriptableEvent",
-                "/Game Object Scriptable Event",
-                "/Game Object Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
+                eventFileName: "GameObjectScriptableEvent",
+                eventMenuName: "/Game Object Scriptable Event",
+                listenerMenuName: "/Game Object Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityObjectEvent + 2
             );
 
             yield return CreateTestCase<
                 TransformScriptableEvent,
                 TransformScriptableEventListener
             >(
-                "TransformScriptableEvent",
-                "/Transform Scriptable Event",
-                "/Transform Scriptable Event Listener",
-                ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
+                eventFileName: "TransformScriptableEvent",
+                eventMenuName: "/Transform Scriptable Event",
+                listenerMenuName: "/Transform Scriptable Event Listener",
+                order: ScriptableEventConstants.MenuOrderUnityObjectEvent + 3
             );
 
             #endregion
@@ -209,7 +212,7 @@ namespace CHARK.ScriptableEvents.Tests.Editor
                 eventFileName,
                 ScriptableEventConstants.MenuNameBase + eventMenuName,
                 ScriptableEventConstants.MenuNameBase + listenerMenuName,
-                order
+                order,
             };
         }
     }

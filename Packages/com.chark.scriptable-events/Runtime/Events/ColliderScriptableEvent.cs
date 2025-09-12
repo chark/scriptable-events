@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_PHYSICS_3D
+
+using UnityEngine;
 
 namespace CHARK.ScriptableEvents.Events
 {
@@ -11,3 +13,5 @@ namespace CHARK.ScriptableEvents.Events
     {
     }
 }
+
+#endif
