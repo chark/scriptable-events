@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Color Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 5
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent
     )]
     public sealed class ColorScriptableEventListener : ScriptableEventListener<Color>
     {

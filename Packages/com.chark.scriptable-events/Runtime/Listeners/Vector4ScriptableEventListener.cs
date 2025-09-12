@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Vector4 Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 1
+        ScriptableEventConstants.MenuOrderUnityPrimitiveEvent
     )]
     public sealed class Vector4ScriptableEventListener : ScriptableEventListener<Vector4>
     {

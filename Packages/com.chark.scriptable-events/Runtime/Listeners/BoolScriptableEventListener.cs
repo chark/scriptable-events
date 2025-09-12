@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Bool Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderPrimitiveEvent + 0
+        ScriptableEventConstants.MenuOrderPrimitiveEvent
     )]
     public sealed class BoolScriptableEventListener : ScriptableEventListener<bool>
     {

@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Float Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderPrimitiveEvent + 3
+        ScriptableEventConstants.MenuOrderPrimitiveEvent
     )]
     public sealed class FloatScriptableEventListener : ScriptableEventListener<float>
     {

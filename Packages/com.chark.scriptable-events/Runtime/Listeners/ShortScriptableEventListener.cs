@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Short Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderPrimitiveEvent + 1
+        ScriptableEventConstants.MenuOrderPrimitiveEvent
     )]
     public sealed class ShortScriptableEventListener : ScriptableEventListener<short>
     {
