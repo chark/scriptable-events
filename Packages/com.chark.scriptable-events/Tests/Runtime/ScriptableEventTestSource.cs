@@ -138,7 +138,7 @@ namespace CHARK.ScriptableEvents.Tests.Runtime
                 ObjectScriptableEvent,
                 ObjectScriptableEventListener,
                 Object
-            >(new GameObject());
+            >(new Object());
 
             yield return CreateTestCase<
                 GameObjectScriptableEvent,
