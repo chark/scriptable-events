@@ -87,6 +87,18 @@ namespace CHARK.ScriptableEvents.Editor
         }
 
         /// <summary>
+        /// Draw a <see cref="short"/> field.
+        /// </summary>
+        internal static short ShortField(short value)
+        {
+#if ODIN_INSPECTOR
+            return (short)Sirenix.Utilities.Editor.SirenixEditorFields.IntField(value);
+#else
+            return (short)EditorGUILayout.IntField(value);
+#endif
+        }
+
+        /// <summary>
         /// Draw a regular <see cref="string"/> field.
         /// </summary>
         internal static string TextField(
@@ -172,6 +184,18 @@ namespace CHARK.ScriptableEvents.Editor
             return Sirenix.Utilities.Editor.SirenixEditorFields.Vector3Field(value);
 #else
             return EditorGUILayout.Vector3Field(GUIContent.none, value);
+#endif
+        }
+
+        /// <summary>
+        /// Draw a <see cref="Vector3"/> field (each component gets an input).
+        /// </summary>
+        internal static Vector4 Vector4Field(Vector4 value)
+        {
+#if ODIN_INSPECTOR
+            return Sirenix.Utilities.Editor.SirenixEditorFields.Vector4Field(value);
+#else
+            return EditorGUILayout.Vector4Field(GUIContent.none, value);
 #endif
         }
 
