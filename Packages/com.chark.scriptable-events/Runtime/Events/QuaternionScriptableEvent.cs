@@ -5,7 +5,7 @@ namespace CHARK.ScriptableEvents.Events
     [CreateAssetMenu(
         fileName = "QuaternionScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Quaternion Scriptable Event",
-        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent
+        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 3
     )]
     public sealed class QuaternionScriptableEvent : ScriptableEvent<Quaternion>
     {

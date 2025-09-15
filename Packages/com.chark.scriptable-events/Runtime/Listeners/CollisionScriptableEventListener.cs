@@ -6,7 +6,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Collision Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderUnityObjectEvent
+        ScriptableEventConstants.MenuOrderUnityObjectEvent + 6
     )]
     public sealed class CollisionScriptableEventListener : ScriptableEventListener<Collision>
     {

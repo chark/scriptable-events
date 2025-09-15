@@ -7,7 +7,7 @@ namespace CHARK.ScriptableEvents.Events
     [CreateAssetMenu(
         fileName = "Collision2DScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Collision 2D Scriptable Event",
-        order = ScriptableEventConstants.MenuOrderUnityObjectEvent
+        order = ScriptableEventConstants.MenuOrderUnityObjectEvent + 4
     )]
     public sealed class Collision2DScriptableEvent : ScriptableEvent<Collision2D>
     {

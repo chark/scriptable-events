@@ -5,7 +5,7 @@ namespace CHARK.ScriptableEvents.Events
     [CreateAssetMenu(
         fileName = "ColorScriptableEvent",
         menuName = ScriptableEventConstants.MenuNameBase + "/Color Scriptable Event",
-        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent
+        order = ScriptableEventConstants.MenuOrderUnityPrimitiveEvent + 4
     )]
     public sealed class ColorScriptableEvent : ScriptableEvent<Color>
     {

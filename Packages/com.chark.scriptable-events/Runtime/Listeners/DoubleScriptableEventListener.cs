@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Double Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderPrimitiveEvent
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 6
     )]
     public sealed class DoubleScriptableEventListener : ScriptableEventListener<double>
     {

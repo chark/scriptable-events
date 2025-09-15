@@ -4,7 +4,7 @@ namespace CHARK.ScriptableEvents.Listeners
 {
     [AddComponentMenu(
         ScriptableEventConstants.MenuNameBase + "/Long Scriptable Event Listener",
-        ScriptableEventConstants.MenuOrderPrimitiveEvent
+        ScriptableEventConstants.MenuOrderPrimitiveEvent + 4
     )]
     public sealed class LongScriptableEventListener : ScriptableEventListener<long>
     {
