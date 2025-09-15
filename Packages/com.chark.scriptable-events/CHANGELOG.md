@@ -10,6 +10,7 @@
 
 - Events by default will suppress exceptions.
 - 2D physics events will not throw compilation errors if the 2D packages are disabled.
+- Menu orders so that Scriptable Events doesn't appear at the very top of menu items in order not interferer with default Unity UX too much.
 
 ## [v3.0.0](https://github.com/chark/scriptable-events/compare/v2.2.0...v3.0.0) - 2023-10-05
 
