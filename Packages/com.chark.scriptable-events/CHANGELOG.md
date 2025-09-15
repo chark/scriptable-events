@@ -1,10 +1,5 @@
 ﻿# Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [v4.0.0](https://github.com/chark/scriptable-events/compare/v3.0.0...v4.0.0) - 2025-XX-XX
 
 ### Added
@@ -20,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This release tidies up this package, so it is consistent with other packages published by CHARK. Additionally, this release includes a set of **breaking changes** which will affect you if you're upgrading from previous versions.
 
-### Changes
+### Changed
 
 - Renamed `BaseScriptableEvent` to `ScriptableEvent`.
 - Renamed `BaseScriptableEventListener` to `ScriptableEventListener`.
