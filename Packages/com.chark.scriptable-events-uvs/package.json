@@ -1,0 +1,35 @@
+{
+  "name": "com.chark.scriptable-events-uvs",
+  "displayName": "Scriptable Events VisualScripting",
+  "author": {
+    "name": "CHARK",
+    "url": "https://chark.io"
+  },
+  "version": "1.0.1",
+  "unity": "2021.3",
+  "description": "VisualScripting support for CHARK.ScriptableEvents library.",
+  "keywords": [
+    "event",
+    "listener",
+    "scriptableobject",
+    "unity",
+    "visualscripting",
+    "architecture"
+  ],
+  "dependencies": {
+    "com.unity.visualscripting": "1.9.4",
+    "com.chark.scriptable-events": "3.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Basic",
+      "description": "Basic usage of Simple/String/Boolean Scriptable Events Nodes.",
+      "path": "Samples/SimpleStringBooleanEventsUsageExample"
+    },
+    {
+      "displayName": "Controling",
+      "description": "Pause, resume, stop an Scriptable Event Listener Node",
+      "path": "Samples/PauseResumeStopExample"
+    }
+  ]
+}

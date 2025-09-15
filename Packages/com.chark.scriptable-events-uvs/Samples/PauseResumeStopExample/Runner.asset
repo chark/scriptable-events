@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e66c6366d904e98bc83428217d4fd7, type: 3}
+  m_Name: Runner
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":146.0,"y":43.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-156.0,"y":-204.0},"guid":"d67a0490-aa63-406d-890f-ff2cfb23ba0e","$version":"A","$type":"Unity.VisualScripting.Start","$id":"9"},{"type":"System.Collections.Generic.List`1[[CHARK.ScriptableEvents.Events.SimpleScriptableEvent,
+      CHARK.ScriptableEvents, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]","value":{"$content":[0],"$type":"System.Collections.Generic.List`1[[CHARK.ScriptableEvents.Events.SimpleScriptableEvent,
+      CHARK.ScriptableEvents, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"defaultValues":{},"position":{"x":-288.0,"y":24.0},"guid":"c3e6fb15-fcdb-463a-8d52-6d105eada934","$version":"A","$type":"Unity.VisualScripting.Literal","$id":"11"},{"chainable":false,"parameterNames":["x","y","z"],"member":{"name":"Translate","parameterTypes":["System.Single","System.Single","System.Single"],"targetType":"UnityEngine.Transform","targetTypeName":"UnityEngine.Transform","$version":"A"},"defaultValues":{"target":null,"%x":{"$content":1.0,"$type":"System.Single"},"%y":{"$content":0.0,"$type":"System.Single"},"%z":{"$content":0.0,"$type":"System.Single"}},"position":{"x":364.0,"y":-111.0},"guid":"9d6594f3-6bef-462d-8462-d3f344b9acad","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"14"},{"defaultValues":{},"position":{"x":-132.0,"y":-108.0},"guid":"146e7220-9386-4f0f-a464-29aee82009d6","$version":"A","$type":"Unity.VisualScripting.This","$id":"18"},{"defaultValues":{"target":null,"paused":{"$content":false,"$type":"System.Boolean"}},"position":{"x":48.0,"y":-132.0},"guid":"90d6bb51-a7cc-4cf2-a2f4-89aedc8af5b8","$version":"A","$type":"CHARK.ScriptableEvents.VisualScripting.SimpleListener","$id":"20"},{"sourceUnit":{"$ref":"9"},"sourceKey":"trigger","destinationUnit":{"$ref":"20"},"destinationKey":"listen","guid":"b0ccdce0-e83e-4852-be6e-a6272ecf06b5","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"20"},"sourceKey":"onRaised","destinationUnit":{"$ref":"14"},"destinationKey":"enter","guid":"e2cfee26-e8b1-4e2f-8c3e-c9ffb3fc2d5e","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"18"},"sourceKey":"self","destinationUnit":{"$ref":"20"},"destinationKey":"target","guid":"30acc797-4911-4d2b-a302-2f96db72bba3","$type":"Unity.VisualScripting.ValueConnection"},{"sourceUnit":{"$ref":"11"},"sourceKey":"output","destinationUnit":{"$ref":"20"},"destinationKey":"events","guid":"09879219-5464-41aa-888b-90e09a6a3e11","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: 25bcf527c187d1042aea3248bdb14293, type: 2}
