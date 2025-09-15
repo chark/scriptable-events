@@ -25,7 +25,7 @@ namespace CHARK.ScriptableEvents
         [Tooltip("Should exceptions not break the listener chain")]
         [FormerlySerializedAs("suppressExceptions")]
         [SerializeField]
-        private bool isSuppressExceptions;
+        private bool isSuppressExceptions = true;
 
         [Tooltip(
             "Should this event log debug info? Enabling this will degrade performance!"
