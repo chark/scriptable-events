@@ -29,27 +29,27 @@
         /// <summary>
         /// Menu order of event assets which use simple arguments.
         /// </summary>
-        internal const int MenuOrderSimpleEvent = MenuOrderBase - 400;
+        internal const int MenuOrderSimpleEvent = MenuOrderBase + 100;
 
         /// <summary>
         /// Menu order of event assets which use primitives as arguments.
         /// </summary>
-        internal const int MenuOrderPrimitiveEvent = MenuOrderBase - 300;
+        internal const int MenuOrderPrimitiveEvent = MenuOrderBase + 200;
 
         /// <summary>
         /// Menu order of event assets which use Unity primitives as arguments.
         /// </summary>
-        internal const int MenuOrderUnityPrimitiveEvent = MenuOrderBase - 200;
+        internal const int MenuOrderUnityPrimitiveEvent = MenuOrderBase + 300;
 
         /// <summary>
         /// Menu order of event assets which use Unity objects as arguments.
         /// </summary>
-        internal const int MenuOrderUnityObjectEvent = MenuOrderBase - 100;
+        internal const int MenuOrderUnityObjectEvent = MenuOrderBase + 400;
 
         /// <summary>
         /// Menu order of event tools.
         /// </summary>
-        internal const int MenuOrderTools = MenuOrderBase;
+        internal const int MenuOrderTools = MenuOrderBase + 500;
 
         /// <summary>
         /// Path of the package.
